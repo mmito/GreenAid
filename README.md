@@ -25,3 +25,15 @@ Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getti
 
 **Checkstyle**:  
 Run `maven site`
+
+## Group members
+
+#### Tommaso Tofacchi
+
+<img src="/images/tommaso.jpeg" height="250">
+
+With the development of our project, I aim to enhance my abilities to cooperate on a team in order to find the best and most efficient solutions to whatever issue we will face.
+
+Maximising group efforts in a smart, intelligent way will be key in achieving this goal, thus I'm looking forward to discovering how we'll be able to optimally distribute the significant workload among each one of us. The presence of deadlines will serve to the purpose of accustoming us to working under pressure, as the necessity to present demos will spur us to constantly remain on track with what should be done.
+
+The final report/project presentation part, furthermore, will greatly help me to maintain the general overview of our product as a whole, plus discussing it and answering questions in front of a panel will challange us to what we could encounter during our present and future working experiences.
