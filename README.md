@@ -1,7 +1,3 @@
--test line
--does it work?
--
-
 # CSE1105 Template Repository
 
 This a template repository to help you get started on making the best project possible!
@@ -69,3 +65,15 @@ With this project I aim to improve my programming skills and my ability to work 
 I am planning on improving my programming by trying to implement ideas that I have for this project with of course the help of other team members. 
 
 With this project I want to learn more about the server and how to contribute more to making a interface, since I think I still lack those capabilities to be able to make a really good interface.
+
+#### Cosmin Octavian Pene (netID: cpene)
+<img src="/images/octavian.jpg">
+
+I was personally waiting for this course since I started my bachelor. I've been involved to some projects in the past, similar to this one let's say, in teams of 5-15 people, and in my opinion this is how you gain a lot of experience in:
+1. Programming
+2. Teamwork
+And these are actually the main points of a good Programmer.
+I've started programming 4-5 years ago with C/C++ and since then I experienced some other languages like Java, JavaScript, SQL, HTML, CSS etc. During this proccess of learning I've seen my strong and weak points and of course, my likes and dislikes.
+I like programming and especially I like algorithms, functionalities and anything that has to do with the main core of the applicaton. On the other hand, I don't find myself a very creative person in terms of design. I don't personally like to design a webpage, or to make anything look nicer, to improve the visual of an application. I care more about efficiency and functionality, I like to make something work properly, as fast as possible and without bugs. Even though I am not very good in designing an application, I am sure my teammates will help me and we will together develop a really nice application.
+My goal is to develop a fully functional Java application, a complete product that can prove me I am on the right way of building a strong career in IT. Moreover, I am also aiming for a very high grade, hopefully a 10, since this is no longer an Exam based course. This course will truly show us our value, our willing to do something in the right way, with strict deadlines and our capability to work proffesionally, in a team.
+After I met my teammates I am pretty sure everything will be ok, because I saw everyone really excited about the project itself and I feel each and every one of us will put in a lot of effort. So even though the teamwork is hard in general, I feel it won't be that hard for us.
