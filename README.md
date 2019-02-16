@@ -46,3 +46,17 @@ Although I have a non-coding background and my programming journey started with 
 To be precise, I want to contribute to the functionality, interface and database parts of the project as I think that I lack some knowledge on these parts and that this project will help me discover tons of new aspects. 
 
 As a team, we have great ideas to realize, and I can't wait to create this application of going green.
+
+#### Julien Lamon (netID: 4916727)
+<img src="/images/julien.png">
+
+My first steps in coding were only on September, when the bachelor started. However, being a fast learner helped me a lot; I was able to catch up with everything on Java. 
+
+My main goal is pretty basic: seeing how we will be able to manage a project of that size with, I hope, no issues in the communication part! 
+
+My weakest points would be that I am stubborn sometimes, and also that I am impatient. But don't worry, being able to counter these points is part of my main goal.
+Also, my strong points would be that I am organised and, as I already said, I am a fast learner.
+
+I hope that, as a team, we will be able to get along with everything, with every deadlines done on time, etc.
+
+The things that I want to improve during these 9 weeks is having the opportunity to touch on new parts of Java. The new parts being the GUI, for example.
