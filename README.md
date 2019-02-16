@@ -60,3 +60,12 @@ Also, my strong points would be that I am organised and, as I already said, I am
 I hope that, as a team, we will be able to get along with everything, with every deadlines done on time, etc.
 
 The things that I want to improve during these 9 weeks is having the opportunity to touch on new parts of Java. The new parts being the GUI, for example.
+
+#### Warren Akrum (netID: wakrum)
+<img src="/images/Warren.jpg">
+
+With this project I aim to improve my programming skills and my ability to work as a team. I am good at communicating with team members which will definitely help me cooperate with my fellow team mates.
+
+I am planning on improving my programming by trying to implement ideas that I have for this project with of course the help of other team members. 
+
+With this project I want to learn more about the server and how to contribute more to making a interface, since I think I still lack those capabilities to be able to make a really good interface.
