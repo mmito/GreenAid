@@ -37,3 +37,12 @@ With the development of our project, I aim to enhance my abilities to cooperate 
 Maximising group efforts in a smart, intelligent way will be key in achieving this goal, thus I'm looking forward to discovering how we'll be able to optimally distribute the significant workload among each one of us. The presence of deadlines will serve to the purpose of accustoming us to working under pressure, as the necessity to present demos will spur us to constantly remain on track with what should be done.
 
 The final report/project presentation part, furthermore, will greatly help me to maintain the general overview of our product as a whole, plus discussing it and answering questions in front of a panel will challange us to what we could encounter during our present and future working experiences.
+
+#### Sina Sen
+<img src="/images/sina.jpg">
+
+Although I have a non-coding background and my programming journey started with the OOP course, I realy enjoy coding and programmig as they are like endless oasises without a limit. In this project, I aim not only to improve my coding and creative thinking skills, I also want to learn how a project team is managed and how different people get along with each other in a long process. In this aspect, I think this project is a nice representation of what's done in real companies: Team up, Think, Design, Code.
+
+To be precise, I want to contribute to the functionality, interface and database parts of the project as I think that I lack some knowledge on these parts and that this project will help me discover tons of new aspects. 
+
+As a team, we have great ideas to realize, and I can't wait to create this application of going green.
