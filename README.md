@@ -82,3 +82,15 @@ I like programming and especially I like algorithms, functionalities and anythin
 My goal is to develop a fully functional Java application, a complete product that can prove me I am on the right way of building a strong career in IT. Moreover, I am also aiming for a very high grade, hopefully a 10, since this is no longer an Exam based course. This course will truly show us our value, our willing to do something in the right way, with strict deadlines and our capability to work proffesionally, in a team.
 
 After I met my teammates I am pretty sure everything will be ok, because I saw everyone really excited about the project itself and I feel each and every one of us will put in a lot of effort. So even though the teamwork is hard in general, I feel it won't be that hard for us.
+
+
+#### Germio Rambharos (netID: grambharos)
+<img src="/images/germio.jpg">
+
+Two things that are important when working in a project:
+- being a teamplayer
+- have a clear understanding what needs to be done (communication)
+
+I am also a non-coder. I am more of a systems (OS) Guy.
+
+I will try to do my best and contribute the best way possible to this project and team.
