@@ -48,7 +48,7 @@ To be precise, I want to contribute to the functionality, interface and database
 As a team, we have great ideas to realize, and I can't wait to create this application of going green.
 
 #### Julien Lamon (netID: 4916727)
-<img src="/images/julien.png">
+<img src="/images/julien.jpg">
 
 My first steps in coding were only on September, when the bachelor started. However, being a fast learner helped me a lot; I was able to catch up with everything on Java. 
 
