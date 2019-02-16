@@ -28,7 +28,7 @@ Run `maven site`
 
 ## Group members
 
-#### Tommaso Tofacchi
+#### Tommaso Tofacchi (netID: ttofacchi)
 
 <img src="/images/tommaso.jpeg" height="250">
 
@@ -38,7 +38,7 @@ Maximising group efforts in a smart, intelligent way will be key in achieving th
 
 The final report/project presentation part, furthermore, will greatly help me to maintain the general overview of our product as a whole, plus discussing it and answering questions in front of a panel will challange us to what we could encounter during our present and future working experiences.
 
-#### Sina Sen
+#### Sina Sen (netID: sinasen)
 <img src="/images/sina.jpg">
 
 Although I have a non-coding background and my programming journey started with the OOP course, I realy enjoy coding and programmig as they are like endless oasises without a limit. In this project, I aim not only to improve my coding and creative thinking skills, I also want to learn how a project team is managed and how different people get along with each other in a long process. In this aspect, I think this project is a nice representation of what's done in real companies: Team up, Think, Design, Code.
@@ -47,7 +47,7 @@ To be precise, I want to contribute to the functionality, interface and database
 
 As a team, we have great ideas to realize, and I can't wait to create this application of going green.
 
-#### Julien Lamon (netID: 4916727)
+#### Julien Lamon (netID: jlamon)
 <img src="/images/julien.jpg">
 
 My first steps in coding were only on September, when the bachelor started. However, being a fast learner helped me a lot; I was able to catch up with everything on Java. 
