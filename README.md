@@ -96,7 +96,7 @@ I am also a non-coder. I am more of a systems (OS) Guy.
 I will try to do my best and contribute the best way possible to this project and team.
 
 #### Sven van Collenburg - netID: svancollenburg - 4962435
-<img scr="/images/sven.jpg">
+<img src="/images/sven.jpg">
 
 This project isn't just about programming, it is mostly about being able to work together as a team. 
 I am trying to improve my ability to work in a team when working on a shared programming goal as well as improve my general understanding of programming itself.
