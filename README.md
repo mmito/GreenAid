@@ -24,7 +24,7 @@ Run `maven site`
 
 ## Group members
 
-#### Tommaso Tofacchi (netID: ttofacchi)
+#### Tommaso Tofacchi netID: ttofacchi - 4933249
 
 <img src="/images/tommaso.jpeg" height="250">
 
@@ -34,7 +34,7 @@ Maximising group efforts in a smart, intelligent way will be key in achieving th
 
 The final report/project presentation part, furthermore, will greatly help me to maintain the general overview of our product as a whole, plus discussing it and answering questions in front of a panel will challange us to what we could encounter during our present and future working experiences.
 
-#### Sina Sen (netID: sinasen)
+#### Sina Sen netID: sinasen - 4821629
 <img src="/images/sina.jpg">
 
 Although I have a non-coding background and my programming journey started with the OOP course, I realy enjoy coding and programmig as they are like endless oasises without a limit. In this project, I aim not only to improve my coding and creative thinking skills, I also want to learn how a project team is managed and how different people get along with each other in a long process. In this aspect, I think this project is a nice representation of what's done in real companies: Team up, Think, Design, Code.
@@ -43,7 +43,7 @@ To be precise, I want to contribute to the functionality, interface and database
 
 As a team, we have great ideas to realize, and I can't wait to create this application of going green.
 
-#### Julien Lamon (netID: jlamon)
+#### Julien Lamon netID: jlamon - 4916727
 <img src="/images/julien.jpg">
 
 My first steps in coding were only on September, when the bachelor started. However, being a fast learner helped me a lot; I was able to catch up with everything on Java. 
@@ -57,7 +57,7 @@ I hope that, as a team, we will be able to get along with everything, with every
 
 The things that I want to improve during these 9 weeks is having the opportunity to touch on new parts of Java. The new parts being the GUI, for example.
 
-#### Warren Akrum (netID: wakrum)
+#### Warren Akrum netID: wakrum - 4865065
 <img src="/images/Warren.jpg">
 
 With this project I aim to improve my programming skills and my ability to work as a team. I am good at communicating with team members which will definitely help me cooperate with my fellow team mates.
@@ -66,7 +66,7 @@ I am planning on improving my programming by trying to implement ideas that I ha
 
 With this project I want to learn more about the server and how to contribute more to making a interface, since I think I still lack those capabilities to be able to make a really good interface.
 
-#### Cosmin Octavian Pene (netID: cpene)
+#### Cosmin Octavian Pene - netID: cpene - 4805739
 <img src="/images/octavian.jpg">
 
 I was personally waiting for this course since I started my bachelor. I've been involved to some projects in the past, similar to this one let's say, in teams of 5-15 people, and in my opinion this is how you gain a lot of experience in:
@@ -84,7 +84,7 @@ My goal is to develop a fully functional Java application, a complete product th
 After I met my teammates I am pretty sure everything will be ok, because I saw everyone really excited about the project itself and I feel each and every one of us will put in a lot of effort. So even though the teamwork is hard in general, I feel it won't be that hard for us.
 
 
-#### Germio Rambharos (netID: grambharos)
+#### Germio Rambharos - netID: grambharos - 4757297
 <img src="/images/germio.jpg">
 
 Two things that are important when working in a project:
