@@ -46,4 +46,4 @@ Brainstorm on the application’s design and content:
 <img src="/images/Brainstorm's photos/app-design-content.jpg">
 
 Brainstorm on the “conceptual” level of the application:
-<img src="/images/Brainstorm's photos/conceptual-level-app.jpg">
+<img src="\images\Brainstorm's photos/conceptual-level-app.jpg">
