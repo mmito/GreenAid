@@ -29,6 +29,15 @@
         </dependency>
     </dependencies>
 
+    <dependencies>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>5.1.4.RELEASE</version>
+    </dependency>
+</dependencies>
+<!-- added the SpringBoot framework -->
+
     <build>
         <plugins>
             <plugin>
