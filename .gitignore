@@ -13,3 +13,12 @@ buildNumber.properties
 !/.mvn/wrapper/maven-wrapper.jar
 
 .idea
+.web
+.lib
+/.idea
+/lib
+/web
+/.idea/
+/lib/
+/web/
+OOP-Project.iml
