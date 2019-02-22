@@ -1,12 +1,12 @@
-package ttofacchi.springtest;
+package app.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages="ttofacchi.controllers")
-@ComponentScan(basePackages="ttofacchi.authentication")
+@ComponentScan(basePackages="app.controllers")
+@ComponentScan(basePackages="app.authentication")
 public class SpringServer {
     public static void main(String[] args) {
 
