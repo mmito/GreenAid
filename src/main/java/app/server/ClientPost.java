@@ -1,7 +1,9 @@
 package app.server;
 
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -15,6 +17,10 @@ public class ClientPost {
     private static final String USER_NAME = "tommy";
     private static final String PASSWORD = "123";
 
+    /**
+     * Class that runs a basic base-64 authentication via POST requests.
+     * @param args arguments of the main method
+     */
     public static void main(String[] args) {
 
         // HttpHeaders
@@ -28,7 +34,7 @@ public class ClientPost {
         String authHeader = "Basic " + new String(encodedAuth);
         headers.set("Authorization", authHeader);
 
-        MultiValueMap<String, String> params= new LinkedMultiValueMap<>();
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("name", "car");
         params.add("co2", "100");
 
@@ -41,7 +47,8 @@ public class ClientPost {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
         // Send request with POST method.
-        //  ResponseEntity<String> response = restTemplate.postForEntity( URL_CREATE_ACTIVITY, request, String.class );
+        //  ResponseEntity<String> response =
+        //  restTemplate.postForEntity( URL_CREATE_ACTIVITY, request, String.class );
         String activity = restTemplate.postForObject(URL_CREATE_ACTIVITY, request, String.class);
 
         System.out.println(activity);

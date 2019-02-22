@@ -9,6 +9,11 @@ public class Activity {
 
     }
 
+    /**
+     * Constructor of activity class that a user does.
+     * @param name name of the activity.
+     * @param co2 amount of co2 saved from that activity.
+     */
     public Activity(String name, String co2) {
 
         this.name = name;

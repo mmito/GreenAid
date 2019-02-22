@@ -15,19 +15,24 @@ public class ClientDemo {
 
     private static final String URL_CREATE_ACTIVITY = "http://localhost:8080/activities";
 
+
+    /**
+     * Body of the class that will ask user to type in his/her credentials.
+     * @param args arguments of the main method.
+     */
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Hello user, please insert your credentials.");
         System.out.print("Username: ");
-        String USER_NAME = sc.nextLine();
+        String userName = sc.nextLine();
         System.out.print("Password: ");
-        String PASSWORD = sc.nextLine();
+        String password = sc.nextLine();
 
         System.out.print("Insert your activity: ");
-        String ACTIVITY_NAME = sc.nextLine();
+        String activityName = sc.nextLine();
         System.out.print("Insert its CO2 emission: ");
-        int CO2 = sc.nextInt();
+        int co2 = sc.nextInt();
 
         // HttpHeaders
         HttpHeaders headers = new HttpHeaders();
@@ -35,14 +40,14 @@ public class ClientDemo {
         //
         // Authentication
         //
-        String auth = USER_NAME + ":" + PASSWORD;
+        String auth = userName + ":" + password;
         byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
         String authHeader = "Basic " + new String(encodedAuth);
         headers.set("Authorization", authHeader);
 
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
-        params.add("name", ACTIVITY_NAME);params.add("co2", CO2);
-
+        params.add("name", activityName);
+        params.add("co2", co2);
         headers.add("Accept", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
@@ -52,7 +57,8 @@ public class ClientDemo {
         HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(params, headers);
 
         // Send request with POST method.
-        //  ResponseEntity<String> response = restTemplate.postForEntity( URL_CREATE_ACTIVITY, request, String.class );
+        //  ResponseEntity<String>
+        //  response = restTemplate.postForEntity( URL_CREATE_ACTIVITY, request, String.class );
         String activity = restTemplate.postForObject(URL_CREATE_ACTIVITY, request, String.class);
 
         System.out.println(activity);

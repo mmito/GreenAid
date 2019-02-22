@@ -1,15 +1,16 @@
 package app.server;
 
-
-import java.nio.charset.Charset;
-
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import org.apache.commons.codec.binary.Base64;
+
+import java.nio.charset.Charset;
+
+
 
 public class ClientGetBasicAuth {
 
@@ -19,6 +20,10 @@ public class ClientGetBasicAuth {
 
     private static final String URL_WELCOME = "http://localhost:8080/";
 
+    /**
+     * Class that does basic authentication.
+     * @param args arguments of main method
+     */
     public static void main(String[] args) {
 
         // HttpHeaders
@@ -40,7 +45,8 @@ public class ClientGetBasicAuth {
         RestTemplate restTemplate = new RestTemplate();
 
         // Send request with GET method, and Headers.
-        ResponseEntity<String> response = restTemplate.exchange(URL_WELCOME, HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> response =
+                restTemplate.exchange(URL_WELCOME, HttpMethod.GET, entity, String.class);
 
         String result = response.getBody();
 
