@@ -15,7 +15,5 @@ buildNumber.properties
 .idea
 lib
 web
-OOP-Project.iml
 .mvn
 spring-test.iml
-gs-rest-service.iml
