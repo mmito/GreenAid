@@ -1,9 +1,7 @@
-package ttofacchi.springtest;
+package app.server;
 
 
 import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.Collections;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
