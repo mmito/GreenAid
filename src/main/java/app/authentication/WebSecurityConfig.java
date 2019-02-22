@@ -17,9 +17,15 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+
     @Autowired
     private AuthenticationEntryPoint authEntryPoint;
 
+    /**
+     * method that determines the configuration protocols.
+     * @param http protocol name to be followed
+     * @throws Exception exception to be thrown if things go wrong
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
@@ -36,6 +42,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Defines which users can access the application. This will later be related to the database
+     * @param auth name of Authentication Manager Builder
+     * @throws Exception exception to be thrown
+     */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
@@ -51,9 +62,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Defines 2 users, stored in memory.
         // ** Spring BOOT >= 2.x (Spring Security 5.x)
         // Spring auto add ROLE_
-        UserDetails u1 = User.withUsername("tommy").password(encrytedPassword).roles("USER").build();
-        UserDetails u2 = User.withUsername("cosmin").password(encrytedPassword).roles("USER").build();
-        UserDetails u3 = User.withUsername("sven").password(encrytedPassword).roles("USER").build();
+        UserDetails u1 =
+                User.withUsername("tommy").password(encrytedPassword).roles("USER").build();
+        UserDetails u2 =
+                User.withUsername("cosmin").password(encrytedPassword).roles("USER").build();
+        UserDetails u3 =
+                User.withUsername("sven").password(encrytedPassword).roles("USER").build();
 
         mngConfig.withUser(u1);
         mngConfig.withUser(u2);
