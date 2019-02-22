@@ -1,4 +1,4 @@
-package ttofacchi.models;
+package app.models;
 
 public class Activity {
 

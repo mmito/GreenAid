@@ -24,7 +24,7 @@ Run `maven site`
 
 ## Group members
 
-#### Tommaso Tofacchi netID: ttofacchi - 4933249
+#### Tommaso Tofacchi netID: app - 4933249
 
 <img src="/images/tommaso.jpeg" height="250">
 
