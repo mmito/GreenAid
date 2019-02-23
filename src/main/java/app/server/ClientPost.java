@@ -34,17 +34,19 @@ public class ClientPost {
         String authHeader = "Basic " + new String(encodedAuth);
         headers.set("Authorization", authHeader);
 
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("name", "car");
-        params.add("co2", "100");
+//        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+//        params.add("name", "car");
+//        params.add("co2", "100");
+        String requestJson = "{\"name\":\"car\", \"co2\": \"100\"}";
 
-        headers.add("Accept", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
         RestTemplate restTemplate = new RestTemplate();
 
         // Data attached to the request.
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+        HttpEntity<String> request = new HttpEntity<String>(requestJson, headers);
+        //HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
         // Send request with POST method.
         //  ResponseEntity<String> response =
