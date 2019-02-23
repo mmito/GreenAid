@@ -36,4 +36,12 @@ public class Activity {
     public void setCo2(String co2) {
         this.co2 = co2;
     }
+
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "name='" + name + '\'' +
+                ", co2='" + co2 + '\'' +
+                '}';
+    }
 }
