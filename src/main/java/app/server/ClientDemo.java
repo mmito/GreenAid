@@ -4,12 +4,11 @@ import org.apache.commons.codec.binary.Base64;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
 import java.util.Scanner;
+
 
 public class ClientDemo {
 
@@ -45,16 +44,19 @@ public class ClientDemo {
         String authHeader = "Basic " + new String(encodedAuth);
         headers.set("Authorization", authHeader);
 
-        MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
-        params.add("name", activityName);
-        params.add("co2", co2);
-        headers.add("Accept", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+//        MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
+//        params.add("name", activityName);
+//        params.add("co2", co2);
+        String requestJson = "{\"name\":\"" + activityName + "\", \"co2\": \"" + co2 + "\"}";
+
+        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
         RestTemplate restTemplate = new RestTemplate();
 
         // Data attached to the request.
-        HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(params, headers);
+        //HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(params, headers);
+        HttpEntity<String> request = new HttpEntity<String>(requestJson, headers);
 
         // Send request with POST method.
         //  ResponseEntity<String>
