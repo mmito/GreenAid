@@ -1,5 +1,9 @@
 package app.server;
 
+import app.models.Activity;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,7 +23,7 @@ public class ClientDemo {
      * Body of the class that will ask user to type in his/her credentials.
      * @param args arguments of the main method.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JsonProcessingException {
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Hello user, please insert your credentials.");
@@ -47,7 +51,11 @@ public class ClientDemo {
 //        MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
 //        params.add("name", activityName);
 //        params.add("co2", co2);
-        String requestJson = "{\"name\":\"" + activityName + "\", \"co2\": \"" + co2 + "\"}";
+
+//        String requestJson = "{\"name\":\"" + activityName + "\", \"co2\": \"" + co2 + "\"}";
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        Activity activity = new Activity(activityName,"" + co2);
+        String requestJson = ow.writeValueAsString(activity);
 
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -61,9 +69,9 @@ public class ClientDemo {
         // Send request with POST method.
         //  ResponseEntity<String>
         //  response = restTemplate.postForEntity( URL_CREATE_ACTIVITY, request, String.class );
-        String activity = restTemplate.postForObject(URL_CREATE_ACTIVITY, request, String.class);
+        String response = restTemplate.postForObject(URL_CREATE_ACTIVITY, request, String.class);
 
-        System.out.println(activity);
+        System.out.println(response);
 
     }
 }
