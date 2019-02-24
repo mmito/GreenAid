@@ -39,9 +39,6 @@ public class Activity {
 
     @Override
     public String toString() {
-        return "Activity{" +
-                "name='" + name + '\'' +
-                ", co2='" + co2 + '\'' +
-                '}';
+        return "Activity{" + "name ='" + name + '\'' + ", co2 ='" + co2 + '\'' + '}';
     }
 }

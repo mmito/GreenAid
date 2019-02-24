@@ -8,8 +8,8 @@ import org.apache.commons.codec.binary.Base64;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+//import org.springframework.util.LinkedMultiValueMap;
+//import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
@@ -38,11 +38,11 @@ public class ClientPost {
         String authHeader = "Basic " + new String(encodedAuth);
         headers.set("Authorization", authHeader);
 
-//        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-//        params.add("name", "car");
-//        params.add("co2", "100");
+        //        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        //        params.add("name", "car");
+        //        params.add("co2", "100");
 
-//        String requestJson = "{\"name\":\"car\", \"co2\": \"100\"}";
+        //        String requestJson = "{\"name\":\"car\", \"co2\": \"100\"}";
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         Activity activity = new Activity("car", "100");
         String requestJson = ow.writeValueAsString(activity);
