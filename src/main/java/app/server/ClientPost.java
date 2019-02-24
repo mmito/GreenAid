@@ -1,5 +1,9 @@
 package app.server;
 
+import app.models.Activity;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -21,7 +25,7 @@ public class ClientPost {
      * Class that runs a basic base-64 authentication via POST requests.
      * @param args arguments of the main method
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JsonProcessingException {
 
         // HttpHeaders
         HttpHeaders headers = new HttpHeaders();
@@ -37,7 +41,11 @@ public class ClientPost {
 //        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 //        params.add("name", "car");
 //        params.add("co2", "100");
-        String requestJson = "{\"name\":\"car\", \"co2\": \"100\"}";
+
+//        String requestJson = "{\"name\":\"car\", \"co2\": \"100\"}";
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        Activity activity = new Activity("car", "100");
+        String requestJson = ow.writeValueAsString(activity);
 
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -51,9 +59,9 @@ public class ClientPost {
         // Send request with POST method.
         //  ResponseEntity<String> response =
         //  restTemplate.postForEntity( URL_CREATE_ACTIVITY, request, String.class );
-        String activity = restTemplate.postForObject(URL_CREATE_ACTIVITY, request, String.class);
+        String response = restTemplate.postForObject(URL_CREATE_ACTIVITY, request, String.class);
 
-        System.out.println(activity);
+        System.out.println(response);
 
     }
 
