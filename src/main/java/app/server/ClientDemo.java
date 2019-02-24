@@ -48,11 +48,12 @@ public class ClientDemo {
         String authHeader = "Basic " + new String(encodedAuth);
         headers.set("Authorization", authHeader);
 
-//        MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
-//        params.add("name", activityName);
-//        params.add("co2", co2);
+        //        MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
+        //        params.add("name", activityName);
+        //        params.add("co2", co2);
 
-//        String requestJson = "{\"name\":\"" + activityName + "\", \"co2\": \"" + co2 + "\"}";
+        //        String requestJson = "{\"name\":\"" +
+        //        activityName + "\", \"co2\": \"" + co2 + "\"}";
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         Activity activity = new Activity(activityName,"" + co2);
         String requestJson = ow.writeValueAsString(activity);
