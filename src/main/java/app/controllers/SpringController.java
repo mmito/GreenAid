@@ -34,7 +34,7 @@ public class SpringController {
     @RequestMapping(value = "/activities", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    String activityInformation(@RequestBody Activity act) {
+        String activityInformation(@RequestBody Activity act) {
 
         logger.info("Activity received: " + act);
         return "Activity information saved successfully: " + act.getName() + " " + act.getCo2();
