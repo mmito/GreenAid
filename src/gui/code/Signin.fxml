@@ -15,7 +15,7 @@
    <children>
       <ImageView fitHeight="427.0" fitWidth="778.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Resources/Assets/background.jpg" />
+            <Image url="@../photo/forest.jpg" />
          </image>
       </ImageView>
       <Pane layoutX="237.0" layoutY="73.0" opacity="0.49" prefHeight="252.0" prefWidth="286.0" style="-fx-background-color: #669966; -fx-background-radius: 9;" />
