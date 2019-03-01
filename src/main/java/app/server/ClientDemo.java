@@ -1,34 +1,30 @@
 package app.server;
 
-import app.models.Activity;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
 import java.util.Scanner;
 
-
 public class ClientDemo {
 
     private static final String URL_CREATE_ACTIVITY = "http://localhost:8080/activities";
 
-
     /**
-     * Body of the class that will ask user to type in his/her credentials.
-     * @param args arguments of the main method.
+     * Class that demonstrates a simple demo of the client side.
+     * @param args main arguments.
      */
-    public static void main(String[] args) throws JsonProcessingException {
+    public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Hello user, please insert your credentials.");
         System.out.print("Username: ");
-        String userName = sc.nextLine();
+        String username = sc.nextLine();
         System.out.print("Password: ");
         String password = sc.nextLine();
 
@@ -43,36 +39,28 @@ public class ClientDemo {
         //
         // Authentication
         //
-        String auth = userName + ":" + password;
+        String auth = username + ":" + password;
         byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
         String authHeader = "Basic " + new String(encodedAuth);
         headers.set("Authorization", authHeader);
 
-        //        MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
-        //        params.add("name", activityName);
-        //        params.add("co2", co2);
-
-        //        String requestJson = "{\"name\":\"" +
-        //        activityName + "\", \"co2\": \"" + co2 + "\"}";
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        Activity activity = new Activity(activityName,"" + co2);
-        String requestJson = ow.writeValueAsString(activity);
-
-        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
+        params.add("name", activityName);
+        params.add("co2", co2);
+        headers.add("Accept", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         RestTemplate restTemplate = new RestTemplate();
 
         // Data attached to the request.
-        //HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(params, headers);
-        HttpEntity<String> request = new HttpEntity<String>(requestJson, headers);
+        HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(params, headers);
 
         // Send request with POST method.
-        //  ResponseEntity<String>
-        //  response = restTemplate.postForEntity( URL_CREATE_ACTIVITY, request, String.class );
-        String response = restTemplate.postForObject(URL_CREATE_ACTIVITY, request, String.class);
+        //  ResponseEntity<String> response =
+        //  restTemplate.postForEntity( URL_CREATE_ACTIVITY, request, String.class );
+        String activity = restTemplate.postForObject(URL_CREATE_ACTIVITY, request, String.class);
 
-        System.out.println(response);
+        System.out.println(activity);
 
     }
 }

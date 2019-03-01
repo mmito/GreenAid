@@ -10,8 +10,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
 
-
-
 public class ClientGetBasicAuth {
 
 
@@ -21,8 +19,8 @@ public class ClientGetBasicAuth {
     private static final String URL_WELCOME = "http://localhost:8080/";
 
     /**
-     * Class that does basic authentication.
-     * @param args arguments of main method
+     * Class that makes a basic authentication.
+     * @param args main arguments.
      */
     public static void main(String[] args) {
 
