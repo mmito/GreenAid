@@ -10,9 +10,9 @@ public class Activity {
     }
 
     /**
-     * Constructor of activity class that a user does.
+     * Class that holds basic properties of an activity.
      * @param name name of the activity.
-     * @param co2 amount of co2 saved from that activity.
+     * @param co2 how many co2 it emits.
      */
     public Activity(String name, String co2) {
 
@@ -35,10 +35,5 @@ public class Activity {
 
     public void setCo2(String co2) {
         this.co2 = co2;
-    }
-
-    @Override
-    public String toString() {
-        return "Activity{" + "name ='" + name + '\'' + ", co2 ='" + co2 + '\'' + '}';
     }
 }

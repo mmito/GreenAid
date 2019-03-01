@@ -17,15 +17,9 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
     @Autowired
     private AuthenticationEntryPoint authEntryPoint;
 
-    /**
-     * method that determines the configuration protocols.
-     * @param http protocol name to be followed
-     * @throws Exception exception to be thrown if things go wrong
-     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
@@ -42,10 +36,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+
     /**
-     * Defines which users can access the application. This will later be related to the database
-     * @param auth name of Authentication Manager Builder
-     * @throws Exception exception to be thrown
+     * Configurations of security and authentication server.
+     * @param auth authentication manager builder
+     * @throws Exception if things go wrong
      */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

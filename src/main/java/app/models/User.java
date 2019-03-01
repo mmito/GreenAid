@@ -1,7 +1,14 @@
 package app.models;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+
 
 @Entity
 @Table(name = "user")
@@ -13,10 +20,10 @@ public class User {
 
     private String username;
     private String password;
-    private String first_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
     private int active;
-    private Timestamp last_update;
+    private Timestamp lastUpdate;
 
     public User(){
 
@@ -51,20 +58,20 @@ public class User {
         this.password = password;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public int getActive() {
@@ -75,11 +82,11 @@ public class User {
         this.active = active;
     }
 
-    public Timestamp getLast_update() {
-        return last_update;
+    public Timestamp getLastUpdate() {
+        return lastUpdate;
     }
 
-    public void setLast_update(Timestamp last_update) {
-        this.last_update = last_update;
+    public void setLastUpdate(Timestamp lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 }
