@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.effect.*?>
 <?import java.lang.*?>
@@ -16,5 +17,6 @@
          </image>
       </ImageView>
       <ScrollBar layoutX="92.0" layoutY="774.0" prefHeight="18.0" prefWidth="1245.0" style="-fx-background-color: #9FCAA3;" />
+      <Text layoutX="1399.0" layoutY="30.0" onMouseClicked="#handleClose" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" text="❌" />
    </children>
 </AnchorPane>
