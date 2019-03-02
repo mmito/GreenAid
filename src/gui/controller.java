@@ -14,6 +14,7 @@ public class controller {
 
     @FXML
     Hyperlink register;
+    @FXML
     Button login;
 
     public void handleClose(){
@@ -38,14 +39,14 @@ public class controller {
 
     public void handleLoginClicked(){
         try{
-            //Window window = login.getScene().getWindow();
+            Window window = login.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
             Stage stage = new Stage();
             stage.setTitle("HomePage");
             stage.setScene(new Scene(root, 1428, 954));
             stage.initStyle(StageStyle.UNDECORATED);
             stage.show();
-            //window.hide();
+            window.hide();
         }
         catch(IOException e){
             System.out.println("Error found in the handleLoginClicked");
