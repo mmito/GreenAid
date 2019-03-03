@@ -1,4 +1,4 @@
-package app.server;
+package app.client;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

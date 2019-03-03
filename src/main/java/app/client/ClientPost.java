@@ -1,4 +1,4 @@
-package app.server;
+package app.client;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.http.HttpEntity;
