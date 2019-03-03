@@ -1,44 +1,37 @@
 package app.models;
 
 import java.sql.Timestamp;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-
+import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
 @Table(name = "user")
 public class User {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String username;
+
     private String password;
-    private String firstName;
-    private String lastName;
-    private int active;
-    private Timestamp lastUpdate;
 
-    public User(){
+    @Transient
+    private String passwordConfirm;
 
-    }
+    @ManyToMany
+    private Set<Role> roles;
 
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
+    /*private String first_name;
+    private String last_name;
+    private double experience_points;
+    private Timestamp last_update;*/
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -58,35 +51,51 @@ public class User {
         this.password = password;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getPasswordConfirm() {
+        return passwordConfirm;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 
-    public String getLastName() {
-        return lastName;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
-    public int getActive() {
-        return active;
+    /*public String getFirst_name() {
+        return first_name;
     }
 
-    public void setActive(int active) {
-        this.active = active;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public Timestamp getLastUpdate() {
-        return lastUpdate;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setLastUpdate(Timestamp lastUpdate) {
-        this.lastUpdate = lastUpdate;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
+
+    public double getExperience_points() {
+        return experience_points;
+    }
+
+    public void setExperience_points(double experience_points) {
+        this.experience_points = experience_points;
+    }
+
+    public Timestamp getLast_update() {
+        return last_update;
+    }
+
+    public void setLast_update(Timestamp last_update) {
+        this.last_update = last_update;
+    }*/
 }

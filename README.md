@@ -103,13 +103,3 @@ I am trying to improve my ability to work in a team when working on a shared pro
 I think that this project will really help us prepare for programming jobs in the future since this asks far more from every member of the team than ever before.
 Getting the team to work together as an efficient machine will be the main task, and i would love to make this possible.
 I think i have the creativity and team work capabilities to make a great application, yet i still need to learn a lot about programming itself and more importantly programming in a team.
-
-
-
-### note:
-
-Command line to test the rest endpoint (on windows)
-```
-curl -u tommy:123 --request POST --data "{\"name\": \"hoi\", \"co2\": 234}" -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8080/acti
-vities
-```
