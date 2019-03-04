@@ -16,6 +16,7 @@ public class SecurityServiceImpl implements SecurityService{
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Qualifier("user")
     @Autowired
     private UserDetailsService userDetailsService;
 
