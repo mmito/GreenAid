@@ -5,7 +5,6 @@ stages:
   - test
   - run
   - validate
-  - deploy
 
 cache:
   paths:
@@ -30,8 +29,3 @@ validate:
   stage: validate
   script:
     - mvn validate
-
-deploy:
-  stage: deploy
-  script:
-    - mvn deploy
