@@ -108,7 +108,7 @@ public class SpringControllerTest {
 
     }
 
-    @Test
+    /*@Test
     @WithMockUser(value = "spring")
     public void activityEndpointPost() throws Exception {
 
@@ -125,7 +125,7 @@ public class SpringControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("Activity information saved successfully: car 100"));
 
-    }
+    }*/
 
 
     private String getAuthenticationHeader() {
