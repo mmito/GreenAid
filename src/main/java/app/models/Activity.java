@@ -8,10 +8,11 @@ import java.sql.Timestamp;
 public class Activity {
 
     private Long user_id;
-    private int category_id;
+    private Long category_id;
     private double carbon_emission;
     private Timestamp last_update;
     private String carbon_activity;
+    private double xp_points;
 
     public Long getUser_id() {
         return user_id;
@@ -21,11 +22,11 @@ public class Activity {
         this.user_id = user_id;
     }
 
-    public int getCategory_id() {
+    public Long getCategory_id() {
         return category_id;
     }
 
-    public void setCategory_id(int category_id) {
+    public void setCategory_id(Long category_id) {
         this.category_id = category_id;
     }
 
@@ -51,5 +52,13 @@ public class Activity {
 
     public void setCarbon_activity(String carbon_activity) {
         this.carbon_activity = carbon_activity;
+    }
+
+    public double getXp_points() {
+        return xp_points;
+    }
+
+    public void setXp_points(double xp_points) {
+        this.xp_points = xp_points;
     }
 }
