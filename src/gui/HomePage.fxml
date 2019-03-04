@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.effect.*?>
@@ -9,14 +10,71 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="954.0" prefWidth="1428.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="954.0" prefWidth="1398.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller">
    <children>
-      <ImageView fitHeight="963.0" fitWidth="1438.0" layoutX="1.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="987.0" fitWidth="1698.0" layoutX="-243.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@BackgroundHome.jpg" />
+            <Image url="@backgroundImg.jpg" />
          </image>
       </ImageView>
-      <ScrollBar layoutX="92.0" layoutY="774.0" prefHeight="18.0" prefWidth="1245.0" style="-fx-background-color: #9FCAA3;" />
-      <Text layoutX="1399.0" layoutY="30.0" onMouseClicked="#handleClose" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" text="❌" />
+      <Text layoutX="1373.0" layoutY="28.0" onMouseClicked="#handleClose" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" text="❌" />
+      <TabPane layoutX="67.0" layoutY="142.0" prefHeight="743.0" prefWidth="717.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Profile">
+               <content>
+                  <AnchorPane prefHeight="701.0" prefWidth="689.0" style="-fx-background-color: #1D7874;">
+                     <children>
+                        <Text fill="WHITE" layoutX="144.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THIS IS THE PROFILE PANE">
+                           <font>
+                              <Font name="System Bold" size="34.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+          <Tab text="LeaderBoard">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1D7874;">
+                     <children>
+                        <Text fill="WHITE" layoutX="120.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THIS IS THE LEADERBOARD PANE">
+                           <font>
+                              <Font name="System Bold" size="30.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Settings">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #1D7874;">
+                     <children>
+                        <Text fill="WHITE" layoutX="172.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THIS IS THE SETTINGS PANE">
+                           <font>
+                              <Font name="System Bold" size="30.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <Text layoutX="587.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GOGREEN">
+         <font>
+            <Font size="50.0" />
+         </font>
+      </Text>
+      <AnchorPane layoutX="894.0" layoutY="142.0" prefHeight="743.0" prefWidth="425.0" style="-fx-background-color: #1D7874;">
+         <children>
+            <Text fill="WHITE" layoutX="136.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Activity">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="14.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What green move have you done today ?" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

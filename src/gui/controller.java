@@ -72,7 +72,7 @@ public class controller {
             Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
             Stage stage = new Stage();
             stage.setTitle("HomePage");
-            stage.setScene(new Scene(root, 1428, 954));
+            stage.setScene(new Scene(root, 1398, 954));
             stage.initStyle(StageStyle.UNDECORATED);
             stage.show();
             window.hide();
