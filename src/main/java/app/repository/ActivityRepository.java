@@ -1,7 +1,7 @@
 package app.repository;
 
-import app.models.Role;
+import app.models.Activity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ActivityRepository extends JpaRepository<Role, Long> {
+public interface ActivityRepository extends JpaRepository<Activity, Long> {
 }
