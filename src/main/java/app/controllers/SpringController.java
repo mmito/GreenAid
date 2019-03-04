@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.event.LoggerListener;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -41,10 +42,10 @@ public class SpringController {
 
     /**
      *  Maps to localhost:8080/activities  and does the following method.
-      * @param act type of activity
-     * @return returns the following string
+     //* @param act type of activity
+     //* @return returns the following string
      */
-    @RequestMapping(value = "/activities", method = RequestMethod.POST,
+    /*@RequestMapping(value = "/activities", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
         String activityInformation(@RequestBody Activity act) {
@@ -52,7 +53,7 @@ public class SpringController {
         logger.info("Activity received: " + act);
         return "Activity information saved successfully: " + act.getName() + " " + act.getCo2();
 
-    }
+    }*/
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -78,6 +79,7 @@ public class SpringController {
 
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
+
         if (error != null)
             model.addAttribute("error", "Your username and password is invalid.");
 
