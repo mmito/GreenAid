@@ -24,10 +24,10 @@ public class User {
     @ManyToMany
     private Set<Role> roles;
 
-    /*private String first_name;
+    private String first_name;
     private String last_name;
     private double experience_points;
-    private Timestamp last_update;*/
+    private Timestamp last_update;
 
     public Long getId() {
         return id;
@@ -69,7 +69,7 @@ public class User {
         this.roles = roles;
     }
 
-    /*public String getFirst_name() {
+    public String getFirst_name() {
         return first_name;
     }
 
@@ -99,5 +99,5 @@ public class User {
 
     public void setLast_update(Timestamp last_update) {
         this.last_update = last_update;
-    }*/
+    }
 }

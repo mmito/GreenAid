@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-@Qualifier("ciao")
+@Qualifier("user")
 public class UserDetailsServiceImpl implements UserDetailsService{
     @Autowired
     private UserRepository userRepository;
