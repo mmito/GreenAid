@@ -7,7 +7,7 @@ stages:
   - validate
   - deploy
 
-cache: 
+cache:
   paths:
     - target/
 
@@ -31,7 +31,7 @@ validate:
   script:
     - mvn validate
 
- deploy:
+deploy:
   stage: deploy
   script:
-    - mvn deploy             
+    - mvn deploy
