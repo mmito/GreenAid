@@ -14,6 +14,10 @@ public class ClientRegistration {
 
     private static final String url_registration = "http://localhost:8080/registration";
 
+    /**
+     * main method of client registration.
+     * @param args arguments of the main
+     */
     public static void main(String[] args) {
 
         boolean retype = true;
@@ -32,8 +36,9 @@ public class ClientRegistration {
             System.out.print("Confirm Password: ");
             passwordConfirm = sc.nextLine();
 
-            if (password.equals(passwordConfirm)) retype = false;
-
+            if (password.equals(passwordConfirm)) {
+                retype = false;
+            }
         }
 
         // HttpHeaders

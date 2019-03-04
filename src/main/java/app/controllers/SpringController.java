@@ -54,6 +54,11 @@ public class SpringController {
 
     }
 
+    /**
+     * Get request for Mapping to /registration of app.
+     * @param model model that we will be using
+     * @return returns  registration
+     */
     @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
@@ -61,8 +66,15 @@ public class SpringController {
         return "registration";
     }
 
+    /**
+     * Post request for Mapping to /registration of app.
+     * @param userForm attribute of the model
+     * @param bindingResult binding result of the mapping
+     * @return returns registration
+     */
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+    public String registration(@ModelAttribute("userForm") User userForm,
+                               BindingResult bindingResult) {
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
@@ -76,14 +88,21 @@ public class SpringController {
         return "redirect:/welcome";
     }
 
+    /**
+     * Maps to localhost:8080/login  and does the following method.
+     * @param model model to be used
+     * @param error a string if an error pops up
+     * @param logout log out string
+     * @return returns login page
+     */
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
-        if (error != null)
+        if (error != null) {
             model.addAttribute("error", "Your username and password is invalid.");
-
-        if (logout != null)
+        }
+        if (logout != null) {
             model.addAttribute("message", "You have been logged out successfully.");
-
+        }
         return "login";
     }
 
