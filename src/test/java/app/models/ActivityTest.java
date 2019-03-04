@@ -7,7 +7,7 @@ import org.junit.Test;
 public class ActivityTest {
 
 
-    @Test
+    /*@Test
     public void getConstructor() {
         Activity a = new Activity("audi", "34.5");
 
@@ -23,6 +23,6 @@ public class ActivityTest {
         a.setCo2("12.5");
         Assert.assertEquals("ford", a.getName());
         Assert.assertEquals("12.5", a.getCo2());
-    }
+    }*/
 
 }
