@@ -13,6 +13,10 @@ public class ClientLogin {
 
     private static final String url_login = "http://localhost:8080/login";
 
+    /**
+     * Main method that starts a client login page.
+     * @param args arguments of main method
+     */
     public static void main(String[] args) {
 
         System.out.println("Hello user, please insert your credentials.");
