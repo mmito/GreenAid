@@ -7,6 +7,10 @@ import java.sql.Timestamp;
 @Table(name = "activity")
 public class Activity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private Long user_id;
     private Long category_id;
     private double carbon_emission;
@@ -60,5 +64,13 @@ public class Activity {
 
     public void setXp_points(double xp_points) {
         this.xp_points = xp_points;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
