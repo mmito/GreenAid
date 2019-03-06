@@ -1,12 +1,15 @@
 package app.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "friendship")
 public class Friendship {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private Long user_id_1;
     private Long user_id_2;
@@ -34,5 +37,13 @@ public class Friendship {
 
     public void setLast_update(Timestamp last_update) {
         this.last_update = last_update;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
