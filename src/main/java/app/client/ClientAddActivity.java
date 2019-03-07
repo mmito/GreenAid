@@ -60,6 +60,7 @@ public class ClientAddActivity {
             else {
 
                 user_id = Long.parseLong(response.substring(7));
+                retype = false;
 
             }
 
