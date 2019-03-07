@@ -1,37 +1,48 @@
 package app.controllers;
 
-import app.authentication.SecurityService;
-import app.authentication.UserService;
+import app.authentication.SecurityServiceImpl;
 import app.models.Activity;
+import app.models.Category;
+import app.repository.CategoryRepository;
+import app.services.ActivityServiceImpl;
+import app.services.CategoryServiceImpl;
+import app.services.UserServiceImpl;
 import app.models.User;
-import app.validator.UserValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.security.access.event.LoggerListener;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
 public class SpringController {
 
-    private Logger logger = LoggerFactory.getLogger(SpringController.class);
+    //private Logger logger = LoggerFactory.getLogger(SpringController.class);
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
-    private SecurityService securityService;
+    private SecurityServiceImpl securityService;
 
     @Autowired
-    private UserValidator userValidator;
+    private ActivityServiceImpl activityService;
 
-    @GetMapping({"/", "/welcome"})
-    public String welcome(Model model) {
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @GetMapping("/welcome")
+    public String welcome() {
+
         return "welcome";
+
+    }
+
+    @GetMapping("/check")
+    public String checkAuth() {
+
+        return "Your username is:" + securityService.findLoggedInUsername();
+
     }
 
 
@@ -41,70 +52,53 @@ public class SpringController {
     }
 
     /**
-     *  Maps to localhost:8080/activities  and does the following method.
-     //* @param act type of activity
-     //* @return returns the following string
-     */
-    /*@RequestMapping(value = "/activities", method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-        String activityInformation(@RequestBody Activity act) {
-
-        logger.info("Activity received: " + act);
-        return "Activity information saved successfully: " + act.getName() + " " + act.getCo2();
-
-    }*/
-
-    /**
      * Get request for Mapping to /registration of app.
-     * @param model model that we will be using
+     * //@param model model that we will be using
      * @return returns  registration
-     */
-    @GetMapping("/registration")
-    public String registration(Model model) {
-        model.addAttribute("userForm", new User());
-
-        return "registration";
-    }
-
-    /**
-     * Post request for Mapping to /registration of app.
-     * @param userForm attribute of the model
-     * @param bindingResult binding result of the mapping
-     * @return returns registration
-     */
+    */
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("userForm") User userForm,
-                               BindingResult bindingResult) {
-        userValidator.validate(userForm, bindingResult);
+    public String registration(User user) {
 
-        if (bindingResult.hasErrors()) {
-            return "registration";
+        if(userService.findByUsername(user.getUsername()) != null) {
+            return "Username is already registered";
+        }
+        else {
+            userService.save(user);
+            return "You are now registered, " + user.getUsername() + "!";
         }
 
-        userService.save(userForm);
-
-        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
-
-        return "redirect:/welcome";
     }
 
-    /**
-     * Maps to localhost:8080/login  and does the following method.
-     * @param model model to be used
-     * @param error a string if an error pops up
-     * @param logout log out string
-     * @return returns login page
-     */
-    @GetMapping("/login")
-    public String login(Model model, String error, String logout) {
-        if (error != null) {
-            model.addAttribute("error", "Your username and password is invalid.");
+    @PostMapping("/activity")
+    public String activity(Activity activity) {
+
+        activity.setCarbon_emission(categoryRepository.findById(activity.getCategory_id()).get().getNormalized_emission() * activity.getAmount());
+        activityService.save(activity);
+        return "Activity \"" + activity.getActivity_name() + "\" saved successfully!";
+
+    }
+
+    @GetMapping("/getcategories")
+    public String getCategories() {
+
+        List<Category> categories= categoryRepository.findAll();
+        String response = "";
+        for(Category c : categories) {
+
+            response += c.getId() + " - " + c.getCategory_name();
+
         }
-        if (logout != null) {
-            model.addAttribute("message", "You have been logged out successfully.");
-        }
-        return "login";
+
+        return response;
+
+    }
+
+    @PostMapping("/findbyusername")
+    public String findByUsername(String username) {
+
+        if(userService.findByUsername(username) != null) return "Found: " + userService.findByUsername(username).getId();
+        else return "User not found.";
+
     }
 
 }

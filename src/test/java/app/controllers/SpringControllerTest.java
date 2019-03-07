@@ -1,8 +1,7 @@
 package app.controllers;
 
-import app.authentication.SecurityService;
-import app.authentication.UserService;
-import app.models.Activity;
+import app.authentication.SecurityServiceImpl;
+import app.services.UserServiceImpl;
 import app.models.User;
 import app.repository.UserRepository;
 import app.validator.UserValidator;
@@ -11,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import org.apache.commons.codec.binary.Base64;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,11 +18,9 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.validation.BindingResult;
 
 import java.nio.charset.Charset;
 
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -41,10 +37,10 @@ public class SpringControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @MockBean
-    private SecurityService securityService;
+    private SecurityServiceImpl securityService;
 
     @MockBean
     private UserValidator userValidator;
@@ -93,7 +89,7 @@ public class SpringControllerTest {
         User userForm = new User();
         userForm.setUsername("aName");
         userForm.setPassword("aPassword");
-        userForm.setPasswordConfirm("aPassword");
+        //userForm.setPasswordConfirm("aPassword");
         String requestJson = ow.writeValueAsString(userForm);
 
 
