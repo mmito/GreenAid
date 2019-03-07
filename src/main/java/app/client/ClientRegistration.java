@@ -60,6 +60,8 @@ public class ClientRegistration {
 
         String registration = restTemplate.postForObject(url_registration, request, String.class);
 
+        System.out.println(registration);
+
     }
 
 

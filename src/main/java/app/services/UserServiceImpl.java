@@ -1,7 +1,7 @@
-package app.authentication;
+package app.services;
 
+import app.authentication.SecurityServiceImpl;
 import app.models.User;
-import app.repository.RoleRepository;
 import app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,24 +10,31 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private SecurityServiceImpl securityService;
 
-    @Override
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles(new HashSet<>(roleRepository.findAll()));
         userRepository.save(user);
     }
 
-    @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    public User getLoggedInUser() {
+        String loggedInUserUsername = securityService.findLoggedInUsername();
+
+        if (loggedInUserUsername == null) {
+            return null;
+        }
+
+        return userRepository.findByUsername(loggedInUserUsername);
     }
 }
 

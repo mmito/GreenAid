@@ -1,5 +1,7 @@
 package app.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -8,16 +10,16 @@ import java.sql.Timestamp;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     private String category_name;
-    private Timestamp last_update;
+    private int normalized_emission;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -29,11 +31,11 @@ public class Category {
         this.category_name = category_name;
     }
 
-    public Timestamp getLast_update() {
-        return last_update;
+    public int getNormalized_emission() {
+        return normalized_emission;
     }
 
-    public void setLast_update(Timestamp last_update) {
-        this.last_update = last_update;
+    public void setNormalized_emission(int normalized_emission) {
+        this.normalized_emission = normalized_emission;
     }
 }
