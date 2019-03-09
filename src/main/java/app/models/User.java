@@ -1,14 +1,17 @@
 package app.models;
 
-
-
 import java.sql.Timestamp;
-import java.util.Set;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 
+
+@SuppressWarnings({"ALL", "CheckStyle"})
 @Entity
 @Table(name = "user")
 public class User {
@@ -21,12 +24,13 @@ public class User {
     private String username;
 
     @NotNull
-    @Size(min=4)
+    @Size(min = 4)
     private String password;
 
     private String first_name;
     private String last_name;
     private double experience_points;
+    @SuppressWarnings("CheckStyle")
     private Timestamp last_update;
 
     public Long getId() {
@@ -73,6 +77,7 @@ public class User {
         return experience_points;
     }
 
+    @SuppressWarnings("CheckStyle")
     public void setExperience_points(double experience_points) {
         this.experience_points = experience_points;
     }
@@ -81,7 +86,7 @@ public class User {
         return last_update;
     }
 
-    public void setLast_update(Timestamp last_update) {
+    public void setLast_update(@SuppressWarnings("CheckStyle") Timestamp last_update) {
         this.last_update = last_update;
     }
 }

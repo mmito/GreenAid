@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 
+@SuppressWarnings("ALL")
 @Service
 public class UserServiceImpl {
     @Autowired
@@ -27,6 +27,10 @@ public class UserServiceImpl {
         return userRepository.findByUsername(username);
     }
 
+    /**
+     * gets the user.
+     * @return returns the username
+     */
     public User getLoggedInUser() {
         String loggedInUserUsername = securityService.findLoggedInUsername();
 
