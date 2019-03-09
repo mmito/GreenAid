@@ -19,7 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
 
     public UserDetails loadUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
