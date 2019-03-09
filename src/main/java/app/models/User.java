@@ -1,13 +1,17 @@
 package app.models;
 
-
-
 import java.sql.Timestamp;
-import java.util.Set;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 
+@SuppressWarnings({"ALL", "CheckStyle"})
 @Entity
 @Table(name = "user")
 public class User {
@@ -15,19 +19,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @Size(min = 4, max = 32)
     private String username;
 
+    @NotNull
+    @Size(min = 4)
     private String password;
-
-    @Transient
-    private String passwordConfirm;
-
-    @ManyToMany
-    private Set<Role> roles;
 
     private String first_name;
     private String last_name;
     private double experience_points;
+    @SuppressWarnings("CheckStyle")
     private Timestamp last_update;
 
     public Long getId() {
@@ -54,22 +57,6 @@ public class User {
         this.password = password;
     }
 
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
     public String getFirst_name() {
         return first_name;
     }
@@ -90,6 +77,7 @@ public class User {
         return experience_points;
     }
 
+    @SuppressWarnings("CheckStyle")
     public void setExperience_points(double experience_points) {
         this.experience_points = experience_points;
     }
@@ -98,7 +86,7 @@ public class User {
         return last_update;
     }
 
-    public void setLast_update(Timestamp last_update) {
+    public void setLast_update(@SuppressWarnings("CheckStyle") Timestamp last_update) {
         this.last_update = last_update;
     }
 }

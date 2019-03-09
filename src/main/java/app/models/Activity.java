@@ -1,18 +1,28 @@
 package app.models;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@SuppressWarnings("ALL")
 @Entity
 @Table(name = "activity")
 public class Activity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private Long user_id;
     private Long category_id;
     private double carbon_emission;
     private Timestamp last_update;
-    private String carbon_activity;
+    private String activity_name;
     private double xp_points;
+    private int amount;
 
     public Long getUser_id() {
         return user_id;
@@ -46,12 +56,12 @@ public class Activity {
         this.last_update = last_update;
     }
 
-    public String getCarbon_activity() {
-        return carbon_activity;
+    public String getActivity_name() {
+        return activity_name;
     }
 
-    public void setCarbon_activity(String carbon_activity) {
-        this.carbon_activity = carbon_activity;
+    public void setActivity_name(String carbon_activity) {
+        this.activity_name = carbon_activity;
     }
 
     public double getXp_points() {
@@ -60,5 +70,21 @@ public class Activity {
 
     public void setXp_points(double xp_points) {
         this.xp_points = xp_points;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }

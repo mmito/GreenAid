@@ -24,9 +24,9 @@ Run `maven site`
 
 ## Group members
 
-#### Tommaso Tofacchi netID: app - 4933249
+#### Tommaso Tofacchi netID: ttofacchi - 4933249
 
-<img src="/images/tommaso.jpeg" height="250">
+<img src="/images/tommaso.jpeg">
 
 With the development of our project, I aim to enhance my abilities to cooperate on a team in order to find the best and most efficient solutions to whatever issue we will face.
 
