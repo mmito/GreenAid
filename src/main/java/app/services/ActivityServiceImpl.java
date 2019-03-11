@@ -11,6 +11,10 @@ public class ActivityServiceImpl {
     @Autowired
     ActivityRepository activityRepository;
 
+    /**
+     * Method that adds an activity to a repository and saves it to the database.
+     * @param activity activity to add
+     */
     public void save(Activity activity) {
 
         activityRepository.save(activity);

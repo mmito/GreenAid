@@ -4,11 +4,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.security.web.header.Header;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.WebUtils;
 
 import java.util.Scanner;
 
@@ -38,6 +36,12 @@ public class Client {
 
     }
 
+    /**
+     * Method that returns session cookies.
+     * @param username username of the user
+     * @param password password of the user
+     * @return returns the session cookie
+     */
     public static String getSessionCookie(String username, String password) {
 
         HttpHeaders headers = new HttpHeaders();
@@ -54,9 +58,11 @@ public class Client {
         // Data attached to the request.
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
-        HttpEntity<String> response = restTemplate.exchange(url_login, HttpMethod.POST, request, String.class);
+        HttpEntity<String> response = restTemplate.exchange(url_login,
+                HttpMethod.POST, request, String.class);
         HttpHeaders responseHeaders = response.getHeaders();
-        String sessionCookie = responseHeaders.getFirst(HttpHeaders.SET_COOKIE).split(";")[0];//.substring(12);
+        String sessionCookie =
+                responseHeaders.getFirst(HttpHeaders.SET_COOKIE).split(";")[0];//.substring(12);
 
         //String login = response.getBody();
 
@@ -64,7 +70,12 @@ public class Client {
 
     }
 
-    public static String checkAuth(String sessionCookie){
+    /**
+     * Class that checks authentication.
+     * @param sessionCookie cookie of the session
+     * @return returns the http message
+     */
+    public static String checkAuth(String sessionCookie) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Accept", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
@@ -75,7 +86,8 @@ public class Client {
         // Data attached to the request.
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(headers);
 
-        HttpEntity<String> response = restTemplate.exchange(url_check, HttpMethod.GET, request, String.class);
+        HttpEntity<String> response =
+                restTemplate.exchange(url_check, HttpMethod.GET, request, String.class);
 
 
         return response.getHeaders().getFirst(HttpHeaders.SET_COOKIE);

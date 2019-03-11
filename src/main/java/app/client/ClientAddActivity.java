@@ -1,6 +1,5 @@
 package app.client;
 
-import app.models.Category;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -8,11 +7,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
+@SuppressWarnings("CheckStyle")
 public class ClientAddActivity {
 
     private static final String url_activity = "http://localhost:8080/activity";
@@ -21,15 +18,18 @@ public class ClientAddActivity {
 
     private static final Scanner sc = new Scanner(System.in);
 
-
+    /**
+     * Main method that asks user to add an activity.
+     * @param args main arguments
+     */
     public static void main(String[] args) {
 
-        boolean retype = false;
+        boolean retype;
         String username;
-        long category_id = 0;
+        long category_id;
         long user_id = 0;
         String activity_name;
-        int amount = 0;
+        int amount;
 
         do {
 
@@ -51,20 +51,20 @@ public class ClientAddActivity {
 
             String response = restTemplate.postForObject(url_users, request, String.class);
 
-            if(response.equals("User not found."))  {
+            if (response.equals("User not found."))  {
 
                 retype = true;
 
-            }
-
-            else {
+            } else {
 
                 user_id = Long.parseLong(response.substring(7));
                 retype = false;
 
             }
 
-        }  while (retype);
+        }
+
+        while (retype);
 
         System.out.println("Your user_id is: " + user_id);
 

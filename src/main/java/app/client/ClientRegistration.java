@@ -43,7 +43,6 @@ public class ClientRegistration {
 
         // HttpHeaders
         HttpHeaders headers = new HttpHeaders();
-
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("username", username);
         params.add("password", password);

@@ -3,13 +3,16 @@ package app.controllers;
 import app.authentication.SecurityServiceImpl;
 import app.models.Activity;
 import app.models.Category;
+import app.models.User;
 import app.repository.CategoryRepository;
 import app.services.ActivityServiceImpl;
-import app.services.CategoryServiceImpl;
 import app.services.UserServiceImpl;
-import app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+//import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,6 +34,10 @@ public class SpringController {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    /**
+     * mapping to /welcome.
+     * @return return the text
+     */
     @GetMapping("/welcome")
     public String welcome() {
 
@@ -38,6 +45,10 @@ public class SpringController {
 
     }
 
+    /**
+     * mapping to /check.
+     * @return return the text
+     */
     @GetMapping("/check")
     public String checkAuth() {
 
@@ -45,7 +56,10 @@ public class SpringController {
 
     }
 
-
+    /**
+     * mapping to /activities.
+     * @return return the text
+     */
     @RequestMapping("/activities")
     public String display() {
         return "Post a JSON request";
@@ -59,16 +73,19 @@ public class SpringController {
     @PostMapping("/registration")
     public String registration(User user) {
 
-        if(userService.findByUsername(user.getUsername()) != null) {
+        if (userService.findByUsername(user.getUsername()) != null) {
             return "Username is already registered";
-        }
-        else {
+        } else {
             userService.save(user);
             return "You are now registered, " + user.getUsername() + "!";
         }
 
     }
 
+    /**
+     * mapping to /activity.
+     * @return return the text
+     */
     @PostMapping("/activity")
     public String activity(Activity activity) {
 
@@ -78,12 +95,16 @@ public class SpringController {
 
     }
 
+    /**
+     * mapping to /getcategories.
+     * @return return the text/response
+     */
     @GetMapping("/getcategories")
     public String getCategories() {
 
-        List<Category> categories= categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAll();
         String response = "";
-        for(Category c : categories) {
+        for (Category c : categories) {
 
             response += c.getId() + " - " + c.getName();
 
@@ -93,11 +114,18 @@ public class SpringController {
 
     }
 
+    /**
+     * mapping to /findbyusername.
+     * @return return the text
+     */
     @PostMapping("/findbyusername")
     public String findByUsername(String username) {
 
-        if(userService.findByUsername(username) != null) return "Found: " + userService.findByUsername(username).getId();
-        else return "User not found.";
+        if (userService.findByUsername(username) != null) {
+            return "Found: " + userService.findByUsername(username).getId();
+        } else {
+            return "User not found.";
+        }
 
     }
 
