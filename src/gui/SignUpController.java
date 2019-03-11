@@ -1,15 +1,23 @@
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import app.models.User;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
+import java.io.IOException;
 
 public class SignUpController {
 
@@ -23,10 +31,20 @@ public class SignUpController {
     private PasswordField passwordConfirm;
     @FXML
     private TextField username;
+    @FXML
+    private TextField firstname;
+    @FXML
+    private TextField lastname;
 
     public String getUsername() {
         return username.getText();
 
+    }
+    public String getFirstname(){
+        return firstname.getText();
+    }
+    public String getLastname(){
+        return lastname.getText();
     }
 
     public String getPassword() {
@@ -47,6 +65,8 @@ public class SignUpController {
         // HttpHeaders
         HttpHeaders headers = new HttpHeaders();
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("first_name", getFirstname());
+        params.add("last_name", getLastname());
         params.add("username", getUsername());
         params.add("password", getPassword());
         params.add("passwordConfirm", getPasswordConfirm());
@@ -64,6 +84,19 @@ public class SignUpController {
 
 
         clearFields();
+
+        try{
+            Window window = saveUser.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("logIn.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root,760.0, 420.0));
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.show();
+            window.hide();
+        }
+        catch (IOException e){
+            System.out.print("Error found in the handleSignupClicked");
+        }
 
     }
     private void clearFields() {
