@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @NotNull
     @Size(min = 4, max = 32)
@@ -33,11 +33,11 @@ public class User {
     @SuppressWarnings("CheckStyle")
     private Timestamp last_update;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

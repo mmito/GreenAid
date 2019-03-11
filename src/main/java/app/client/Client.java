@@ -90,8 +90,8 @@ public class Client {
                 restTemplate.exchange(url_check, HttpMethod.GET, request, String.class);
 
 
-        //return response.getHeaders().getFirst(HttpHeaders.SET_COOKIE);
-        return request.getHeaders().getFirst(HttpHeaders.SET_COOKIE);
+        return response.getHeaders().getFirst(HttpHeaders.SET_COOKIE);
+        //return request.getHeaders().getFirst(HttpHeaders.SET_COOKIE);
 
     }
 
