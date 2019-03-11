@@ -81,18 +81,4 @@ public class controller {
             System.out.println("Error found in the handleLoginClicked");
         }
     }
-    public void handleSignupClicked(){
-        try{
-            Window window = signup.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("logIn.fxml"));
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root,760.0, 420.0));
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.show();
-            window.hide();
-        }
-        catch (IOException e){
-            System.out.print("Error found in the handleSignupClicked");
-        }
-    }
 }
