@@ -16,7 +16,7 @@
          </image>
       </ImageView>
       <Pane layoutX="244.0" layoutY="101.0" opacity="0.5" prefHeight="225.0" prefWidth="271.0" style="-fx-background-color: #669966; -fx-background-radius: 10;" />
-      <Hyperlink fx:id="register" layoutX="324.0" layoutY="242.0" onMouseClicked="#handleRegisterClicked" text="Register" textFill="WHITE" underline="true" />
+      <Hyperlink fx:id="register" layoutX="324.0" layoutY="242.0" onAction="#handleRegisterClicked" text="Register" textFill="WHITE" underline="true" />
       <TextField layoutX="275.0" layoutY="151.0" prefHeight="31.0" prefWidth="211.0" promptText="Username" />
       <Button fx:id="login" layoutX="419.0" layoutY="241.0" mnemonicParsing="false" onMouseClicked="#handleLoginClicked" prefHeight="16.0" prefWidth="67.0" text="Log In" />
       <PasswordField layoutX="275.0" layoutY="198.0" prefHeight="31.0" prefWidth="211.0" promptText="Password" />
