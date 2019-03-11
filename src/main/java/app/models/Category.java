@@ -12,8 +12,10 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String category_name;
-    private int normalized_emission;
+    private String name;
+    private long amount_saved;
+    private double xp_points;
+    private long category_type_id;
 
     public long getId() {
         return id;
@@ -23,19 +25,35 @@ public class Category {
         this.id = id;
     }
 
-    public String getCategory_name() {
-        return category_name;
+    public String getName() {
+        return name;
     }
 
-    public void setCategory_name(String category_name) {
-        this.category_name = category_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getNormalized_emission() {
-        return normalized_emission;
+    public long getAmount_saved() {
+        return amount_saved;
     }
 
-    public void setNormalized_emission(int normalized_emission) {
-        this.normalized_emission = normalized_emission;
+    public void setAmount_saved(long amount_saved) {
+        this.amount_saved = amount_saved;
+    }
+
+    public double getXp_points() {
+        return xp_points;
+    }
+
+    public void setXp_points(double xp_points) {
+        this.xp_points = xp_points;
+    }
+
+    public long getCategory_type_id() {
+        return category_type_id;
+    }
+
+    public void setCategory_type_id(long category_type_id) {
+        this.category_type_id = category_type_id;
     }
 }

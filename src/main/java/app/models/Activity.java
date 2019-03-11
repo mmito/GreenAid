@@ -9,38 +9,28 @@ public class Activity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    private Long user_id;
-    private Long category_id;
-    private double carbon_emission;
-    private Timestamp last_update;
-    private String activity_name;
+    private long user_id;
+    private long category_id;
+    private long amount;
     private double xp_points;
-    private int amount;
+    private Timestamp last_update;
 
-    public Long getUser_id() {
+    public long getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(Long user_id) {
+    public void setUser_id(long user_id) {
         this.user_id = user_id;
     }
 
-    public Long getCategory_id() {
+    public long getCategory_id() {
         return category_id;
     }
 
     public void setCategory_id(Long category_id) {
         this.category_id = category_id;
-    }
-
-    public double getCarbon_emission() {
-        return carbon_emission;
-    }
-
-    public void setCarbon_emission(double carbon_emission) {
-        this.carbon_emission = carbon_emission;
     }
 
     public Timestamp getLast_update() {
@@ -51,14 +41,6 @@ public class Activity {
         this.last_update = last_update;
     }
 
-    public String getActivity_name() {
-        return activity_name;
-    }
-
-    public void setActivity_name(String carbon_activity) {
-        this.activity_name = carbon_activity;
-    }
-
     public double getXp_points() {
         return xp_points;
     }
@@ -67,19 +49,19 @@ public class Activity {
         this.xp_points = xp_points;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getAmount() {
+    public long getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(long amount) {
         this.amount = amount;
     }
 }

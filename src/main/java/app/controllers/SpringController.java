@@ -72,9 +72,9 @@ public class SpringController {
     @PostMapping("/activity")
     public String activity(Activity activity) {
 
-        activity.setCarbon_emission(categoryRepository.findById(activity.getCategory_id()).get().getNormalized_emission() * activity.getAmount());
+        activity.setXp_points(categoryRepository.findById(activity.getId()).getXp_points() * activity.getAmount());
         activityService.save(activity);
-        return "Activity \"" + activity.getActivity_name() + "\" saved successfully!";
+        return "Activity \"" + categoryRepository.findById(activity.getId()).getName() + "\" saved successfully!";
 
     }
 
@@ -85,7 +85,7 @@ public class SpringController {
         String response = "";
         for(Category c : categories) {
 
-            response += c.getId() + " - " + c.getCategory_name();
+            response += c.getId() + " - " + c.getName();
 
         }
 
