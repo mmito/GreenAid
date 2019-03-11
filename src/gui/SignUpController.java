@@ -62,42 +62,52 @@ public class SignUpController {
     @FXML
     private void saveUser(MouseEvent mouseEvent) {
 
-        // HttpHeaders
-        HttpHeaders headers = new HttpHeaders();
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("first_name", getFirstname());
-        params.add("last_name", getLastname());
-        params.add("username", getUsername());
-        params.add("password", getPassword());
-        params.add("passwordConfirm", getPasswordConfirm());
+        if (getPassword().equals(getPasswordConfirm())) {
+
+            // HttpHeaders
+            HttpHeaders headers = new HttpHeaders();
+            MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+            params.add("first_name", getFirstname());
+            params.add("last_name", getLastname());
+            params.add("username", getUsername());
+            params.add("password", getPassword());
 
 
-        headers.add("Accept", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            headers.add("Accept", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        RestTemplate restTemplate = new RestTemplate();
+            RestTemplate restTemplate = new RestTemplate();
 
-        // Data attached to the request.
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+            // Data attached to the request.
+            HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
-        String registration = restTemplate.postForObject(url_registration, request, String.class);
+            String registration = restTemplate.postForObject(url_registration, request, String.class);
+
+            if (registration.equals("Username is already registered")) {
+
+                clearFields();
+
+            } else {
 
 
-        clearFields();
-
-        try{
-            Window window = saveUser.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("logIn.fxml"));
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root,760.0, 420.0));
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.show();
-            window.hide();
+                try {
+                    Window window = saveUser.getScene().getWindow();
+                    Parent root = FXMLLoader.load(getClass().getResource("logIn.fxml"));
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root, 760.0, 420.0));
+                    stage.initStyle(StageStyle.UNDECORATED);
+                    stage.show();
+                    window.hide();
+                } catch (IOException e) {
+                    System.out.print("Error found in the handleSignupClicked");
+                }
+            }
         }
-        catch (IOException e){
-            System.out.print("Error found in the handleSignupClicked");
-        }
+        else{
 
+            clearFields();
+
+        }
     }
     private void clearFields() {
         username.setText(null);
