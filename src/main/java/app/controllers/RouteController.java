@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @RestController
-public class SpringController {
+public class RouteController {
 
     //private Logger logger = LoggerFactory.getLogger(SpringController.class);
 
@@ -45,16 +45,10 @@ public class SpringController {
 
     }
 
-
-    @RequestMapping("/activities")
-    public String display() {
-        return "Post a JSON request";
-    }
-
     /**
      * Get request for Mapping to /registration of app.
-     * //@param model model that we will be using
-     * @return returns  registration
+     * @param user that we will be using
+     * @return returns registration
     */
     @PostMapping("/registration")
     public String registration(User user) {
@@ -72,9 +66,21 @@ public class SpringController {
     @PostMapping("/activity")
     public String activity(Activity activity) {
 
-        activity.setXp_points(categoryRepository.findById(activity.getId()).getXp_points() * activity.getAmount());
+        String username = securityService.findLoggedInUsername();
+        User user = userService.findByUsername(username);
+
+        activity.setUser_id(userService.findByUsername(username).getId());
+        activity.setXp_points(categoryRepository.findById(activity.getCategory_id()).getXp_points() * activity.getAmount());
         activityService.save(activity);
-        return "Activity \"" + categoryRepository.findById(activity.getId()).getName() + "\" saved successfully!";
+
+        // The following method to update a user's EXP Points doesn't work:
+        // it re-saves the whole user's account, meaning that it re-saves the
+        // password re-encrypting the already encrypted password...
+        // We need to set a trigger on the database for that.
+        //user.setExperience_points(userService.findByUsername(username).getExperience_points() + activity.getXp_points());
+        //userService.save(user);
+
+        return "Activity \"" + categoryRepository.findById(activity.getCategory_id()).getName() + "\" saved successfully!";
 
     }
 
@@ -85,19 +91,11 @@ public class SpringController {
         String response = "";
         for(Category c : categories) {
 
-            response += c.getId() + " - " + c.getName();
+            response += "\n" + c.getId() + " - " + c.getName();
 
         }
 
         return response;
-
-    }
-
-    @PostMapping("/findbyusername")
-    public String findByUsername(String username) {
-
-        if(userService.findByUsername(username) != null) return "Found: " + userService.findByUsername(username).getId();
-        else return "User not found.";
 
     }
 
