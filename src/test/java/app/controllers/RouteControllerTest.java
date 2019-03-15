@@ -4,7 +4,6 @@ import app.authentication.SecurityServiceImpl;
 import app.services.UserServiceImpl;
 import app.models.User;
 import app.repository.UserRepository;
-import app.validator.UserValidator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.apache.commons.codec.binary.Base64;
@@ -27,8 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(SpringController.class)
-public class SpringControllerTest {
+@WebMvcTest(RouteController.class)
+public class RouteControllerTest {
 
     private static final String USER_NAME = "tommy";
     private static final String PASSWORD = "123";
@@ -41,9 +40,6 @@ public class SpringControllerTest {
 
     @MockBean
     private SecurityServiceImpl securityService;
-
-    @MockBean
-    private UserValidator userValidator;
 
     @MockBean
     private UserRepository userRepository;
