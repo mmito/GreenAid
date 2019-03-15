@@ -1,5 +1,6 @@
 package app.authentication;
 
+import app.responses.Response;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -31,7 +32,8 @@ public class AuthFailureHandler implements AuthenticationFailureHandler {
         response.setStatus(200);
         response.setContentType("Application/JSON");
         response.getWriter().write(
-                new ObjectMapper().writer().writeValueAsString("Auth failure" )
+                new ObjectMapper().writer().writeValueAsString(
+                        new Response(false, "Auth failure"))
         );
     }
 

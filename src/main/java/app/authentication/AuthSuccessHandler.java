@@ -1,5 +1,7 @@
 package app.authentication;
 
+import app.responses.Response;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -29,8 +31,8 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
     ) throws IOException, ServletException {
         response.setStatus(200);
         response.setContentType("Application/JSON");
-        response.getWriter().write("Logged in"
-        );
+        response.getWriter().write(new ObjectMapper().writer().writeValueAsString(
+                new Response(true, "Logged in.")));
     }
 
 }
