@@ -1,4 +1,5 @@
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,6 +8,7 @@ import javafx.scene.control.*;
 
 import app.models.User;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
@@ -35,6 +37,13 @@ public class SignUpController {
     private TextField firstname;
     @FXML
     private TextField lastname;
+    @FXML
+    private AnchorPane pane;
+
+    private double xOffset =0;
+    private double yOffset =0;
+
+
 
     public String getUsername() {
         return username.getText();
@@ -54,6 +63,18 @@ public class SignUpController {
     public String getPasswordConfirm() {
         return passwordConfirm.getText();
     }
+
+    public void movingSignup() {
+        pane.setOnMousePressed(event -> {
+            xOffset = controller.stage.getX() - event.getScreenX();
+            yOffset = controller.stage.getY() - event.getScreenY();
+        });
+        pane.setOnMouseDragged(event -> {
+            controller.stage.setX(event.getScreenX() + xOffset);
+            controller.stage.setY(event.getScreenY() + yOffset);
+        });
+    }
+
 
     public void handleClose() {
         System.exit(0);
