@@ -46,7 +46,7 @@ public class Client {
 
     }
 
-    private static HttpHeaders setHeaders(String sessionCookie) {
+    public static HttpHeaders setHeaders(String sessionCookie) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
@@ -57,7 +57,7 @@ public class Client {
 
     }
 
-    private static HttpEntity<Response> getRequest(String sessionCookie, String url) {
+    public static HttpEntity<Response> getRequest(String sessionCookie, String url) {
 
         HttpHeaders headers = setHeaders(sessionCookie);
         RestTemplate restTemplate = new RestTemplate();
@@ -69,7 +69,7 @@ public class Client {
 
     }
 
-    private static HttpEntity<Response> postRequest(String sessionCookie, String url, MultiValueMap<String, Object> params) {
+    public static HttpEntity<Response> postRequest(String sessionCookie, String url, MultiValueMap<String, Object> params) {
 
         HttpHeaders headers = setHeaders(sessionCookie);
         RestTemplate restTemplate = new RestTemplate();
@@ -82,7 +82,7 @@ public class Client {
     }
 
     // With login data the method retrieves its session cookie.
-    private static String getSessionCookie(String username, String password) {
+    public static String getSessionCookie(String username, String password) {
 
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("username", username);
@@ -99,7 +99,7 @@ public class Client {
     }
 
         // Test method just to check whether the session cookies are working or not.
-    private static String checkAuth(String sessionCookie){
+    public static String checkAuth(String sessionCookie){
 
         HttpEntity<Response> response = getRequest(sessionCookie, url_check);
 
@@ -107,7 +107,7 @@ public class Client {
     }
 
     // Method used to display the list of categories, just if the session is authenticated.
-    private static String getCategories(String sessionCookie) {
+    public static String getCategories(String sessionCookie) {
 
         HttpEntity<Response> categories = getRequest(sessionCookie, url_categories);
 
@@ -116,7 +116,7 @@ public class Client {
     }
 
     // Method used to add an activity in the database given a session, a category id and the amount of times that activity has been made.
-    private static String addActivity(String sessionCookie, long categoryId, long amount) {
+    public static String addActivity(String sessionCookie, long categoryId, long amount) {
 
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("category_id", categoryId);

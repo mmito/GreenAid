@@ -1,4 +1,5 @@
 
+import app.responses.Response;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -106,7 +107,7 @@ public class SignUpController implements Initializable {
             params.add("password", getPassword());
 
 
-            headers.add("Accept", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
+            headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
             RestTemplate restTemplate = new RestTemplate();
@@ -114,9 +115,9 @@ public class SignUpController implements Initializable {
             // Data attached to the request.
             HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
-            String registration = restTemplate.postForObject(url_registration, request, String.class);
+            Response registration = restTemplate.postForObject(url_registration, request, Response.class);
 
-            if (registration.equals("Username is already registered")) {
+            if (registration.getData().equals("Username is already registered")) {
                 exists.setText("Username already exists");
                 exists.setVisible(true);
                 clearFields();
