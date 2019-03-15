@@ -29,10 +29,4 @@ public class ActivityServiceImpl {
 
     }
 
-    /*public List<Activity> findNameById(long userId) {
-
-        return activityRepository.findNamesById(userId);
-
-    }*/
-
 }
