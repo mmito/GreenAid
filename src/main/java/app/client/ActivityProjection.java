@@ -1,11 +1,18 @@
 package app.client;
 
-public class ActivityRepresentation {
+public class ActivityProjection {
 
     String username;
     String category;
-    int amount;
+    long amount;
     double xp_points;
+
+    public ActivityProjection(String username, String category, long amount, double xp_points) {
+        this.username = username;
+        this.category = category;
+        this.amount = amount;
+        this.xp_points = xp_points;
+    }
 
     public String getUsername() {
         return username;
@@ -23,11 +30,11 @@ public class ActivityRepresentation {
         this.category = category;
     }
 
-    public int getAmount() {
+    public long getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(long amount) {
         this.amount = amount;
     }
 

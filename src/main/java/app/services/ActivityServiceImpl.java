@@ -1,11 +1,8 @@
 package app.services;
 
-import app.client.ActivityRepresentation;
 import app.models.Activity;
 import app.repository.ActivityRepository;
-import app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,10 +29,10 @@ public class ActivityServiceImpl {
 
     }
 
-    public List<Object> findNameById(long userId) {
+    /*public List<Activity> findNameById(long userId) {
 
-        return  activityRepository.findNamesById(userId);
+        return activityRepository.findNamesById(userId);
 
-    }
+    }*/
 
 }

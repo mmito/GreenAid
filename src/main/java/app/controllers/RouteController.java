@@ -1,7 +1,7 @@
 package app.controllers;
 
 import app.authentication.SecurityServiceImpl;
-import app.client.ActivityRepresentation;
+import app.client.ActivityProjection;
 import app.models.Activity;
 import app.models.Category;
 import app.repository.CategoryRepository;
@@ -12,6 +12,7 @@ import app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -110,9 +111,46 @@ public class RouteController {
 
         User user = userService.findByUsername(securityService.findLoggedInUsername());
 
-        List<Object> activities = activityService.findNameById(user.getId());
+        String username = user.getUsername();
 
-        return new Response(true, activities);
+        List<Activity> activities = activityService.findByUser_id(user.getId());
+        List<ActivityProjection> response = new LinkedList<>();
+
+        for (Activity a : activities) {
+
+            long amount = a.getAmount();
+            double xp_points = a.getXp_points();
+            String category = "";
+            switch((int)a.getCategory_id()) {
+
+                case 1:
+                    category = "Eating a vegetarian meal";
+                    break;
+                case 2:
+                    category = "Buying local produce";
+                    break;
+                case 3:
+                    category = "Using bike instead of car";
+                    break;
+                case 4:
+                    category = "Using public transport instead of car";
+                    break;
+                case 5:
+                    category = "Installing solar panels";
+                    break;
+                case 6:
+                    category = "Lowering the temperature of your home";
+                    break;
+                    default:
+                      category = "unknown";
+
+            }
+
+            response.add(new ActivityProjection(username, category, amount, xp_points));
+
+        }
+
+        return new Response(true, response);
 
     }
 
