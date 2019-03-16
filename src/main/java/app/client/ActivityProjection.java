@@ -4,7 +4,7 @@ public class ActivityProjection {
 
     String username;
     String category;
-    long amount;
+    double amount;
     double xp_points;
 
     /**
@@ -14,7 +14,7 @@ public class ActivityProjection {
      * @param amount amount of the activity
      * @param xp_points xp points of that activity given the amount
      */
-    public ActivityProjection(String username, String category, long amount, double xp_points) {
+    public ActivityProjection(String username, String category, double amount, double xp_points) {
         this.username = username;
         this.category = category;
         this.amount = amount;
@@ -37,11 +37,11 @@ public class ActivityProjection {
         this.category = category;
     }
 
-    public long getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
