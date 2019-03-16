@@ -1,7 +1,9 @@
 package app.client;
 
+import app.responses.Response;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -62,7 +64,7 @@ public class ClientRegistration {
         params.add("last_name", last_name);
 
 
-        headers.add("Accept", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
+        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -70,9 +72,9 @@ public class ClientRegistration {
         // Data attached to the request.
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
-        String registration = restTemplate.postForObject(url_registration, request, String.class);
+        HttpEntity<Response> resp = restTemplate.exchange(url_registration, HttpMethod.POST, request, Response.class);
 
-        System.out.println(registration);
+        System.out.println(resp.getBody().getData());
 
     }
 

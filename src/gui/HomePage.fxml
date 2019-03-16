@@ -10,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="954.0" prefWidth="1398.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#movingHome" prefHeight="954.0" prefWidth="1398.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HomepageController">
    <children>
       <ImageView fitHeight="987.0" fitWidth="1698.0" layoutX="-243.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -74,6 +74,7 @@
                </font>
             </Text>
             <Text fill="WHITE" layoutX="14.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What green move have you done today ?" />
+            <ComboBox fx:id="comboBox" layoutX="29.0" layoutY="106.0" prefWidth="150.0" />
          </children>
       </AnchorPane>
    </children>

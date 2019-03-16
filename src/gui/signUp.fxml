@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
@@ -8,14 +9,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="655.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SignUpController">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#movingSignup" prefHeight="655.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SignUpController">
    <children>
       <ImageView fitHeight="661.0" fitWidth="1249.0" layoutX="-345.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@backgroundImg.jpg" />
          </image>
       </ImageView>
-      <Pane layoutX="55.0" layoutY="123.0" opacity="0.5" prefHeight="382.0" prefWidth="591.0" style="-fx-background-color: #669966; -fx-background-radius: 10;" />
+      <Pane layoutX="55.0" layoutY="123.0" opacity="0.5" prefHeight="382.0" prefWidth="591.0" style="-fx-background-color: #669966; -fx-background-radius: 10;">
+         <children>
+            <Text fx:id="exists" fill="RED" layoutX="37.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="seeeemeee" wrappingWidth="248.6708984375">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Text>
+         </children></Pane>
       <TextField fx:id="username" layoutX="85.0" layoutY="230.0" prefHeight="48.0" prefWidth="530.0" promptText="Username" />
       <TextField fx:id="firstname" layoutX="85.0" layoutY="165.0" prefHeight="48.0" prefWidth="258.0" promptText="First Name" />
       <TextField fx:id="lastname" layoutX="357.0" layoutY="165.0" prefHeight="48.0" prefWidth="258.0" promptText="Last Name" />

@@ -1,3 +1,5 @@
+import app.client.Client;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -6,12 +8,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,30 +30,27 @@ public class controller {
     Button signup;
     @FXML
     AnchorPane pane;
+    @FXML
+    TextField username;
+    @FXML
+    TextField password;
 
+    String sessionCookie = "";
 
-    private double xOffset =0;
-    private double yOffset =0;
-
-
+    public static Stage stage = null;
 
     public void handleClose(){
         System.exit(0);
     }
 
-    public void movingLogin(){
-        pane.setOnMousePressed(event -> {
-            xOffset =event.getSceneX();
-            yOffset =event.getSceneY();
-        });
-        pane.setOnMouseDragged(event -> {
-            JavaFXMain.stage.setX(event.getScreenX()-xOffset);
-            JavaFXMain.stage.setY(event.getScreenY()-yOffset);
-        });
+    public void handleMinimizeButton(MouseEvent mouse){
 
+        JavaFXMain.stage.setIconified(true);
     }
-
-
+    private void clearFields() {
+        username.setText(null);
+        password.clear();
+    }
     public void handleRegisterClicked(){
         try{
             Window window = register.getScene().getWindow();
@@ -58,6 +59,7 @@ public class controller {
             stage.setTitle("signUp");
             stage.setScene(new Scene(root, 700, 655));
             stage.initStyle(StageStyle.UNDECORATED);
+            this.stage= stage;
             stage.show();
             window.hide();
         }
@@ -66,19 +68,43 @@ public class controller {
         }
     }
 
+    public String getUsername() {
+        return username.getText();
+
+    }
+
+    public String getPassword() {
+        return password.getText();
+    }
+
     public void handleLoginClicked(){
-        try{
-            Window window = login.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("HomePage");
-            stage.setScene(new Scene(root, 1398, 954));
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.show();
-            window.hide();
+
+        String response = Client.getSessionCookie(getUsername(), getPassword());
+
+        if(!response.equals("No cookie found.")){
+
+            sessionCookie = response;
+            try{
+                Window window = login.getScene().getWindow();
+                Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+                Stage stage = new Stage();
+                stage.setTitle("HomePage");
+                stage.setScene(new Scene(root, 1398, 954));
+                stage.initStyle(StageStyle.UNDECORATED);
+                this.stage=stage;
+                stage.show();
+                window.hide();
+            }
+            catch(IOException e){
+                System.out.println("Error found in the handleLoginClicked");
+            }
+
         }
-        catch(IOException e){
-            System.out.println("Error found in the handleLoginClicked");
+        else{
+                clearFields();
+
         }
+
+
     }
 }

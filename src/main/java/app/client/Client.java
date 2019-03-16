@@ -1,5 +1,6 @@
 package app.client;
 
+import app.responses.Response;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -8,6 +9,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Client {
@@ -15,8 +17,8 @@ public class Client {
     private static final String url_login = "http://localhost:8080/login";
     private static final String url_check = "http://localhost:8080/check";
     private static final String url_categories = "http://localhost:8080/getcategories";
-    private static final String url_activity = "http://localhost:8080/activity";
-
+    private static final String url_add_activity = "http://localhost:8080/activity";
+    private static final String url_user_activities = "http://localhost:8080/showactivities";
 
     /**
      * Main method that starts a client login page.
@@ -34,10 +36,7 @@ public class Client {
         String sessionCookie = getSessionCookie(username, password);
         System.out.println(sessionCookie);
         System.out.println(checkAuth(sessionCookie));
-        //System.out.println(getCategories(sessionCookie));
-        System.out.println("1 - Eating a vegetarian meal");
-        System.out.println("2 - Buying local produce\n3 - Using bike instead of car\n4 - Using public transport instead of car\n" + "5 - Installing solar panels\n" + "6 - Lowering the temperature of your home");
-
+        System.out.println(getCategories(sessionCookie));
         System.out.println("Which kind of activity would you like to add?");
         long categoryId = sc.nextLong();
         System.out.println("How many times have you performed that activity?");
@@ -51,15 +50,15 @@ public class Client {
     public static HttpHeaders setHeaders(String sessionCookie) {
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Accept", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
-        headers.add("Cookie", sessionCookie);
+        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.add("Cookie", sessionCookie);
 
         return headers;
 
     }
 
-    public static HttpEntity<String> getRequest(String sessionCookie, String url) {
+    public static HttpEntity<Response> getRequest(String sessionCookie, String url) {
 
         HttpHeaders headers = setHeaders(sessionCookie);
         RestTemplate restTemplate = new RestTemplate();
@@ -67,11 +66,11 @@ public class Client {
         // Data attached to the request.
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(headers);
 
-        return restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+        return restTemplate.exchange(url, HttpMethod.GET, request, Response.class);
 
     }
 
-    public static HttpEntity<String> postRequest(String sessionCookie, String url, MultiValueMap<String, Object> params) {
+    public static HttpEntity<Response> postRequest(String sessionCookie, String url, MultiValueMap<String, Object> params) {
 
         HttpHeaders headers = setHeaders(sessionCookie);
         RestTemplate restTemplate = new RestTemplate();
@@ -79,7 +78,7 @@ public class Client {
         // Data attached to the request.
         HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(params, headers);
 
-        return restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+        return restTemplate.exchange(url, HttpMethod.POST, request, Response.class);
 
     }
 
@@ -90,7 +89,7 @@ public class Client {
         params.add("username", username);
         params.add("password", password);
 
-        HttpEntity<String> response = postRequest("", url_login, params);
+        HttpEntity<Response> response = postRequest("", url_login, params);
         HttpHeaders responseHeaders = response.getHeaders();
         if (responseHeaders.getFirst(HttpHeaders.SET_COOKIE) != null) {
             return responseHeaders.getFirst(HttpHeaders.SET_COOKIE).split(";")[0];
@@ -103,17 +102,17 @@ public class Client {
         // Test method just to check whether the session cookies are working or not.
     public static String checkAuth(String sessionCookie){
 
-        HttpEntity<String> response = getRequest(sessionCookie, url_check);
+        HttpEntity<Response> response = getRequest(sessionCookie, url_check);
 
-        return response.getBody();
+        return (String) response.getBody().getData();
     }
 
     // Method used to display the list of categories, just if the session is authenticated.
     public static String getCategories(String sessionCookie) {
 
-        HttpEntity<String> categories = getRequest(sessionCookie, url_categories);
+        HttpEntity<Response> categories = getRequest(sessionCookie, url_categories);
 
-        return categories.getBody().replaceFirst("\n", "");
+        return ((String) categories.getBody().getData()).replaceFirst("\n", "");
 
     }
 
@@ -124,9 +123,17 @@ public class Client {
         params.add("category_id", categoryId);
         params.add("amount", amount);
 
-        HttpEntity<String> response = postRequest(sessionCookie, url_activity, params);
+        HttpEntity<Response> response = postRequest(sessionCookie, url_add_activity, params);
 
-        return response.getBody();
+        return (String) response.getBody().getData();
+
+    }
+
+    public static List<ActivityProjection> getUserActivities(String sessionCookie) {
+
+       HttpEntity<Response> response = getRequest(sessionCookie, url_user_activities);
+
+       return ((List<ActivityProjection>) response.getBody().getData());
 
     }
 
