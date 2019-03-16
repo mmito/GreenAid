@@ -9,6 +9,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Client {
@@ -16,8 +17,8 @@ public class Client {
     private static final String url_login = "http://localhost:8080/login";
     private static final String url_check = "http://localhost:8080/check";
     private static final String url_categories = "http://localhost:8080/getcategories";
-    private static final String url_activity = "http://localhost:8080/activity";
-
+    private static final String url_add_activity = "http://localhost:8080/activity";
+    private static final String url_user_activities = "http://localhost:8080/showactivities";
 
     /**
      * Main method that starts a client login page.
@@ -122,9 +123,17 @@ public class Client {
         params.add("category_id", categoryId);
         params.add("amount", amount);
 
-        HttpEntity<Response> response = postRequest(sessionCookie, url_activity, params);
+        HttpEntity<Response> response = postRequest(sessionCookie, url_add_activity, params);
 
         return (String) response.getBody().getData();
+
+    }
+
+    public static List<ActivityProjection> getUserActivities(String sessionCookie) {
+
+       HttpEntity<Response> response = getRequest(sessionCookie, url_user_activities);
+
+       return ((List<ActivityProjection>) response.getBody().getData());
 
     }
 
