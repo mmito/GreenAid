@@ -1,4 +1,4 @@
-# CSE1105 Template Repository
+# CSE1105 Group 66 Project
 
 This a template repository to help you get started on making the best project possible!
 
@@ -19,8 +19,43 @@ Intellij:
 **Jacoco**:  
 Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getting-started-with-maven.html#execute_maven_goal)/[Eclipse](http://imgur.com/a/6q7pV))
 
+## Overview
+In today's world, the carbon dioxide consumption is increasing day by day. Unfortunately, the daily life became super-dependent on CO2 that it sometimes feels impossible to reverse this situation. But lots of countries and individuals take initiative in order to prevent the devastation that is created by excessive usage of carbon dioxide. Thus, we also wanted to contribute to this movement. As Group 66, our aim is to deliver one of the best applications of whole CSE class to reflect the amount of work we've put in the project.
+
+**GO GREEN** is an application which aims to influence better standards of living by creating an activity-based gamification app. The user registers to the app, selects an activity that he/she's done, selects the amount of it, and the activity gets added to his/her profile and he/she earns XP points according to the amount and type of the activity. Then friends can be added and leaderboards between friends are created in order to influence healthy&sustainable activities even more. 
+
+
+## Design Goals
+1- Creating a simple, clean, good-looking GUI.
+2- Keeping the code quality up as much as possible. Not writing any spaghetti code.
+3- Writing quality tests and having a sufficient code/test coverage.
+4- Having a user-friendly user-interface.
+5- Having an efficient and clear database that obeys ACID properties.
+## Text Files about Project
+1- Proof of choice report:
+2- Responsible Computer Science Report:
+3- Personal Growth Report:
+
+## Getting started/Installation
+
+## Example Code Usage/Screenshots from the app
+
+## Libraries/Frameworks used
+1- Spring 
+2- Hibernate
+3- JavaFX
+4- Something for recommendation engine
+
+## Tests
+
 **Checkstyle**:  
 Run `maven site`
+
+
+**JUNIT Test**:
+If the test is a JUnit test, you can run the them by simply clicking right to that file and select `Run as Junit test`
+
+## Layout of internal code tree
 
 ## Group members
 
@@ -103,3 +138,6 @@ I am trying to improve my ability to work in a team when working on a shared pro
 I think that this project will really help us prepare for programming jobs in the future since this asks far more from every member of the team than ever before.
 Getting the team to work together as an efficient machine will be the main task, and i would love to make this possible.
 I think i have the creativity and team work capabilities to make a great application, yet i still need to learn a lot about programming itself and more importantly programming in a team.
+
+## Licensing and contributions
+
