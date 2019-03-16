@@ -15,10 +15,17 @@
             <Image url="@backgroundImg.jpg" />
          </image>
       </ImageView>
-      <Pane layoutX="244.0" layoutY="101.0" opacity="0.5" prefHeight="225.0" prefWidth="271.0" style="-fx-background-color: #669966; -fx-background-radius: 10;" />
+      <Pane layoutX="245.0" layoutY="101.0" opacity="0.5" prefHeight="225.0" prefWidth="271.0" style="-fx-background-color: #669966; -fx-background-radius: 10;">
+         <children>
+            <Text fx:id="invalid" fill="RED" layoutX="14.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="I AM TEXT" wrappingWidth="172.6708984375">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+         </children></Pane>
       <Hyperlink fx:id="register" layoutX="324.0" layoutY="242.0" onAction="#handleRegisterClicked" text="Register" textFill="WHITE" underline="true" />
       <TextField fx:id="username" layoutX="275.0" layoutY="151.0" prefHeight="31.0" prefWidth="211.0" promptText="Username" />
-      <Button fx:id="login" layoutX="419.0" layoutY="241.0" mnemonicParsing="false" onMouseClicked="#handleLoginClicked" prefHeight="16.0" prefWidth="67.0" text="Log In" />
+      <Button fx:id="login" layoutX="419.0" layoutY="241.0" mnemonicParsing="false" onMouseClicked="#handleLoginClicked" prefHeight="16.0" prefWidth="67.0" style="-fx-cursor: hand;" text="Log In" />
       <PasswordField fx:id="password" layoutX="275.0" layoutY="198.0" prefHeight="31.0" prefWidth="211.0" promptText="Password" />
       <Text layoutX="738.0" layoutY="20.0" onMouseClicked="#handleClose" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" text="❌" />
       <Text layoutX="705.0" layoutY="30.0" onMouseClicked="#handleMinimizeButton" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" text="-">
