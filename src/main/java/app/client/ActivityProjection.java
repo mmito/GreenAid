@@ -7,6 +7,13 @@ public class ActivityProjection {
     long amount;
     double xp_points;
 
+    /**
+     * Constructor of the class that  projects the activities in the homepage of the app.
+     * @param username username of the user
+     * @param category category of the activity
+     * @param amount amount of the activity
+     * @param xp_points xp points of that activity given the amount
+     */
     public ActivityProjection(String username, String category, long amount, double xp_points) {
         this.username = username;
         this.category = category;

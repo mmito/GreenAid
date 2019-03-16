@@ -46,16 +46,13 @@ public class ClientRegistration {
 
             if (password.equals(passwordConfirm)) {
                 retype = false;
-            }
-
-            else {
+            } else {
                 System.out.println("Passwords do not match.");
             }
 
         }
 
-        // HttpHeaders
-        HttpHeaders headers = new HttpHeaders();
+
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("username", username);
         params.add("password", password);
@@ -63,7 +60,8 @@ public class ClientRegistration {
         params.add("first_name", first_name);
         params.add("last_name", last_name);
 
-
+        // HttpHeaders
+        HttpHeaders headers = new HttpHeaders();
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
@@ -72,7 +70,8 @@ public class ClientRegistration {
         // Data attached to the request.
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
-        HttpEntity<Response> resp = restTemplate.exchange(url_registration, HttpMethod.POST, request, Response.class);
+        HttpEntity<Response> resp = restTemplate.exchange(url_registration,
+                HttpMethod.POST, request, Response.class);
 
         System.out.println(resp.getBody().getData());
 

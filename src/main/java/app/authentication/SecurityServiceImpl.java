@@ -11,13 +11,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SecurityServiceImpl {
+
+    private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
-
-    private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
     /**
      * finds the username of the logged in user.

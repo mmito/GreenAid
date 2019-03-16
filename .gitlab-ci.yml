@@ -4,6 +4,7 @@ stages:
   - build
   - test
   - run
+  - check
   - validate
 
 cache:
@@ -24,6 +25,11 @@ run:
   stage: run
   script:
     - mvn compile
+
+check:
+  stage: check
+  script:
+    - mvn site
 
 validate:
   stage: validate
