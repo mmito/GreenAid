@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import app.models.User;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -46,7 +47,18 @@ public class SignUpController implements Initializable {
     private AnchorPane pane;
     @FXML
     private Text exists;
-
+    @FXML
+    private Text emptyFirst;
+    @FXML
+    private Text emptyLast;
+    @FXML
+    private Text emptyUser;
+    @FXML
+    private Text emptyPass;
+    @FXML
+    private Text emptyPassCon;
+    @FXML
+    private ImageView Home;
 
     private double xOffset =0;
     private double yOffset =0;
@@ -54,6 +66,11 @@ public class SignUpController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
     exists.setVisible(false);
+    emptyFirst.setVisible(false);
+    emptyLast.setVisible(false);
+    emptyUser.setVisible(false);
+    emptyPass.setVisible(false);
+    emptyPassCon.setVisible(false);
     }
 
     public String getUsername() {
@@ -87,14 +104,79 @@ public class SignUpController implements Initializable {
             controller.stage.setY(event.getScreenY() + yOffset);
         });
     }
+    @FXML
+    private void home(){
+        Window window = saveUser.getScene().getWindow();
+        Stage stage = JavaFXMain.stage;
+        stage.show();
+        window.hide();
+
+    }
 
 
     public void handleClose() {
         System.exit(0);
     }
 
+    private void emptyFirst(){
+        emptyFirst.setText("Fill in Firstname");
+        emptyFirst.setVisible(true);
+    }
+
+    private void emptyLast(){
+        emptyLast.setText("Fill in LastName");
+        emptyLast.setVisible(true);
+    }
+
+    private void emptyUser(){
+        emptyUser.setText("Fill in Username");
+        emptyUser.setVisible(true);
+    }
+
+    private void emptyPass(){
+        emptyPass.setText("Fill in password");
+        emptyPass.setVisible(true);
+    }
+
+    private void emptyPassCon(){
+        emptyPassCon.setText("Fill in password");
+        emptyPassCon.setVisible(true);
+    }
+
     @FXML
     private void saveUser(MouseEvent mouseEvent) {
+
+        if(getFirstname().isEmpty()){
+            emptyFirst();
+        }
+        else{
+            emptyFirst.setVisible(false);
+        }
+        if(getLastname().isEmpty()){
+            emptyLast();
+        }
+        else {
+            emptyLast.setVisible(false);
+        }
+        if(getUsername().isEmpty()){
+            emptyUser();
+        }
+        else {
+            emptyUser.setVisible(false);
+        }
+        if(getPassword().isEmpty()){
+            emptyPass();
+        }
+        else {
+            emptyPass.setVisible(false);
+        }
+        if(getPasswordConfirm().isEmpty()) {
+            emptyPassCon();
+        }
+        else {
+            emptyPassCon.setVisible(false);
+        }
+
 
         if (getPassword().equals(getPasswordConfirm())) {
 
@@ -126,18 +208,10 @@ public class SignUpController implements Initializable {
             }
 
             else {
-
-                try {
                     Window window = saveUser.getScene().getWindow();
-                    Parent root = FXMLLoader.load(getClass().getResource("logIn.fxml"));
-                    Stage stage = new Stage();
-                    stage.setScene(new Scene(root, 760.0, 420.0));
-                    stage.initStyle(StageStyle.UNDECORATED);
+                    Stage stage = JavaFXMain.stage;
                     stage.show();
                     window.hide();
-                } catch (IOException e) {
-                    System.out.print("Error found in the handleSignupClicked");
-                }
             }
         }
         else {
@@ -146,11 +220,14 @@ public class SignUpController implements Initializable {
 
         }
     }
+
     private void clearFields() {
         username.setText(null);
         password.clear();
         passwordConfirm.clear();
     }
+
+
 
 }
 

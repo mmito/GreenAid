@@ -11,6 +11,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
@@ -20,7 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class controller {
+public class controller implements Initializable{
 
     @FXML
     Hyperlink register;
@@ -34,11 +35,18 @@ public class controller {
     TextField username;
     @FXML
     TextField password;
+    @FXML
+    Text invalid;
 
     String sessionCookie = "";
 
     public static Stage stage = null;
 
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1){
+        invalid.setVisible(false);
+    }
     public void handleClose(){
         System.exit(0);
     }
@@ -100,8 +108,25 @@ public class controller {
             }
 
         }
+        else if(getUsername().equals("") && getPassword().equals("") ){
+            invalid.setText("Fill in username and password");
+            invalid.setVisible(true);
+        }
+
+           else if(!getUsername().equals("") && getPassword().equals("") ){
+                invalid.setText("Fill in password");
+                invalid.setVisible(true);
+
+        }
+
+        else if(getUsername().equals("") && !getPassword().equals("") ) {
+            invalid.setText("Fill in username");
+            invalid.setVisible(true);
+        }
+
         else{
-                clearFields();
+                invalid.setText("Username or password is incorrect");
+                invalid.setVisible(true);
 
         }
 
