@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#movingHome" prefHeight="954.0" prefWidth="1398.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HomepageController">
    <children>
@@ -22,8 +31,9 @@
         <tabs>
           <Tab text="Profile">
                <content>
-                  <AnchorPane prefHeight="701.0" prefWidth="689.0" style="-fx-background-color: #1D7874;">
+                  <AnchorPane prefHeight="701.0" prefWidth="689.0">
                      <children>
+                        <Pane layoutX="-1.0" layoutY="-2.0" prefHeight="709.0" prefWidth="717.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;" />
                         <Text fill="WHITE" layoutX="144.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THIS IS THE PROFILE PANE">
                            <font>
                               <Font name="System Bold" size="34.0" />
@@ -35,8 +45,9 @@
             </Tab>
           <Tab text="LeaderBoard">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1D7874;">
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
+                        <Pane layoutX="-1.0" layoutY="-4.0" prefHeight="707.0" prefWidth="717.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;" />
                         <Text fill="WHITE" layoutX="120.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THIS IS THE LEADERBOARD PANE">
                            <font>
                               <Font name="System Bold" size="30.0" />
@@ -48,8 +59,9 @@
             </Tab>
             <Tab text="Settings">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #1D7874;">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
+                        <Pane layoutX="-1.0" layoutY="-4.0" prefHeight="707.0" prefWidth="717.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;" />
                         <Text fill="WHITE" layoutX="172.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THIS IS THE SETTINGS PANE">
                            <font>
                               <Font name="System Bold" size="30.0" />
@@ -66,15 +78,28 @@
             <Font size="50.0" />
          </font>
       </Text>
-      <AnchorPane layoutX="894.0" layoutY="142.0" prefHeight="743.0" prefWidth="425.0" style="-fx-background-color: #1D7874;">
+      <Pane layoutX="881.0" layoutY="139.0" prefHeight="757.0" prefWidth="441.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8; -fx-background-radius: 10;" />
+      <AnchorPane layoutX="894.0" layoutY="142.0" prefHeight="743.0" prefWidth="425.0">
          <children>
             <Text fill="WHITE" layoutX="136.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Activity">
                <font>
                   <Font size="28.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="14.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What green move have you done today ?" />
-            <ComboBox fx:id="comboBox" layoutX="29.0" layoutY="106.0" prefWidth="150.0" />
+            <Text fill="WHITE" layoutX="14.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What green move have you done today ?" wrappingWidth="196.19432661682367" />
+            <ComboBox fx:id="comboBox" layoutX="210.0" layoutY="92.0" prefHeight="31.0" prefWidth="196.0" />
+            <Button layoutX="330.0" layoutY="128.0" mnemonicParsing="false" onMouseClicked="#activityChoosed" prefHeight="31.0" prefWidth="76.0" text="Submit" />
+            <VBox layoutX="13.0" layoutY="166.0" prefHeight="550.0" prefWidth="395.0" spacing="10.0">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <Text fx:id="activityText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="373.6708984375" />
+                  <HBox fx:id="hBox" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin></HBox>
+               </children></VBox>
          </children>
       </AnchorPane>
    </children>
