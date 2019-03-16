@@ -7,22 +7,15 @@ import org.springframework.http.MediaType;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.WebUtils;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.Principal;
-import java.util.*;
+import java.util.Scanner;
 
 public class Client {
 
     private static final String url_login = "http://localhost:8080/login";
     private static final String url_check = "http://localhost:8080/check";
-
+    private static final String url_categories = "http://localhost:8080/getcategories";
+    private static final String url_activity = "http://localhost:8080/activity";
 
 
     /**
@@ -33,84 +26,105 @@ public class Client {
 
         System.out.println("Hello user, please insert your credentials.");
         Scanner sc = new Scanner(System.in);
-
-
         System.out.print("Username: ");
         String username = sc.nextLine();
         System.out.print("Password: ");
         String password = sc.nextLine();
 
         String sessionCookie = getSessionCookie(username, password);
+        System.out.println(sessionCookie);
+        System.out.println(checkAuth(sessionCookie));
+        //System.out.println(getCategories(sessionCookie));
+        System.out.println("1 - Eating a vegetarian meal");
+        System.out.println("2 - Buying local produce\n3 - Using bike instead of car\n4 - Using public transport instead of car\n" + "5 - Installing solar panels\n" + "6 - Lowering the temperature of your home");
 
-        for (int i = 1; i <= 3 && sessionCookie == null; i++) {
-            System.out.println("Sorry, you typed wrong username or password.\nPlease try again!\n\n");
+        System.out.println("Which kind of activity would you like to add?");
+        long categoryId = sc.nextLong();
+        System.out.println("How many times have you performed that activity?");
+        long amount = sc.nextLong();
 
-            System.out.print("Username: ");
-            username = sc.nextLine();
-            System.out.print("Password: ");
-            password = sc.nextLine();
-            sessionCookie = getSessionCookie(username, password);
-        }
-
-        if (sessionCookie == null)
-            System.out.println("Sorry, we can't recognize you.");
-        else
-            System.out.println(checkAuth(sessionCookie));
+        sc.close();
+        System.out.println(addActivity(sessionCookie, categoryId, amount));
 
     }
 
-    /**
-     * Method that returns session cookies.
-     * @param username username of the user
-     * @param password password of the user
-     * @return returns the session cookie
-     */
-    public static String getSessionCookie(String username, String password) {
-
-        HttpHeaders headers = new HttpHeaders();
-
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("username", username);
-        params.add("password", password);
-
-        headers.add("Accept", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        // Data attached to the request.
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
-
-        HttpEntity<String> response = restTemplate.exchange(url_login,
-                HttpMethod.POST, request, String.class);
-        HttpHeaders responseHeaders = response.getHeaders();
-        String sessionCookie =
-                responseHeaders.getFirst(HttpHeaders.SET_COOKIE);//.split(";")[0];//.substring(12);
-
-
-        return sessionCookie;
-
-    }
-
-    /**
-     * Class that checks authentication.
-     * @param sessionCookie cookie of the session
-     * @return returns the http message
-     */
-    public static String checkAuth(String sessionCookie) {
+    public static HttpHeaders setHeaders(String sessionCookie) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Accept", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
         headers.add("Cookie", sessionCookie);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        return headers;
+
+    }
+
+    public static HttpEntity<String> getRequest(String sessionCookie, String url) {
+
+        HttpHeaders headers = setHeaders(sessionCookie);
         RestTemplate restTemplate = new RestTemplate();
 
         // Data attached to the request.
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(headers);
 
-        HttpEntity<String> response =
-                restTemplate.exchange(url_check, HttpMethod.GET, request, String.class);
+        return restTemplate.exchange(url, HttpMethod.GET, request, String.class);
 
+    }
+
+    public static HttpEntity<String> postRequest(String sessionCookie, String url, MultiValueMap<String, Object> params) {
+
+        HttpHeaders headers = setHeaders(sessionCookie);
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Data attached to the request.
+        HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(params, headers);
+
+        return restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+
+    }
+
+    // With login data the method retrieves its session cookie.
+    public static String getSessionCookie(String username, String password) {
+
+        MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
+        params.add("username", username);
+        params.add("password", password);
+
+        HttpEntity<String> response = postRequest("", url_login, params);
+        HttpHeaders responseHeaders = response.getHeaders();
+        if (responseHeaders.getFirst(HttpHeaders.SET_COOKIE) != null) {
+            return responseHeaders.getFirst(HttpHeaders.SET_COOKIE).split(";")[0];
+        }
+
+        else return "No cookie found.";
+
+    }
+
+        // Test method just to check whether the session cookies are working or not.
+    public static String checkAuth(String sessionCookie){
+
+        HttpEntity<String> response = getRequest(sessionCookie, url_check);
+
+        return response.getBody();
+    }
+
+    // Method used to display the list of categories, just if the session is authenticated.
+    public static String getCategories(String sessionCookie) {
+
+        HttpEntity<String> categories = getRequest(sessionCookie, url_categories);
+
+        return categories.getBody().replaceFirst("\n", "");
+
+    }
+
+    // Method used to add an activity in the database given a session, a category id and the amount of times that activity has been made.
+    public static String addActivity(String sessionCookie, long categoryId, long amount) {
+
+        MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
+        params.add("category_id", categoryId);
+        params.add("amount", amount);
+
+        HttpEntity<String> response = postRequest(sessionCookie, url_activity, params);
 
         return response.getBody();
 

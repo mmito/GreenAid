@@ -13,11 +13,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan(basePackages = "app.authentication")
 public class SpringServer extends SpringBootServletInitializer {
 
-    /*@Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(SpringServer.class);
-    }*/
-
     /**
      * Class that starts the client.
      * @param args arguments of the main method.
