@@ -19,21 +19,9 @@ public class Activity {
 
     private long user_id;
     private long category_id;
-    private long amount;
+    private double amount;
     private double xp_points;
     private Timestamp last_update;
-
-    @Transient
-    private String username;
-    @Transient
-    private String category;
-
-    /*public Activity(String username, String category, int amount, double xp_points){
-
-
-
-
-    }*/
 
     public long getUser_id() {
         return user_id;
@@ -75,11 +63,11 @@ public class Activity {
         this.id = id;
     }
 
-    public long getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 }

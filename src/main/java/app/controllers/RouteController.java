@@ -145,7 +145,7 @@ public class RouteController {
 
         for (Activity a : activities) {
 
-            long amount = a.getAmount();
+            double amount = a.getAmount();
             double xp_points = a.getXp_points();
             String category = "";
             switch ((int)a.getCategory_id()) {

@@ -32,14 +32,8 @@
 
         <!--java.version>1.8</java.version-->
     </properties>
-    <!-- mysql connection info -->
-    <dependencies>
-        <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.46</version>
-    </dependency>
 
+    <dependencies>
         <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
             <groupId>junit</groupId>

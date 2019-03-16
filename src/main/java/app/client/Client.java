@@ -40,7 +40,7 @@ public class Client {
         System.out.println("Which kind of activity would you like to add?");
         long categoryId = sc.nextLong();
         System.out.println("How many times have you performed that activity?");
-        long amount = sc.nextLong();
+        double amount = sc.nextDouble();
 
         sc.close();
         System.out.println(addActivity(sessionCookie, categoryId, amount));
@@ -101,8 +101,6 @@ public class Client {
 
     }
 
-    // With login data the method retrieves its session cookie.
-
     /**
      * Method that retrieves its session cookie with the login data.
      * @param username username of the user
@@ -138,8 +136,6 @@ public class Client {
         return (String) response.getBody().getData();
     }
 
-    // Method used to display the list of categories, just if the session is authenticated.
-
     /**
      * Method used to display the list of categories, just if the session is authenticated.
      * @param sessionCookie sessionCookie is used for checking
@@ -153,6 +149,8 @@ public class Client {
 
     }
 
+    // Method used to add an activity in the database given a session, a category id and the amount of times that activity has been made.
+    public static String addActivity(String sessionCookie, long categoryId, double amount) {
 
     /**
      * Method used to add an activity in the database given a session, a category id
@@ -162,7 +160,6 @@ public class Client {
      * @param amount amount of the activity
      * @return returns the data of the added activity
      */
-    public static String addActivity(String sessionCookie, long categoryId, long amount) {
 
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("category_id", categoryId);
