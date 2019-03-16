@@ -18,8 +18,10 @@ public class JavaFXMain extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("logIn.fxml"));
-            primaryStage.setScene(new Scene(root, 760.0, 420.0));
+            //Parent root = FXMLLoader.load(getClass().getResource("logIn.fxml"));
+            //primaryStage.setScene(new Scene(root, 760.0, 420.0));
+            Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+            primaryStage.setScene(new Scene(root, 1398, 954));
             primaryStage.initStyle(StageStyle.UNDECORATED);
             this.stage = primaryStage;
 
