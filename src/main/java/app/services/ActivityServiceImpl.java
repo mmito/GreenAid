@@ -23,6 +23,11 @@ public class ActivityServiceImpl {
 
     }
 
+    /**
+     * Method that finds a user by his/her ID.
+     * @param userId id of the user
+     * @return returns the ID of the user.
+     */
     public List<Activity> findByUser_id(long userId) {
 
         return activityRepository.findByUser_id(userId);

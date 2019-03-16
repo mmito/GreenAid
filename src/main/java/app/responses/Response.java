@@ -6,6 +6,9 @@ public class Response {
 
     private Object data;
 
+    /**
+     * Constructor of the class.
+     */
     public Response() {
 
         this.ok = false;
