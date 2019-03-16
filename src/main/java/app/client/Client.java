@@ -99,7 +99,7 @@ public class Client {
 
     }
 
-        // Test method just to check whether the session cookies are working or not.
+    // Test method just to check whether the session cookies are working or not.
     public static String checkAuth(String sessionCookie){
 
         HttpEntity<Response> response = getRequest(sessionCookie, url_check);
@@ -131,9 +131,9 @@ public class Client {
 
     public static List<ActivityProjection> getUserActivities(String sessionCookie) {
 
-       HttpEntity<Response> response = getRequest(sessionCookie, url_user_activities);
+        HttpEntity<Response> response = getRequest(sessionCookie, url_user_activities);
 
-       return ((List<ActivityProjection>) response.getBody().getData());
+        return ((List<ActivityProjection>) response.getBody().getData());
 
     }
 
