@@ -168,7 +168,7 @@ public class HomepageController implements Initializable {
         double amount = spinner.getValue();
 
         Client.addActivity(sessionCookie, categoryId, amount);
-
+        test.setText(Client.getUserActivities(controller.sessionCookie));
     }
 
 
