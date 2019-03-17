@@ -26,37 +26,49 @@ In today's world, the carbon dioxide consumption is increasing day by day. Unfor
 
 
 ## Design Goals
-1- Creating a simple, clean, good-looking GUI.
-2- Keeping the code quality up as much as possible. Not writing any spaghetti code.
-3- Writing quality tests and having a sufficient code/test coverage.
-4- Having a user-friendly user-interface.
-5- Having an efficient and clear database that obeys ACID properties.
+ 1- Creating a simple, clean, good-looking GUI.
+ 2- Keeping the code quality up as much as possible. Not writing any spaghetti code.
+ 3- Writing quality tests and having a sufficient code/test coverage.
+ 4- Having a user-friendly user-interface.
+ 5- Having an efficient and clear database that obeys ACID properties.
 ## Text Files about Project
-1- Proof of choice report:
-2- Responsible Computer Science Report:
-3- Personal Growth Report:
+ 1- Proof of choice report:
+ 2- Responsible Computer Science Report:
+ 3- Personal Growth Report:
 
 ## Getting started/Installation
 
 ## Example Code Usage/Screenshots from the app
 
 ## Libraries/Frameworks used
-1- Spring 
-2- Hibernate
-3- JavaFX
-4- Something for recommendation engine
+ 1- Spring 
+ 2- Hibernate
+ 3- JavaFX
+ 4- Something for recommendation engine
 
 ## Tests
 
 **Checkstyle**:  
-Run `maven site`
+Run `mvn site`
 
 
 **JUNIT Test**:
 If the test is a JUnit test, you can run the them by simply clicking right to that file and select `Run as Junit test`
 
+Run `mvn test` to create a branch/code coverage.
+
 ## Layout of internal code tree
 
+    		SRC
+    		/ \ 
+    	   /   \
+    	  GUI  APP-->tests for everything
+    	       /  \
+    	   Client Server->Security Configurations
+    	   		   /   \
+    	   		  /   Communication with database
+    	   		 /  
+    	 Authentication/Authorization
 ## Group members
 
 #### Tommaso Tofacchi netID: ttofacchi - 4933249
