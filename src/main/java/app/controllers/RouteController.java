@@ -179,7 +179,15 @@ public class RouteController {
 
         }
 
-        return new Response(true, response);
+        String result = "Your activities are: \n";
+        int i = 1;
+        for (ActivityProjection a : response) {
+
+            result += i + " - " + a.getCategory() + " done " + a.getAmount() + " times and it gave you " + a.getXp_points() + " XP points.\n";
+            i++;
+        }
+
+        return new Response(true, result);
 
     }
 
