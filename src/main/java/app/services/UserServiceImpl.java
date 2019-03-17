@@ -4,6 +4,7 @@ import app.authentication.SecurityServiceImpl;
 import app.models.User;
 import app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,13 @@ public class UserServiceImpl {
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+    }
+
+    public void delete(User user) {
+        if (this.findByUsername(user.getUsername()) != null)
+            userRepository.delete(user);
+        else
+            throw new UsernameNotFoundException("Username not found");
     }
 
     public User findByUsername(String username) {
