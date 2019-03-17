@@ -40,6 +40,13 @@ In today's world, the carbon dioxide consumption is increasing day by day. Unfor
 
 ## Example Code Usage/Screenshots from the app
 
+### Login
+<img src="/images/login.jpg">
+
+### Sign-up
+<img src="/images/signup.jpg">
+
+
 ## Libraries/Frameworks used
  1. Spring 
  2. Hibernate
