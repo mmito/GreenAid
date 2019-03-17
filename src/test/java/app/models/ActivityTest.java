@@ -4,25 +4,31 @@ package app.models;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 public class ActivityTest {
 
-
-    /*@Test
-    public void getConstructor() {
-        Activity a = new Activity("audi", "34.5");
-
-        Assert.assertEquals("audi", a.getName());
-        Assert.assertEquals("34.5", a.getCo2());
-    }
-
     @Test
-    public void getSetters() {
-        Activity a = new Activity("audi", "34.5");
+    public void setConstructor() {
+        Activity a = new Activity();
 
-        a.setName("ford");
-        a.setCo2("12.5");
-        Assert.assertEquals("ford", a.getName());
-        Assert.assertEquals("12.5", a.getCo2());
-    }*/
+        Date now = new Date();
+        Timestamp timestamp = new Timestamp(now.getTime());
+
+        a.setId(0);
+        a.setUser_id(11);
+        a.setCategory_id(22);
+        a.setAmount(33.44);
+        a.setXp_points(55.66);
+        a.setLast_update(timestamp);
+
+        Assert.assertEquals(0, a.getId());
+        Assert.assertEquals(11, a.getUser_id());
+        Assert.assertEquals(22, a.getCategory_id());
+        Assert.assertEquals(33.44, a.getAmount(), 0.001);
+        Assert.assertEquals(55.66, a.getXp_points(), 0.001);
+        Assert.assertEquals(timestamp, a.getLast_update());
+    }
 
 }

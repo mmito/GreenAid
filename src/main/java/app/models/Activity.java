@@ -35,7 +35,7 @@ public class Activity {
         return category_id;
     }
 
-    public void setCategory_id(Long category_id) {
+    public void setCategory_id(long category_id) {
         this.category_id = category_id;
     }
 
