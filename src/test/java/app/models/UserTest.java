@@ -115,6 +115,35 @@ public class UserTest {
         Timestamp expected = new Timestamp(date.getTime());
         user.setLast_update(new Timestamp(date.getTime()));
         assertEquals(expected, user.getLast_update());
+    }
 
+    @Test
+    public void equalsSameUser() {
+        assertTrue(user.equals(user));
+    }
+
+    @Test
+    public void equalsNullObject() {
+        assertFalse(user.equals(null));
+    }
+
+    @Test
+    public void equalsDifferentClass() {
+        Object user2 = new String();
+        assertFalse(user.equals(user2));
+    }
+
+    @Test
+    public void equalsDifferentUser() {
+        User user2 = new User();
+        user2.setId(2);
+        assertFalse(user.equals(user2));
+    }
+
+    @Test
+    public void equalsTrue() {
+        User user2 = new User();
+        user2.setId(1);
+        assertTrue(user.equals(user2));
     }
 }

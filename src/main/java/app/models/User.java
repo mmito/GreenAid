@@ -1,6 +1,7 @@
 package app.models;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -89,4 +90,13 @@ public class User {
     public void setLast_update(@SuppressWarnings("CheckStyle") Timestamp last_update) {
         this.last_update = last_update;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id;
+    }
+
 }
