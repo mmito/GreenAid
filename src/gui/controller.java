@@ -38,10 +38,11 @@ public class controller implements Initializable{
     @FXML
     Text invalid;
 
-    String sessionCookie = "";
+    public static String sessionCookie = null;
 
     public static Stage stage = null;
 
+    public static String Name = null;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
@@ -76,7 +77,9 @@ public class controller implements Initializable{
         }
     }
 
+
     public String getUsername() {
+        this.Name = username.getText();
         return username.getText();
 
     }
@@ -91,7 +94,9 @@ public class controller implements Initializable{
 
         if(!response.equals("No cookie found.")){
 
-            sessionCookie = response;
+            this.sessionCookie= response;
+
+
             try{
                 Window window = login.getScene().getWindow();
                 Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
@@ -132,4 +137,6 @@ public class controller implements Initializable{
 
 
     }
+
+
 }
