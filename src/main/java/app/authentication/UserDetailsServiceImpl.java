@@ -28,8 +28,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),
-                user.getPassword(), getAuthorities());
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                getAuthorities()
+        );
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {

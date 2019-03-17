@@ -24,9 +24,9 @@ public class ActivityServiceImpl {
     }
 
     /**
-     * Method that finds a user by his/her ID.
+     * Method that finds a user by his/her activities.
      * @param userId id of the user
-     * @return returns the ID of the user.
+     * @return returns the activities of the user.
      */
     public List<Activity> findByUser_id(long userId) {
 
