@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.awt.event.ActionEvent;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -85,6 +86,7 @@ public class RouteController {
     public Response activity(Activity activity) throws Exception {
 
         try {
+
 
             String username = securityService.findLoggedInUsername();
             //User user = userService.findByUsername(username);
@@ -179,6 +181,23 @@ public class RouteController {
 
         return new Response(true, response);
 
+    }
+
+    @GetMapping("/userfirst")
+    public Response getUserFirst() {
+
+        User user = userService.findByUsername(securityService.findLoggedInUsername());
+
+        return new Response(true, user.getFirst_name());
+
+
+    }
+
+    @GetMapping("/userlast")
+    public Response getUserLast() {
+
+        User user = userService.findByUsername(securityService.findLoggedInUsername());
+        return new Response(true, user.getLast_name());
     }
 
 }

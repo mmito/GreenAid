@@ -23,6 +23,7 @@ public class Activity {
     private double xp_points;
     private Timestamp last_update;
 
+
     public long getUser_id() {
         return user_id;
     }

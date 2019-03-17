@@ -1,5 +1,6 @@
 package app.client;
 
+import app.models.User;
 import app.responses.Response;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +20,8 @@ public class Client {
     private static final String url_categories = "http://localhost:8080/getcategories";
     private static final String url_add_activity = "http://localhost:8080/activity";
     private static final String url_user_activities = "http://localhost:8080/showactivities";
+    private static  final String url_user_first = "http://localhost:8080/userfirst";
+    private static  final String url_user_last = "http://localhost:8080/userlast";
 
     /**
      * Main method that starts a client login page.
@@ -181,6 +184,21 @@ public class Client {
         HttpEntity<Response> response = getRequest(sessionCookie, url_user_activities);
 
         return (List<ActivityProjection>) response.getBody().getData();
+
+    }
+
+    public static String getUserFirst(String sessionCookie) {
+
+        HttpEntity<Response> response = getRequest(sessionCookie, url_user_first);
+
+        return (String) response.getBody().getData();
+
+    }
+
+    public static String getUserLast(String sessionCookie){
+
+        HttpEntity<Response> response = getRequest(sessionCookie, url_user_last);
+        return  (String) response.getBody().getData();
 
     }
 

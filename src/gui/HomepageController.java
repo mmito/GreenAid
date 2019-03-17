@@ -1,13 +1,23 @@
+import app.client.Client;
+import app.models.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+
 import java.net.URL;
+import java.util.PrimitiveIterator;
 import java.util.ResourceBundle;
 
 public class HomepageController implements Initializable {
@@ -15,19 +25,38 @@ public class HomepageController implements Initializable {
     @FXML
     private AnchorPane pane;
     @FXML
-    private ComboBox<String> comboBox;
+    ComboBox<String> comboBox;
+    @FXML
+    private ImageView Home;
+
     @FXML
     private Text activityText;
     @FXML
     private HBox hBox;
+    @FXML
+    private Text  field;
+    @FXML
+    private Text firstName;
+    @FXML
+    private Text lastName;
 
     private double xOffset;
     private double yOffset;
 
+    private long categoryId;
+
+
+
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
+        field.setText(controller.Name);
         comboBox.getItems().removeAll(comboBox.getItems());
         comboBox.getItems().addAll("Eating A Vegetarian Meal", "Buying Local Produce", "Using Bike Instead of Car", "Using Public transports instead of Car", "Installing Solar Panels", "Lowering the Temperature of your Home");
+
+        firstName.setText(Client.getUserFirst(controller.sessionCookie));
+        lastName.setText(Client.getUserLast(controller.sessionCookie));
+
     }
 
     public void handleClose() {
@@ -45,32 +74,66 @@ public class HomepageController implements Initializable {
             controller.stage.setY(event.getScreenY() + yOffset);
         });
     }
+    @FXML
+    private void Home(){
+
+        Window window = Home.getScene().getWindow();
+        Stage stage = JavaFXMain.stage;
+        stage.show();
+        window.hide();
+    }
 
     public void activityChoosed(){
 
         String activity = comboBox.getValue();
 
+        switch(activity) {
+
+            case "Eating A Vegetarian Meal":
+                categoryId = 1;
+                break;
+            case "Buying Local Produce":
+                categoryId = 2;
+                break;
+            case "Using Bike Instead of Car":
+                categoryId = 3;
+                break;
+            case "Using Public transports instead of Car" :
+                categoryId = 4;
+                break;
+            case "Installing Solar Panels":
+                categoryId = 5;
+                break;
+            case "Lowering the Temperature of your Home":
+                categoryId = 6;
+                break;
+
+        }
+
+
         Button addActivity = new Button("Add Activity !");
+        Spinner<Double> spinner = new Spinner<>();
+
 
         hBox.getChildren().clear();
 
         if (!(activity.equals("Using Bike Instead of Car") || activity.equals("Using Public transports instead of Car"))) {
-            Spinner<Integer> spinner = new Spinner<>();
+
             spinner.setEditable(true);
-            SpinnerValueFactory<Integer> spinnerVal = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1);
+            SpinnerValueFactory<Double> spinnerVal = new SpinnerValueFactory.DoubleSpinnerValueFactory(1, Double.MAX_VALUE, 1);
             spinner.setValueFactory(spinnerVal);
 
 
             hBox.getChildren().addAll(spinner, addActivity);
         }
         else {
-            Spinner<Double> spinnerDouble = new Spinner<>();
-            spinnerDouble.setEditable(true);
+
+            spinner.setEditable(true);
             SpinnerValueFactory<Double> spinnerDoubleVal = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, Double.MAX_VALUE, 0.1);
-            spinnerDouble.setValueFactory(spinnerDoubleVal);
+            spinner.setValueFactory(spinnerDoubleVal);
 
 
-            hBox.getChildren().addAll(spinnerDouble, addActivity);
+            hBox.getChildren().addAll(spinner, addActivity);
         }
 
         if(activity.equals("Eating A Vegetarian Meal")){
@@ -88,7 +151,23 @@ public class HomepageController implements Initializable {
         else if(activity.equals("Lowering the Temperature of your Home")){
             activityText.setText("Since how many days have you been lowering your home's temperature ?");
         }
+
+        addActivity.setOnMouseClicked(event ->{
+
+            postActivity(controller.sessionCookie, categoryId, spinner);
+
+        });
+
     }
+
+    public void postActivity(String sessionCookie, long categoryId, Spinner<Double> spinner) {
+
+        double amount = spinner.getValue();
+
+        Client.addActivity(sessionCookie, categoryId, amount);
+
+    }
+
 
 }
 
