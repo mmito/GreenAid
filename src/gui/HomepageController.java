@@ -39,6 +39,8 @@ public class HomepageController implements Initializable {
     private Text firstName;
     @FXML
     private Text lastName;
+    @FXML
+    private Text test;
 
     private double xOffset;
     private double yOffset;
@@ -56,6 +58,7 @@ public class HomepageController implements Initializable {
 
         firstName.setText(Client.getUserFirst(controller.sessionCookie));
         lastName.setText(Client.getUserLast(controller.sessionCookie));
+        test.setText(Client.getUserActivities(controller.sessionCookie));
 
     }
 

@@ -179,11 +179,11 @@ public class Client {
      * @param sessionCookie uses sessionCookies to achieve this.
      * @return returns the list of the activities done by the user
      */
-    public static List<ActivityProjection> getUserActivities(String sessionCookie) {
+    public static String getUserActivities(String sessionCookie) {
 
         HttpEntity<Response> response = getRequest(sessionCookie, url_user_activities);
 
-        return (List<ActivityProjection>) response.getBody().getData();
+        return (String) response.getBody().getData();
 
     }
 
