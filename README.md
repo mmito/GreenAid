@@ -59,16 +59,16 @@ Run `mvn test` to create a branch/code coverage.
 
 ## Layout of internal code tree
 
-    		SRC
-    		/ \ 
-    	   /   \
-    	  GUI  APP-->tests for everything
-    	       /  \
-    	   Client Server->Security Configurations
-    	   		   /   \
-    	   		  /   Communication with database
-    	   		 /  
-    	 Authentication/Authorization
+    		SOURCE FOLDER
+    	    	    /   \ 
+    	           /     \
+    	         GUI   APP-->tests for everything
+    	                /  \
+    	            Client Server->Security Configurations
+    	   		              /   \
+    	   		             /   Communication with database
+    	   		            /  
+    	     Authentication/Authorization
 ## Group members
 
 #### Tommaso Tofacchi netID: ttofacchi - 4933249
