@@ -55,7 +55,7 @@ public class RouteController {
         if (securityService.findLoggedInUsername() != null) {
             return new Response(true, "Your username is:" + securityService.findLoggedInUsername());
         } else {
-            return new Response(true, "User not logged in");
+            return new Response(false, "User not logged in");
         }
     }
 
@@ -83,33 +83,20 @@ public class RouteController {
      * @throws Exception throws exception in case things go wrong.
      */
     @PostMapping("/activity")
-    public Response activity(Activity activity) throws Exception {
+    public Response activity(Activity activity) {
 
-        try {
-
-
-            String username = securityService.findLoggedInUsername();
-            //User user = userService.findByUsername(username);
-
+        String username = securityService.findLoggedInUsername();
+        if (username != null) {
             activity.setUser_id(userService.findByUsername(username).getId());
             activity.setXp_points(categoryRepository.findById(activity
                     .getCategory_id()).getXp_points() * activity.getAmount());
             activityService.save(activity);
 
-            // The following method to update a user's EXP Points doesn't work:
-            // it re-saves the whole user's account, meaning that it re-saves the
-            // password re-encrypting the already encrypted password...
-            // We need to set a trigger on the database for that.
-            //user.setExperience_points(userService
-            // .findByUsername(username).getExperience_points() + activity.getXp_points());
-            //userService.save(user);
-
             return new Response(true, "Activity \""
                     + categoryRepository.findById(activity.getCategory_id()).getName() + "\" saved successfully!");
-
-        } catch (Exception e) {
-            return new Response(false, e);
         }
+        else
+            return new Response(false, "You are not authorized");
     }
 
     /**
@@ -119,16 +106,22 @@ public class RouteController {
     @GetMapping("/getcategories")
     public Response getCategories() {
 
-        List<Category> categories = categoryRepository.findAll();
-        String response = "";
-        for (Category c : categories) {
+        User user = userService.findByUsername(securityService.findLoggedInUsername());
 
-            response += "\n" + c.getId() + " - " + c.getName();
+        if (user != null) {
+            List<Category> categories = categoryRepository.findAll();
+            String response = "";
+            for (Category c : categories) {
 
+                response += "\n" + c.getId() + " - " + c.getName();
+
+            }
+
+            return new Response(true, response);
         }
-
-        return new Response(true, response);
-
+        else {
+            return new Response(false, "You are not authorized!");
+        }
     }
 
     /**
@@ -140,55 +133,59 @@ public class RouteController {
 
         User user = userService.findByUsername(securityService.findLoggedInUsername());
 
-        String username = user.getUsername();
+        if (user != null) {
+            String username = user.getUsername();
 
-        List<Activity> activities = activityService.findByUser_id(user.getId());
-        List<ActivityProjection> response = new LinkedList<>();
+            List<Activity> activities = activityService.findByUser_id(user.getId());
+            List<ActivityProjection> response = new LinkedList<>();
 
-        for (Activity a : activities) {
+            for (Activity a : activities) {
 
-            double amount = a.getAmount();
-            double xp_points = a.getXp_points();
-            String category = "";
-            switch ((int)a.getCategory_id()) {
+                double amount = a.getAmount();
+                double xp_points = a.getXp_points();
+                String category = "";
+                switch ((int) a.getCategory_id()) {
 
-                case 1:
-                    category = "Eating a vegetarian meal";
-                    break;
-                case 2:
-                    category = "Buying local produce";
-                    break;
-                case 3:
-                    category = "Using bike instead of car";
-                    break;
-                case 4:
-                    category = "Using public transport instead of car";
-                    break;
-                case 5:
-                    category = "Installing solar panels";
-                    break;
-                case 6:
-                    category = "Lowering the temperature of your home";
-                    break;
-                default:
-                    category = "unknown";
+                    case 1:
+                        category = "Eating a vegetarian meal";
+                        break;
+                    case 2:
+                        category = "Buying local produce";
+                        break;
+                    case 3:
+                        category = "Using bike instead of car";
+                        break;
+                    case 4:
+                        category = "Using public transport instead of car";
+                        break;
+                    case 5:
+                        category = "Installing solar panels";
+                        break;
+                    case 6:
+                        category = "Lowering the temperature of your home";
+                        break;
+                    default:
+                        category = "unknown";
+
+                }
+
+                response.add(new ActivityProjection(username, category, amount, xp_points));
 
             }
 
-            response.add(new ActivityProjection(username, category, amount, xp_points));
+            String result = "Your activities are: \n";
+            int i = 1;
+            for (ActivityProjection a : response) {
 
+                result += i + " - " + a.getCategory() + " done " + a.getAmount() + " times and it gave you " + a.getXp_points() + " XP points.\n";
+                i++;
+            }
+
+            return new Response(true, result);
         }
-
-        String result = "Your activities are: \n";
-        int i = 1;
-        for (ActivityProjection a : response) {
-
-            result += i + " - " + a.getCategory() + " done " + a.getAmount() + " times and it gave you " + a.getXp_points() + " XP points.\n";
-            i++;
+        else {
+            return new Response(false, "You are not authorized!");
         }
-
-        return new Response(true, result);
-
     }
 
     @GetMapping("/userfirst")
@@ -196,8 +193,10 @@ public class RouteController {
 
         User user = userService.findByUsername(securityService.findLoggedInUsername());
 
-        return new Response(true, user.getFirst_name());
-
+        if (user != null)
+            return new Response(true, user.getFirst_name());
+        else
+            return new Response(false, "You are not authorized");
 
     }
 
@@ -205,7 +204,11 @@ public class RouteController {
     public Response getUserLast() {
 
         User user = userService.findByUsername(securityService.findLoggedInUsername());
-        return new Response(true, user.getLast_name());
+
+        if (user != null)
+            return new Response(true, user.getLast_name());
+        else
+            return new Response(false, "You are not authorized");
     }
 
 }
