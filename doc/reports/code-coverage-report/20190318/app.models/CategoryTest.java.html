@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CategoryTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">template$All_in_template__1_.exec</a> &gt; <a href="index.source.html" class="el_package">app.models</a> &gt; <span class="el_source">CategoryTest.java</span></div><h1>CategoryTest.java</h1><pre class="source lang-java linenums">package app.models;
+
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import org.junit.Assert;
+import org.junit.Test;
+
+<span class="fc" id="L7">public class CategoryTest {</span>
+
+    @Test
+    public void setConstructor() {
+<span class="fc" id="L11">        Category c = new Category();</span>
+
+<span class="fc" id="L13">        c.setName(&quot;eating&quot;);</span>
+<span class="fc" id="L14">        c.setId(0);</span>
+<span class="fc" id="L15">        c.setAmount_saved(200);</span>
+<span class="fc" id="L16">        c.setXp_points(50);</span>
+<span class="fc" id="L17">        c.setCategory_type_id(5);</span>
+
+<span class="fc" id="L19">        Assert.assertEquals(&quot;eating&quot;, c.getName());</span>
+<span class="fc" id="L20">        Assert.assertEquals(0, c.getId());</span>
+<span class="fc" id="L21">        Assert.assertEquals(200, c.getAmount_saved());</span>
+<span class="fc" id="L22">        Assert.assertEquals(50, c.getXp_points(), 0.001);</span>
+<span class="fc" id="L23">        Assert.assertEquals(5, c.getCategory_type_id());</span>
+
+<span class="fc" id="L25">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

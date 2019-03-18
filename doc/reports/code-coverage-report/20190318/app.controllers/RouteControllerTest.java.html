@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RouteControllerTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">template$All_in_template__1_.exec</a> &gt; <a href="index.source.html" class="el_package">app.controllers</a> &gt; <span class="el_source">RouteControllerTest.java</span></div><h1>RouteControllerTest.java</h1><pre class="source lang-java linenums">package app.controllers;
+
+import app.authentication.SecurityServiceImpl;
+import app.repository.ActivityRepository;
+import app.repository.CategoryRepository;
+import app.repository.FriendshipRepository;
+import app.services.ActivityServiceImpl;
+import app.services.UserServiceImpl;
+import app.models.User;
+import app.repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import org.apache.commons.codec.binary.Base64;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.nio.charset.Charset;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+
+@RunWith(SpringRunner.class)
+@WebMvcTest(RouteController.class)
+<span class="fc" id="L35">public class RouteControllerTest {</span>
+
+    private static final String USER_NAME = &quot;tommy&quot;;
+    private static final String PASSWORD = &quot;123&quot;;
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockBean
+    private UserServiceImpl userService;
+
+    @MockBean
+    private SecurityServiceImpl securityService;
+
+    @MockBean
+    private UserRepository userRepository;
+
+    @MockBean
+    private FriendshipRepository friendshipRepository;
+
+    @MockBean
+    private ActivityServiceImpl activityService;
+
+    @MockBean
+    private CategoryRepository categoryRepository;
+
+    @MockBean
+    private ActivityRepository activityRepository;
+
+    @Test
+    public void clientErrorOnRoot() throws Exception {
+
+<span class="fc" id="L67">        this.mockMvc.perform(get(&quot;/&quot;).accept(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L68">                .andExpect(status().is4xxClientError());</span>
+<span class="fc" id="L69">    }</span>
+
+    @Test
+    @WithMockUser(value = &quot;spring&quot;)
+    public void welcomeEndpoint() throws Exception {
+
+<span class="fc" id="L75">        this.mockMvc.perform(get(&quot;/welcome&quot;).accept(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L76">                .andExpect(status().isOk())</span>
+<span class="fc" id="L77">                .andExpect(content().string(&quot;{\&quot;ok\&quot;:true,\&quot;data\&quot;:\&quot;welcome\&quot;}&quot;));</span>
+<span class="fc" id="L78">    }</span>
+
+    @Test
+    @WithMockUser(value = &quot;spring&quot;)
+    public void userfirstEndpoint() throws Exception {
+
+<span class="fc" id="L84">        User u = new User();</span>
+<span class="fc" id="L85">        u.setFirst_name(&quot;John&quot;);</span>
+<span class="fc" id="L86">        Mockito.when(securityService.findLoggedInUsername()).thenReturn(&quot;abc&quot;);</span>
+<span class="fc" id="L87">        Mockito.when(userService.findByUsername(&quot;abc&quot;)).thenReturn(u);</span>
+
+
+<span class="fc" id="L90">        this.mockMvc.perform(get(&quot;/userfirst&quot;).accept(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L91">                .andExpect(status().isOk())</span>
+<span class="fc" id="L92">                .andExpect(content().string(&quot;{\&quot;ok\&quot;:true,\&quot;data\&quot;:\&quot;John\&quot;}&quot;));</span>
+<span class="fc" id="L93">    }</span>
+
+    @Test
+    @WithMockUser(value = &quot;spring&quot;)
+    public void userlastEndpoint() throws Exception {
+
+<span class="fc" id="L99">        User u = new User();</span>
+<span class="fc" id="L100">        u.setLast_name(&quot;Smith&quot;);</span>
+<span class="fc" id="L101">        Mockito.when(securityService.findLoggedInUsername()).thenReturn(&quot;abc&quot;);</span>
+<span class="fc" id="L102">        Mockito.when(userService.findByUsername(&quot;abc&quot;)).thenReturn(u);</span>
+
+
+<span class="fc" id="L105">        this.mockMvc.perform(get(&quot;/userlast&quot;).accept(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L106">                .andExpect(status().isOk())</span>
+<span class="fc" id="L107">                .andExpect(content().string(&quot;{\&quot;ok\&quot;:true,\&quot;data\&quot;:\&quot;Smith\&quot;}&quot;));</span>
+<span class="fc" id="L108">    }</span>
+
+//    @Test
+//    public void registrationGetRequest() throws Exception {
+//
+//        this.mockMvc.perform(get(&quot;/registration&quot;).accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(content().string(&quot;registration&quot;));
+//    }
+
+//    @Test
+//    @WithMockUser(value = &quot;spring&quot;)
+//    public void registrationPostRequest() throws Exception {
+//
+//        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+//        User userForm = new User();
+//        userForm.setUsername(&quot;aName&quot;);
+//        userForm.setPassword(&quot;aPassword&quot;);
+//        //userForm.setPasswordConfirm(&quot;aPassword&quot;);
+//        String requestJson = ow.writeValueAsString(userForm);
+//
+//
+//        this.mockMvc.perform(
+//                post(&quot;/registration&quot;)
+//                        .accept(MediaType.APPLICATION_JSON_VALUE)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(requestJson)
+//        )
+//                .andExpect(status().isOk())
+//                .andExpect(content().string(&quot;redirect:/welcome&quot;));
+//
+//    }
+
+//    @Test
+//    @WithMockUser(value = &quot;spring&quot;)
+//    public void activityEndpointPost() throws Exception {
+//
+//        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+//        Activity activity = new Activity(&quot;car&quot;, &quot;100&quot;);
+//        String requestJson = ow.writeValueAsString(activity);
+//
+//        this.mockMvc.perform(
+//                post(&quot;/activities&quot;)
+//                        .accept(MediaType.APPLICATION_JSON_VALUE)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(requestJson)
+//        )
+//                .andExpect(status().isOk())
+//                .andExpect(content().string(&quot;Activity information saved successfully: car 100&quot;));
+//
+//    }
+
+
+//    private String getAuthenticationHeader() {
+//        String auth = USER_NAME + &quot;:&quot; + PASSWORD;
+//        byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName(&quot;US-ASCII&quot;)));
+//        return &quot;Basic &quot; + new String(encodedAuth);
+//    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

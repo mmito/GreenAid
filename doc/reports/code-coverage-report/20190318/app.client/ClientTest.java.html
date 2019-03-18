@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClientTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">template$All_in_template__1_.exec</a> &gt; <a href="index.source.html" class="el_package">app.client</a> &gt; <span class="el_source">ClientTest.java</span></div><h1>ClientTest.java</h1><pre class="source lang-java linenums">package app.client;
+
+import app.responses.Response;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+
+import static org.junit.Assert.*;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment  = SpringBootTest.WebEnvironment.DEFINED_PORT)
+//@AutoConfigureMockMvc
+<span class="fc" id="L20">public class ClientTest {</span>
+
+    private static final String username = &quot;cpene&quot;;
+    private static final String password = &quot;cpenecpene&quot;;
+
+    @Before
+    public void setUp() throws Exception {
+<span class="fc" id="L27">    }</span>
+
+    @After
+    public void tearDown() throws Exception {
+<span class="fc" id="L31">    }</span>
+
+    @Test
+    public void setHeaders() {
+<span class="fc" id="L35">        String expected = &quot;[Accept:\&quot;application/json\&quot;, Content-Type:\&quot;application/x-www-form-urlencoded\&quot;, Cookie:\&quot;sessionCookie\&quot;]&quot;;</span>
+<span class="fc" id="L36">        HttpHeaders headers = Client.setHeaders(&quot;sessionCookie&quot;);</span>
+<span class="fc" id="L37">        assertEquals(expected, headers.toString());</span>
+<span class="fc" id="L38">    }</span>
+
+
+    @Test
+    public void getRequest() {
+<span class="fc" id="L43">        String URL = &quot;http://localhost:8080/welcome&quot;;</span>
+<span class="fc" id="L44">        String sessionCookie = &quot;sessionCookie&quot;;</span>
+
+<span class="fc" id="L46">        HttpEntity&lt;Response&gt; response = Client.getRequest(sessionCookie, URL);</span>
+<span class="fc" id="L47">        assertEquals(true, response.getBody().isOk());</span>
+<span class="fc" id="L48">    }</span>
+
+    @Test
+    public void postRequest() {
+<span class="fc" id="L52">        String URL = &quot;http://localhost:8080/login&quot;;</span>
+<span class="fc" id="L53">        String sessionCookie = &quot;sessionCookie&quot;;</span>
+<span class="fc" id="L54">        MultiValueMap&lt;String, Object&gt; params = new LinkedMultiValueMap&lt;&gt;();</span>
+<span class="fc" id="L55">        params.add(&quot;username&quot;, username);</span>
+<span class="fc" id="L56">        params.add(&quot;password&quot;, password);</span>
+<span class="fc" id="L57">        HttpEntity&lt;Response&gt; response = Client.postRequest(sessionCookie, URL, params);</span>
+<span class="fc" id="L58">        assertEquals(true, response.getBody().isOk());</span>
+<span class="fc" id="L59">    }</span>
+
+    @Test
+    public void getSessionCookieValidUser() {
+<span class="fc" id="L63">        String unexpected = &quot;No cookie found.&quot;;</span>
+<span class="fc" id="L64">        String sessionCookie = Client.getSessionCookie(username, password);</span>
+<span class="fc" id="L65">        assertNotEquals(unexpected, sessionCookie);</span>
+<span class="fc" id="L66">    }</span>
+
+    @Test
+    public void getSessionCookieInvalidUser() {
+<span class="fc" id="L70">        String expected = &quot;No cookie found.&quot;;</span>
+<span class="fc" id="L71">        String sessionCookie = Client.getSessionCookie(&quot;XXX0invalid0user0XXX&quot;, &quot;wrongPassword&quot;);</span>
+<span class="fc" id="L72">        assertEquals(expected, sessionCookie);</span>
+<span class="fc" id="L73">    }</span>
+
+    @Test
+    public void checkAuthNotLoggedInUser() {
+<span class="fc" id="L77">        String expected = &quot;User not logged in&quot;;</span>
+<span class="fc" id="L78">        String sessionCookie = &quot;sessionCookie&quot;;</span>
+<span class="fc" id="L79">        assertEquals(expected, Client.checkAuth(sessionCookie));</span>
+<span class="fc" id="L80">    }</span>
+
+    @Test
+    public void checkAuthLoggedInUser() {
+<span class="fc" id="L84">        String unexpected = &quot;User not logged in&quot;;</span>
+<span class="fc" id="L85">        String sessionCookie = Client.getSessionCookie(username, password);</span>
+<span class="fc" id="L86">        assertNotEquals(unexpected, Client.checkAuth(sessionCookie));</span>
+<span class="fc" id="L87">    }</span>
+
+//    @Test
+//    public void getCategoriesInvalidUser() {
+//        String expected = &quot;idk&quot;;
+//        String sessionCookie = Client.getSessionCookie(&quot;XXX0invalid0user0XXX&quot;, &quot;wrongPassword&quot;);
+//        assertEquals(expected, Client.getCategories(sessionCookie));
+//    }
+
+    @Test
+    public void getCategoriesValidUser() {
+<span class="fc" id="L98">        String unexpected = &quot;You are not authorized&quot;;</span>
+<span class="fc" id="L99">        String sessionCookie = Client.getSessionCookie(username, password);</span>
+<span class="fc" id="L100">        assertNotEquals(unexpected, Client.getCategories(sessionCookie));</span>
+<span class="fc" id="L101">    }</span>
+
+//    @Test
+//    public void addActivityInvalidUser() {
+//    }
+
+//    @Test
+//    public void addActivityValidUser() {
+//    }
+
+//    @Test
+//    public void getUserActivitiesInvalidUser() {
+//    }
+
+    @Test
+    public void getUserActivitiesValidUser() {
+<span class="fc" id="L117">        String unexpected = &quot;You are not authorized&quot;;</span>
+<span class="fc" id="L118">        String sessionCookie = Client.getSessionCookie(username, password);</span>
+<span class="fc" id="L119">        assertNotEquals(unexpected, Client.getUserActivities(sessionCookie));</span>
+<span class="fc" id="L120">    }</span>
+
+//    @Test
+//    public void getUserFirstInvalidUser() {
+//    }
+
+    @Test
+    public void getUserFirstValidUser() {
+<span class="fc" id="L128">        String expected = &quot;Cosmin Octavian&quot;;</span>
+<span class="fc" id="L129">        String sessionCookie = Client.getSessionCookie(username, password);</span>
+<span class="fc" id="L130">        assertEquals(expected, Client.getUserFirst(sessionCookie));</span>
+<span class="fc" id="L131">    }</span>
+
+//    @Test
+//    public void getUserLastInvalidUser() {
+//    }
+
+    @Test
+    public void getUserLastValidUser() {
+<span class="fc" id="L139">        String expected = &quot;Pene&quot;;</span>
+<span class="fc" id="L140">        String sessionCookie = Client.getSessionCookie(username, password);</span>
+<span class="fc" id="L141">        assertEquals(expected, Client.getUserLast(sessionCookie));</span>
+<span class="fc" id="L142">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
