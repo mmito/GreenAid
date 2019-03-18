@@ -5,6 +5,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.scene.layout.HBox;
@@ -33,7 +34,9 @@ public class HomepageController implements Initializable {
     @FXML
     private Text lastName;
     @FXML
-    private Text test;
+    private VBox history;
+    @FXML
+    private ScrollPane scrollPane;
 
     private double xOffset;
     private double yOffset;
@@ -51,8 +54,13 @@ public class HomepageController implements Initializable {
 
         firstName.setText(Client.getUserFirst(controller.sessionCookie));
         lastName.setText(Client.getUserLast(controller.sessionCookie));
-        test.setText(Client.getUserActivities(controller.sessionCookie));
 
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        Text test = new Text();
+        test.setText(Client.getUserActivities(controller.sessionCookie));
+        history.getChildren().add(test);
     }
 
     public void handleClose() {
@@ -161,7 +169,11 @@ public class HomepageController implements Initializable {
         double amount = spinner.getValue();
 
         Client.addActivity(sessionCookie, categoryId, amount);
+
+        history.getChildren().clear();
+        Text test = new Text();
         test.setText(Client.getUserActivities(controller.sessionCookie));
+        history.getChildren().add(test);
     }
 
 
