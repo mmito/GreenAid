@@ -1,23 +1,17 @@
 import app.client.Client;
-import app.models.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 
 import java.net.URL;
-import java.util.PrimitiveIterator;
 import java.util.ResourceBundle;
 
 public class HomepageController implements Initializable {
@@ -28,7 +22,6 @@ public class HomepageController implements Initializable {
     ComboBox<String> comboBox;
     @FXML
     private ImageView Home;
-
     @FXML
     private Text activityText;
     @FXML
