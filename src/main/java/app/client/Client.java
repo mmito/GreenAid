@@ -24,33 +24,6 @@ public class Client {
     private static  final String url_user_last = "http://localhost:8080/userlast";
 
     /**
-     * Main method that starts a client login page.
-     * @param args arguments of main method
-     */
-//    public static void main(String[] args) {
-//
-//        System.out.println("Hello user, please insert your credentials.");
-//        Scanner sc = new Scanner(System.in);
-//        System.out.print("Username: ");
-//        String username = sc.nextLine();
-//        System.out.print("Password: ");
-//        String password = sc.nextLine();
-//
-//        String sessionCookie = getSessionCookie(username, password);
-//        System.out.println(sessionCookie);
-//        System.out.println(checkAuth(sessionCookie));
-//        System.out.println(getCategories(sessionCookie));
-//        System.out.println("Which kind of activity would you like to add?");
-//        long categoryId = sc.nextLong();
-//        System.out.println("How many times have you performed that activity?");
-//        double amount = sc.nextDouble();
-//
-//        sc.close();
-//        System.out.println(addActivity(sessionCookie, categoryId, amount));
-//
-//    }
-
-    /**
      * Sets headers for the communication betwen server and client.
      * @param sessionCookie uses the sessionCookie to achieve it
      * @return returns the headers of the communication
@@ -63,7 +36,6 @@ public class Client {
         headers.add("Cookie", sessionCookie);
 
         return headers;
-
     }
 
     /**

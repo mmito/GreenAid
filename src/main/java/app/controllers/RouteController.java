@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.awt.event.ActionEvent;
+import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -70,6 +70,8 @@ public class RouteController {
         if (userService.findByUsername(user.getUsername()) != null) {
             return new Response(false, "Username is already registered");
         } else {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            user.setLast_update(timestamp);
             userService.save(user);
             return new Response(true, "You are now registered, " + user.getUsername() + "!");
         }
@@ -87,9 +89,11 @@ public class RouteController {
 
         String username = securityService.findLoggedInUsername();
         if (username != null) {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             activity.setUser_id(userService.findByUsername(username).getId());
             activity.setXp_points(categoryRepository.findById(activity
                     .getCategory_id()).getXp_points() * activity.getAmount());
+            activity.setLast_update(timestamp);
             activityService.save(activity);
 
             return new Response(true, "Activity \""
