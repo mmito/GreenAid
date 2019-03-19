@@ -1,7 +1,10 @@
 package app.client;
 
+import app.models.Activity;
 import app.models.User;
 import app.responses.Response;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -18,10 +21,9 @@ public class Client {
     private static final String url_login = "http://localhost:8080/login";
     private static final String url_check = "http://localhost:8080/check";
     private static final String url_categories = "http://localhost:8080/getcategories";
-    private static final String url_add_activity = "http://localhost:8080/activity";
-    private static final String url_user_activities = "http://localhost:8080/showactivities";
-    private static  final String url_user_first = "http://localhost:8080/userfirst";
-    private static  final String url_user_last = "http://localhost:8080/userlast";
+    private static final String url_add_activity = "http://localhost:8080/user/add-activity";
+    private static final String url_user_activities = "http://localhost:8080/user/activities";
+    private static  final String url_user_details = "http://localhost:8080/user/details";
 
     /**
      * Sets headers for the communication betwen server and client.
@@ -151,27 +153,34 @@ public class Client {
      * @param sessionCookie uses sessionCookies to achieve this.
      * @return returns the list of the activities done by the user
      */
-    public static String getUserActivities(String sessionCookie) {
+    public static List<ActivityProjection> getUserActivities(String sessionCookie) {
 
         HttpEntity<Response> response = getRequest(sessionCookie, url_user_activities);
 
-        return (String) response.getBody().getData();
+        //return (String) response.getBody().getData();
+        ObjectMapper mapper = new ObjectMapper();
+        List<ActivityProjection> activities = mapper.convertValue(response.getBody().getData(), new TypeReference<List<ActivityProjection>>() {});
+        return activities;
 
     }
 
-    public static String getUserFirst(String sessionCookie) {
+    public static User getUserDetails(String sessionCookie) {
 
-        HttpEntity<Response> response = getRequest(sessionCookie, url_user_first);
-
-        return (String) response.getBody().getData();
-
-    }
-
-    public static String getUserLast(String sessionCookie){
-
-        HttpEntity<Response> response = getRequest(sessionCookie, url_user_last);
-        return  (String) response.getBody().getData();
+        HttpEntity<Response> response = getRequest(sessionCookie, url_user_details);
+        ObjectMapper mapper = new ObjectMapper();
+        User user = mapper.convertValue(response.getBody().getData(), User.class);
+        return user;
 
     }
+
+     public static void main(String[] args) {
+
+        String sessionCookie = getSessionCookie("tommytest", "quadronno");
+        User user = getUserDetails(sessionCookie);
+        //System.out.println(user.getExperience_points());
+        List<ActivityProjection> activities = getUserActivities(sessionCookie);
+        //System.out.println(activities.get(1).getCategory());
+
+     }
 
 }
