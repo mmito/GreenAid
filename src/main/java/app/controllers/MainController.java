@@ -20,7 +20,7 @@ import java.util.List;
 
 
 @RestController
-public class RouteController {
+public class MainController {
 
     @Autowired
     private UserServiceImpl userService;
