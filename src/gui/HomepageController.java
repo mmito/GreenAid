@@ -1,4 +1,6 @@
+import app.client.ActivityProjection;
 import app.client.Client;
+import app.models.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -13,6 +15,8 @@ import javafx.scene.text.Text;
 
 
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class HomepageController implements Initializable {
@@ -43,8 +47,8 @@ public class HomepageController implements Initializable {
 
     private long categoryId;
 
-
-
+    private User user = Client.getUserDetails(controller.sessionCookie);
+    private List<ActivityProjection> activities = Client.getUserActivities(controller.sessionCookie);
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
@@ -52,14 +56,14 @@ public class HomepageController implements Initializable {
         comboBox.getItems().removeAll(comboBox.getItems());
         comboBox.getItems().addAll("Eating A Vegetarian Meal", "Buying Local Produce", "Using Bike Instead of Car", "Using Public transports instead of Car", "Installing Solar Panels", "Lowering the Temperature of your Home");
 
-        firstName.setText(Client.getUserFirst(controller.sessionCookie));
-        lastName.setText(Client.getUserLast(controller.sessionCookie));
+        firstName.setText(user.getFirst_name());
+        lastName.setText(user.getLast_name());
 
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
         Text test = new Text();
-        test.setText(Client.getUserActivities(controller.sessionCookie));
+        test.setText(showUserActivities());
         history.getChildren().add(test);
     }
 
@@ -172,10 +176,25 @@ public class HomepageController implements Initializable {
 
         history.getChildren().clear();
         Text test = new Text();
-        test.setText(Client.getUserActivities(controller.sessionCookie));
+        test.setText(showUserActivities());
         history.getChildren().add(test);
     }
 
+    public String showUserActivities() {
+
+        String result = user.getUsername() + ", here are your activities!\n\n";
+        int i = 1;
+        for (ActivityProjection a : activities) {
+
+            result += i + ") " + a.getCategory() + " done " + a.getAmount() + " times for a total of"
+                    + Double.valueOf(new DecimalFormat("#.##").format(a.getXp_points())) + " XP points.\n";
+            i++;
+
+        }
+
+        return result;
+
+    }
 
 }
 
