@@ -3,7 +3,7 @@ package app.controllers;
 import app.authentication.SecurityServiceImpl;
 import app.repository.ActivityRepository;
 import app.repository.CategoryRepository;
-import app.repository.FriendshipRepository;
+import app.repository.FollowingRepository;
 import app.services.ActivityServiceImpl;
 import app.services.UserServiceImpl;
 import app.models.User;
@@ -44,7 +44,7 @@ public class MainControllerTest {
     private UserRepository userRepository;
 
     @MockBean
-    private FriendshipRepository friendshipRepository;
+    private FollowingRepository followingRepository;
 
     @MockBean
     private ActivityServiceImpl activityService;

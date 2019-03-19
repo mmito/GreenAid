@@ -1,12 +1,15 @@
 package app.controllers;
 
 import app.authentication.SecurityServiceImpl;
-import app.client.ActivityProjection;
+import app.models.ActivityProjection;
+import app.models.UserProjection;
 import app.models.Activity;
+import app.models.Following;
 import app.models.User;
 import app.repository.CategoryRepository;
 import app.responses.Response;
 import app.services.ActivityServiceImpl;
+import app.services.FollowingServiceImpl;
 import app.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,10 +37,34 @@ public class UserController {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private FollowingServiceImpl followingRepository;
+
+    public List<UserProjection> toUserProjection(List<User> input) {
+
+        List<UserProjection> output = new LinkedList<>();
+        for (User u : input) {
+
+            output.add(new UserProjection(u.getUsername(), u.getFirst_name(), u.getLast_name(), u.getExperience_points(), u.getLast_update()));
+
+        }
+
+        return output;
+
+    }
+
     @GetMapping("/details")
     public Response getUserDetails() {
         if(securityService.findLoggedInUsername() != null) {
             return new Response(true, userService.findByUsername(securityService.findLoggedInUsername()));
+        }
+        else return new Response(false, "User not logged in.");
+    }
+
+    @PostMapping("/info")
+    public Response getUserInfo(String username) {
+        if(securityService.findLoggedInUsername() != null) {
+            return new Response(true, userService.findByUsername(username));
         }
         else return new Response(false, "User not logged in.");
     }
@@ -91,14 +118,6 @@ public class UserController {
 
             }
 
-            String result = "Your activities are: \n";
-            int i = 1;
-            for (ActivityProjection a : response) {
-
-                result += i + " - " + a.getCategory() + " done " + a.getAmount() + " times and it gave you " + a.getXp_points() + " XP points.\n";
-                i++;
-            }
-
             return new Response(true, response);
         }
         else {
@@ -132,5 +151,59 @@ public class UserController {
             return new Response(false, "You are not authorized");
     }
 
+    @GetMapping("/followings")
+    public Response getFollowings() {
+
+        if(securityService.findLoggedInUsername() != null) {
+
+            List<User> query = userService.findFollowings(userService.findByUsername(securityService.findLoggedInUsername()).getId());
+            return new Response(true, toUserProjection(query));
+
+        }
+
+        else
+            return new Response(false, "You are not authorized!");
+
+    }
+
+    @GetMapping("/followed-by")
+    public Response getFollowedBy() {
+
+        if (securityService.findLoggedInUsername() != null) {
+
+            List<User> query = userService.findFollowedBy(userService.findByUsername(securityService.findLoggedInUsername()).getId());
+            return new Response(true, toUserProjection(query));
+
+        }
+
+        else
+            return new Response(false, "You are not authorized!");
+
+    }
+
+    @PostMapping("/add-following")
+    public Response addFollowing(Following following, String username) {
+
+        if(securityService.findLoggedInUsername() != null) {
+
+            if (securityService.findLoggedInUsername().equals(username)) {
+
+                return new Response(false, "You already follow yourself...");
+
+            }
+
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            following.setUser_id_1(userService.findByUsername(securityService.findLoggedInUsername()).getId());
+            following.setUser_id_2(userService.findByUsername(username).getId());
+            following.setLast_update(timestamp);
+            followingRepository.save(following);
+            return new Response(true, "Your followings have been updated!");
+
+        }
+
+        else
+            return new Response(false, "You are not authorized");
+
+    }
 
 }

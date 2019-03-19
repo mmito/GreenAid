@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @SuppressWarnings("ALL")
 @Service
@@ -48,5 +50,18 @@ public class UserServiceImpl {
 
         return userRepository.findByUsername(loggedInUserUsername);
     }
+
+    public List<User> findFollowings(long id) {
+
+        return userRepository.findFollowings(id);
+
+    }
+
+    public List<User> findFollowedBy(long id) {
+
+        return userRepository.findFollowedBy(id);
+
+    }
+
 }
 

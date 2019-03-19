@@ -10,8 +10,8 @@ import javax.persistence.Table;
 
 @SuppressWarnings("ALL")
 @Entity
-@Table(name = "friendship")
-public class Friendship {
+@Table(name = "following")
+public class Following {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

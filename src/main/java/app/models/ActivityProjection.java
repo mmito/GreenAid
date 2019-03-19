@@ -1,4 +1,4 @@
-package app.client;
+package app.models;
 
 import java.util.Objects;
 
@@ -9,14 +9,6 @@ public class ActivityProjection {
     double amount;
     double xp_points;
 
-    /**
-     * Constructor of the class that  projects the activities in the homepage of the app.
-     * @param username username of the user
-     * @param category category of the activity
-     * @param amount amount of the activity
-     * @param xp_points xp points of that activity given the amount
-     */
-
     public ActivityProjection() {
         this.username = new String();
         this.category = new String();
@@ -24,6 +16,13 @@ public class ActivityProjection {
         this.xp_points = 0.0;
     }
 
+    /**
+     * Constructor of the class that  projects the activities in the homepage of the app.
+     * @param username username of the user
+     * @param category category of the activity
+     * @param amount amount of the activity
+     * @param xp_points xp points of that activity given the amount
+     */
     public ActivityProjection(String username, String category, double amount, double xp_points) {
         this.username = username;
         this.category = category;

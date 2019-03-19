@@ -6,11 +6,11 @@ import org.junit.Test;
 import java.sql.Timestamp;
 import java.util.Date;
 
-public class FriendshipTest {
+public class FollowingTest {
 
     @Test
     public void setConstructor() {
-        Friendship f = new Friendship();
+        Following f = new Following();
 
         Date now = new Date();
         Timestamp timestamp = new Timestamp(now.getTime());

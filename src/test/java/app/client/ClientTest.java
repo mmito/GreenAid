@@ -33,7 +33,7 @@ public class ClientTest {
     @Test
     public void setHeaders() {
         String expected = "[Accept:\"application/json\", Content-Type:\"application/x-www-form-urlencoded\", Cookie:\"sessionCookie\"]";
-        HttpHeaders headers = Client.setHeaders("sessionCookie");
+        HttpHeaders headers = HttpRequests.setHeaders("sessionCookie");
         assertEquals(expected, headers.toString());
     }
 
@@ -43,7 +43,7 @@ public class ClientTest {
         String URL = "http://localhost:8080/welcome";
         String sessionCookie = "sessionCookie";
 
-        HttpEntity<Response> response = Client.getRequest(sessionCookie, URL);
+        HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, URL);
         assertEquals(true, response.getBody().isOk());
     }
 
@@ -54,7 +54,7 @@ public class ClientTest {
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("username", username);
         params.add("password", password);
-        HttpEntity<Response> response = Client.postRequest(sessionCookie, URL, params);
+        HttpEntity<Response> response = HttpRequests.postRequest(sessionCookie, URL, params);
         assertEquals(true, response.getBody().isOk());
     }
 
