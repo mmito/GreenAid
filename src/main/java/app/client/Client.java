@@ -19,11 +19,14 @@ public class Client {
     private static final String url_check = "http://localhost:8080/check";
     private static final String url_categories = "http://localhost:8080/getcategories";
     private static final String url_add_activity = "http://localhost:8080/user/add-activity";
+    private static final String url_remove_activity = "http://localhost:8080/user/remove-activity";
     private static final String url_user_activities = "http://localhost:8080/user/activities";
     private static final String url_user_details = "http://localhost:8080/user/details";
     private static final String url_user_followings = "http://localhost:8080/user/followings";
     private static final String url_user_followed_by = "http://localhost:8080/user/followed-by";
     private static final String url_add_follow = "http://localhost:8080/user//add-following";
+    private static final String url_remove_follow = "http://localhost:8080/user/remove-following";
+
 
     private static ObjectMapper mapper = new ObjectMapper();
 
@@ -97,6 +100,17 @@ public class Client {
 
     }
 
+    public static String removeActivity(String sessionCookie, long id) {
+
+        MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
+        params.add("id", id);
+
+        HttpEntity<Response> response = HttpRequests.postRequest(sessionCookie, url_remove_activity, params);
+
+        return (String) response.getBody().getData();
+
+    }
+
     /**
      * Lists the activities of the user.
      * @param sessionCookie uses sessionCookies to achieve this.
@@ -135,14 +149,26 @@ public class Client {
 
     }
 
-    public static String addFollow(String sessionCookie, String username) {
+    public static  String manageFollowRequests(String sessionCookie, String username, String url) {
 
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("username", username);
 
-        HttpEntity<Response> response = HttpRequests.postRequest(sessionCookie, url_add_follow, params);
+        HttpEntity<Response> response = HttpRequests.postRequest(sessionCookie, url, params);
 
         return (String) response.getBody().getData();
+
+    }
+
+    public static String addFollow(String sessionCookie, String username) {
+
+        return manageFollowRequests(sessionCookie, username, url_add_follow);
+
+    }
+
+    public static String removeFollow(String sessionCookie, String username) {
+
+        return manageFollowRequests(sessionCookie, username, url_remove_follow);
 
     }
 
@@ -157,9 +183,12 @@ public class Client {
         System.out.println(followings.size());
         List<UserProjection> followedBy = getUserFollowedBy(sessionCookie);
         System.out.println(followedBy.size());
-        System.out.println(addFollow(sessionCookie,"UsainBolt"));
+        //System.out.println(addFollow(sessionCookie,"UsainBolt"));
+        //System.out.println(removeFollow(sessionCookie, "UsainBolt"));
         List<UserProjection> followings2 = getUserFollowings(sessionCookie);
         System.out.println(followings2.size());
+        System.out.println(followings2.get(1).isFollowing());
+        System.out.println(removeActivity(sessionCookie, 59));
 
      }
 

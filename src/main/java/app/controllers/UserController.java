@@ -38,14 +38,14 @@ public class UserController {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private FollowingServiceImpl followingRepository;
+    private FollowingServiceImpl followingService;
 
-    public List<UserProjection> toUserProjection(List<User> input) {
+    public List<UserProjection> toUserProjection(List<User> input, long id1) {
 
         List<UserProjection> output = new LinkedList<>();
         for (User u : input) {
-
-            output.add(new UserProjection(u.getUsername(), u.getFirst_name(), u.getLast_name(), u.getExperience_points(), u.getLast_update()));
+            boolean following = followingService.findById1Id2(id1, u.getId()) != null;
+            output.add(new UserProjection(u.getUsername(), u.getFirst_name(), u.getLast_name(), u.getExperience_points(), u.getLast_update(), following));
 
         }
 
@@ -86,9 +86,10 @@ public class UserController {
 
             for (Activity a : activities) {
 
+                long id = a.getId();
                 double amount = a.getAmount();
                 double xp_points = a.getXp_points();
-                String category = "";
+                String category;
                 switch ((int) a.getCategory_id()) {
 
                     case 1:
@@ -114,7 +115,7 @@ public class UserController {
 
                 }
 
-                response.add(new ActivityProjection(username, category, amount, xp_points));
+                response.add(new ActivityProjection(id, username, category, amount, xp_points));
 
             }
 
@@ -125,7 +126,6 @@ public class UserController {
         }
     }
 
-
     /**
      * Maps to /activity with a POST request.
      * @param activity adds and activity to user profile.
@@ -133,7 +133,7 @@ public class UserController {
      * @throws Exception throws exception in case things go wrong.
      */
     @PostMapping("/add-activity")
-    public Response activity(Activity activity) {
+    public Response addActivity(Activity activity) {
 
         String username = securityService.findLoggedInUsername();
         if (username != null) {
@@ -147,8 +147,42 @@ public class UserController {
             return new Response(true, "Activity \""
                     + categoryRepository.findById(activity.getCategory_id()).getName() + "\" saved successfully!");
         }
+
         else
             return new Response(false, "You are not authorized");
+
+    }
+
+    @PostMapping("/remove-activity")
+    public Response removeActivity(long id) {
+
+        if(securityService.findLoggedInUsername() != null) {
+
+            Activity activity = activityService.findById(id);
+
+            if(activity != null) {
+
+                if(activity.getUser_id() == userService.findByUsername(securityService.findLoggedInUsername()).getId()) {
+
+                    activityService.delete(activity);
+                    return new Response(true, "Activity \""
+                            + categoryRepository.findById(activity.getCategory_id()).getName() + "\" removed successfully!");
+
+                }
+
+                else
+                    return new Response(false, "You can't remove someone else's activity!");
+
+            }
+
+            else
+                return new Response(false, "Activity not found!");
+
+        }
+
+        else
+            return new Response(false, "Your are not authorized");
+
     }
 
     @GetMapping("/followings")
@@ -157,7 +191,7 @@ public class UserController {
         if(securityService.findLoggedInUsername() != null) {
 
             List<User> query = userService.findFollowings(userService.findByUsername(securityService.findLoggedInUsername()).getId());
-            return new Response(true, toUserProjection(query));
+            return new Response(true, toUserProjection(query, userService.findByUsername(securityService.findLoggedInUsername()).getId()));
 
         }
 
@@ -172,7 +206,7 @@ public class UserController {
         if (securityService.findLoggedInUsername() != null) {
 
             List<User> query = userService.findFollowedBy(userService.findByUsername(securityService.findLoggedInUsername()).getId());
-            return new Response(true, toUserProjection(query));
+            return new Response(true, toUserProjection(query, userService.findByUsername(securityService.findLoggedInUsername()).getId()));
 
         }
 
@@ -186,18 +220,54 @@ public class UserController {
 
         if(securityService.findLoggedInUsername() != null) {
 
-            if (securityService.findLoggedInUsername().equals(username)) {
+            if(userService.findByUsername(username) != null) {
 
-                return new Response(false, "You already follow yourself...");
+                if (securityService.findLoggedInUsername().equals(username)) {
+
+                    return new Response(false, "You already follow yourself...");
+
+                }
+
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                following.setUser_id_1(userService.findByUsername(securityService.findLoggedInUsername()).getId());
+                following.setUser_id_2(userService.findByUsername(username).getId());
+                following.setLast_update(timestamp);
+                followingService.save(following);
+                return new Response(true, "Your followings have been updated!");
 
             }
 
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            following.setUser_id_1(userService.findByUsername(securityService.findLoggedInUsername()).getId());
-            following.setUser_id_2(userService.findByUsername(username).getId());
-            following.setLast_update(timestamp);
-            followingRepository.save(following);
-            return new Response(true, "Your followings have been updated!");
+            else
+                return new Response(false, "User not found.");
+
+        }
+
+        else
+            return new Response(false, "You are not authorized");
+
+    }
+
+    @PostMapping("/remove-following")
+    public Response removeFollowing(String username) {
+
+        if(securityService.findLoggedInUsername() != null) {
+
+            if(userService.findByUsername(username) != null) {
+
+                if(securityService.findLoggedInUsername().equals(username)) {
+
+                    return new Response(false, "You cannot unfollow yourself...");
+
+                }
+
+                followingService.delete(followingService.findById1Id2(userService.findByUsername(securityService.findLoggedInUsername()).getId(),
+                        userService.findByUsername(username).getId()));
+                return new Response(true, "Your followings have been updated!");
+
+            }
+
+            else
+                return new Response(false, "User not found.");
 
         }
 

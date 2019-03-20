@@ -23,6 +23,12 @@ public class ActivityServiceImpl {
 
     }
 
+    public void delete(Activity activity) {
+
+        activityRepository.delete(activity);
+
+    }
+
     /**
      * Method that finds a user by his/her activities.
      * @param userId id of the user
@@ -31,6 +37,12 @@ public class ActivityServiceImpl {
     public List<Activity> findByUser_id(long userId) {
 
         return activityRepository.findByUser_id(userId);
+
+    }
+
+    public Activity findById(long id) {
+
+        return activityRepository.findById(id);
 
     }
 
