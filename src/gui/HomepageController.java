@@ -1,4 +1,4 @@
-import app.client.ActivityProjection;
+import app.models.ActivityProjection;
 import app.client.Client;
 import app.models.User;
 import javafx.fxml.FXML;

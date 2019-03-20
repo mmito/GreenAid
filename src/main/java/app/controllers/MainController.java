@@ -1,8 +1,6 @@
 package app.controllers;
 
 import app.authentication.SecurityServiceImpl;
-import app.client.ActivityProjection;
-import app.models.Activity;
 import app.models.Category;
 import app.models.User;
 import app.repository.CategoryRepository;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
-import java.util.LinkedList;
 import java.util.List;
 
 
