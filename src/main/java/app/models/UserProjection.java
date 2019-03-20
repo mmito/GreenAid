@@ -9,14 +9,16 @@ public class UserProjection {
     String last_name;
     double experience_points;
     Timestamp last_update;
+    boolean following;
 
-    public UserProjection(String username, String first_name, String last_name, double experience_points, Timestamp last_update) {
+    public UserProjection(String username, String first_name, String last_name, double experience_points, Timestamp last_update, boolean following) {
 
         this.username = username;
         this.first_name = first_name;
         this.last_name = last_name;
         this.experience_points = experience_points;
         this.last_update = last_update;
+        this.following = following;
 
     }
 
@@ -62,5 +64,13 @@ public class UserProjection {
 
     public void setLast_update(Timestamp last_update) {
         this.last_update = last_update;
+    }
+
+    public boolean isFollowing() {
+        return following;
+    }
+
+    public void setFollowing(boolean following) {
+        this.following = following;
     }
 }

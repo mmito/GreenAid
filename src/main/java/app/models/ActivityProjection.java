@@ -4,12 +4,14 @@ import java.util.Objects;
 
 public class ActivityProjection {
 
+    long id;
     String username;
     String category;
     double amount;
     double xp_points;
 
     public ActivityProjection() {
+        this.id = 0;
         this.username = new String();
         this.category = new String();
         this.amount = 0.0;
@@ -18,12 +20,14 @@ public class ActivityProjection {
 
     /**
      * Constructor of the class that  projects the activities in the homepage of the app.
+     * @param id id of the activity
      * @param username username of the user
      * @param category category of the activity
      * @param amount amount of the activity
      * @param xp_points xp points of that activity given the amount
      */
-    public ActivityProjection(String username, String category, double amount, double xp_points) {
+    public ActivityProjection(long id, String username, String category, double amount, double xp_points) {
+        this.id = id;
         this.username = username;
         this.category = category;
         this.amount = amount;
