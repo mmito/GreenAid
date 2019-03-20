@@ -42,10 +42,10 @@ public class HomepageController implements Initializable {
     @FXML
     private ScrollPane scrollPane;
 
+    private long categoryId;
+
     private double xOffset;
     private double yOffset;
-
-    private long categoryId;
 
     private User user = Client.getUserDetails(controller.sessionCookie);
     private List<ActivityProjection> activities = Client.getUserActivities(controller.sessionCookie);
@@ -62,9 +62,27 @@ public class HomepageController implements Initializable {
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-        Text test = new Text();
-        test.setText(showUserActivities());
-        history.getChildren().add(test);
+        showUserActivities();
+    }
+
+    public void showUserActivities() {
+        int sz = activities.size();
+        history.getChildren().clear();
+
+        Text start = new Text();
+        start.setText(activities.get(0).getUsername() + ", here is your list of activities!");
+
+        for(int i = 0; i < sz; i++){
+            Text temp = new Text();
+
+            String ret = i + " - ";
+            ret += activities.get(i).getCategory() + " done ";
+            ret += activities.get(i).getAmount() + " times for a total of ";
+            ret += Double.valueOf(new DecimalFormat("#.##").format(activities.get(i).getXp_points())) + " XP point.";
+
+            temp.setText(ret);
+            history.getChildren().add(temp);
+        }
     }
 
     public void handleClose() {
@@ -165,36 +183,14 @@ public class HomepageController implements Initializable {
             postActivity(controller.sessionCookie, categoryId, spinner);
 
         });
-
     }
 
-    public void postActivity(String sessionCookie, long categoryId, Spinner<Double> spinner) {
-
+    public void postActivity(String sessionCookie, long CategoryId, Spinner<Double> spinner){
         double amount = spinner.getValue();
 
-        Client.addActivity(sessionCookie, categoryId, amount);
+        Client.addActivity(sessionCookie, CategoryId, amount);
 
-        history.getChildren().clear();
-        Text test = new Text();
-        test.setText(showUserActivities());
-        history.getChildren().add(test);
+        showUserActivities();
     }
-
-    public String showUserActivities() {
-
-        String result = user.getUsername() + ", here are your activities!\n\n";
-        int i = 1;
-        for (ActivityProjection a : activities) {
-
-            result += i + ") " + a.getCategory() + " done " + a.getAmount() + " times for a total of"
-                    + Double.valueOf(new DecimalFormat("#.##").format(a.getXp_points())) + " XP points.\n";
-            i++;
-
-        }
-
-        return result;
-
-    }
-
 }
 
