@@ -1,20 +1,19 @@
 
 import app.responses.Response;
-import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+
 import javafx.scene.control.*;
 
-import app.models.User;
+
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+
 import javafx.stage.Window;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,7 +22,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -73,27 +72,33 @@ public class SignUpController implements Initializable {
     emptyPassCon.setVisible(false);
     }
 
+    // Gets the username from the register screen
     public String getUsername() {
         return username.getText();
 
     }
 
+    // Gets the Firstname from the register screen
     public String getFirstname(){
         return firstname.getText();
     }
 
+    // Gets the Lastname from the register screen
     public String getLastname(){
         return lastname.getText();
     }
 
+    // Gets the password from the register screen
     public String getPassword() {
         return password.getText();
     }
 
+    // Gets the password confirm from the register screen
     public String getPasswordConfirm() {
         return passwordConfirm.getText();
     }
 
+    // Making the signup Page movable
     public void movingSignup() {
         pane.setOnMousePressed(event -> {
             xOffset = controller.stage.getX() - event.getScreenX();
@@ -104,6 +109,8 @@ public class SignUpController implements Initializable {
             controller.stage.setY(event.getScreenY() + yOffset);
         });
     }
+
+    // The logout button to go back to the login page
     @FXML
     private void home(){
         Window window = saveUser.getScene().getWindow();
@@ -113,36 +120,42 @@ public class SignUpController implements Initializable {
 
     }
 
-
+    // Closing the program
     public void handleClose() {
         System.exit(0);
     }
 
+    // Error messages if the First name field is empty
     private void emptyFirst(){
         emptyFirst.setText("Fill in Firstname");
         emptyFirst.setVisible(true);
     }
 
+    // Error messages if the Last name field is empty
     private void emptyLast(){
         emptyLast.setText("Fill in LastName");
         emptyLast.setVisible(true);
     }
 
+    // Error messages if the Username field is empty
     private void emptyUser(){
         emptyUser.setText("Fill in Username");
         emptyUser.setVisible(true);
     }
 
+    // Error messages if the Password field is empty
     private void emptyPass(){
         emptyPass.setText("Fill in password");
         emptyPass.setVisible(true);
     }
 
+    // Error messages if the Password confirm field is empty
     private void emptyPassCon(){
         emptyPassCon.setText("Fill in password");
         emptyPassCon.setVisible(true);
     }
 
+    // Sets the error messages if empty and/or not matching and if the username already exists, if not saves the user to the database
     @FXML
     private void saveUser(MouseEvent mouseEvent) {
 
@@ -199,6 +212,7 @@ public class SignUpController implements Initializable {
 
             Response registration = restTemplate.postForObject(url_registration, request, Response.class);
 
+            // Checks if the user already exists
             if (registration.getData().equals("Username is already registered")) {
                 exists.setText("Username already exists");
                 exists.setVisible(true);
@@ -207,6 +221,7 @@ public class SignUpController implements Initializable {
 
             }
 
+            // Goes back to the login page
             else {
                     Window window = saveUser.getScene().getWindow();
                     Stage stage = JavaFXMain.stage;
@@ -221,6 +236,7 @@ public class SignUpController implements Initializable {
         }
     }
 
+    // Clear the fields
     private void clearFields() {
         username.setText(null);
         password.clear();

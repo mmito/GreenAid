@@ -1,14 +1,18 @@
 import app.client.Client;
-import javafx.event.ActionEvent;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
+
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -16,7 +20,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
-import javax.swing.*;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -47,19 +51,29 @@ public class controller implements Initializable{
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
         invalid.setVisible(false);
+    password.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent event) {
+            if (event.getCode().equals(KeyCode.ENTER))
+            {
+                handleLoginClicked();
+            }
+        }
+    });
     }
+
+    // Closes the program
     public void handleClose(){
         System.exit(0);
     }
 
+    //Minimizes the program
     public void handleMinimizeButton(MouseEvent mouse){
 
         JavaFXMain.stage.setIconified(true);
     }
-    private void clearFields() {
-        username.setText(null);
-        password.clear();
-    }
+
+    // Goes to the register screen
     public void handleRegisterClicked(){
         try{
             Window window = register.getScene().getWindow();
@@ -77,21 +91,25 @@ public class controller implements Initializable{
         }
     }
 
-
+    // Gets the username from the login
     public String getUsername() {
         this.Name = username.getText();
         return username.getText();
 
     }
 
+    // Gets the password from the login
     public String getPassword() {
         return password.getText();
     }
 
+
+    // Goes to the homepage if the information is correct
     public void handleLoginClicked(){
 
         String response = Client.getSessionCookie(getUsername(), getPassword());
 
+        // Checks if the information is the same as in the database
         if(!response.equals("No cookie found.")){
 
             this.sessionCookie= response;
@@ -113,22 +131,24 @@ public class controller implements Initializable{
             }
 
         }
+        // Checks if the username field and password field is empty
         else if(getUsername().equals("") && getPassword().equals("") ){
             invalid.setText("Fill in username and password");
             invalid.setVisible(true);
         }
-
+           // Checks if username field is not empty and if the password field is
            else if(!getUsername().equals("") && getPassword().equals("") ){
                 invalid.setText("Fill in password");
                 invalid.setVisible(true);
 
         }
-
+        // Checks if the username field is empty and the password field is not
         else if(getUsername().equals("") && !getPassword().equals("") ) {
             invalid.setText("Fill in username");
             invalid.setVisible(true);
         }
-
+        /* Sets the error of that username or password is not correct if the combination is not in the database
+         on the login screen */
         else{
                 invalid.setText("Username or password is incorrect");
                 invalid.setVisible(true);
