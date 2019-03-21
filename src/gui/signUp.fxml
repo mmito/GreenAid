@@ -23,6 +23,11 @@
                   <Font size="26.0" />
                </font>
             </Text>
+            <Text fx:id="passcheck" fill="RED" layoutX="37.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ay caramba" wrappingWidth="248.6708984375">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Text>
          </children></Pane>
       <TextField fx:id="username" layoutX="85.0" layoutY="230.0" prefHeight="48.0" prefWidth="530.0" promptText="Username" />
       <TextField fx:id="firstname" layoutX="85.0" layoutY="165.0" prefHeight="48.0" prefWidth="258.0" promptText="First Name" />

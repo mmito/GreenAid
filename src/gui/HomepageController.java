@@ -1,8 +1,6 @@
-import app.authentication.SecurityServiceImpl;
 import app.models.ActivityProjection;
 import app.client.Client;
 import app.models.User;
-import app.services.UserServiceImpl;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -14,7 +12,6 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.net.URL;
@@ -44,32 +41,14 @@ public class HomepageController implements Initializable {
     private VBox history;
     @FXML
     private ScrollPane scrollPane;
-    @FXML
-    private ProgressIndicator progress;
-    @FXML
-    private Text level;
-    @FXML
-    private Text xp;
-
 
     private long categoryId;
 
     private double xOffset;
     private double yOffset;
 
-    private double y ;
-
-
-    // counter for level
-
-    private int a ;
-
-
-
     private User user = Client.getUserDetails(controller.sessionCookie);
     private List<ActivityProjection> activities = Client.getUserActivities(controller.sessionCookie);
-
- //   private User experience = userService.findByUsername(securityService.findLoggedInUsername());
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
@@ -79,29 +58,13 @@ public class HomepageController implements Initializable {
 
         firstName.setText(user.getFirst_name());
         lastName.setText(user.getLast_name());
-        xp.setVisible(false);
 
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-        experience();
-        level.setText("lvl"+ a);
-
-        progress.setProgress(y/100.0);
         showUserActivities();
     }
 
-
-    public  void Hover(){
-        experience();
-        xp.setText("" + y+ "/100");
-        xp.setVisible(true);
-
-
-    }
-    public void exit(){
-        xp.setVisible(false);
-    }
     public void showUserActivities() {
         int sz = activities.size();
         history.getChildren().clear();
@@ -119,7 +82,6 @@ public class HomepageController implements Initializable {
 
             temp.setText(ret);
             history.getChildren().add(temp);
-
         }
     }
 
@@ -218,26 +180,10 @@ public class HomepageController implements Initializable {
 
         addActivity.setOnMouseClicked(event ->{
 
-
             postActivity(controller.sessionCookie, categoryId, spinner);
-            // Refreshing the user and getting the new info
-            user = Client.getUserDetails(controller.sessionCookie);
-            experience();
-            progress.setProgress(y/100.0);
-            showUserActivities();
 
         });
     }
-
-    public void experience(){
-
-        a= (int)user.getExperience_points()/100;
-        y= user.getExperience_points() - a*100;
-    }
-
-
-
-
 
     public void postActivity(String sessionCookie, long CategoryId, Spinner<Double> spinner){
         double amount = spinner.getValue();
