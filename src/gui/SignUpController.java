@@ -58,6 +58,8 @@ public class SignUpController implements Initializable {
     private Text emptyPassCon;
     @FXML
     private ImageView Home;
+    @FXML
+    private Text passcheck;
 
     private double xOffset =0;
     private double yOffset =0;
@@ -70,6 +72,7 @@ public class SignUpController implements Initializable {
     emptyUser.setVisible(false);
     emptyPass.setVisible(false);
     emptyPassCon.setVisible(false);
+    passcheck.setVisible(false);
     }
 
     // Gets the username from the register screen
@@ -190,9 +193,18 @@ public class SignUpController implements Initializable {
             emptyPassCon.setVisible(false);
         }
 
+        if (!getPassword().equals(getPasswordConfirm())){
+            passcheck.setText("Passwords do not match");
+            passcheck.setVisible(true);
+        }
+        else {
+            passcheck.setVisible(false);
+        }
 
-        if (getPassword().equals(getPasswordConfirm())) {
+        if (getPassword().equals(getPasswordConfirm()) && !getLastname().isEmpty()&& !getFirstname().isEmpty()
+            && !getUsername().isEmpty() && !getPassword().isEmpty()) {
 
+            
             // HttpHeaders
             HttpHeaders headers = new HttpHeaders();
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
@@ -230,7 +242,8 @@ public class SignUpController implements Initializable {
             }
         }
         else {
-            exists.setText("Passwords do not match");
+
+            exists.setText("Fill in open fields");
             exists.setVisible(true);
 
         }
