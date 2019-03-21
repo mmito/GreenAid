@@ -17,5 +17,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT * FROM user where id in (select user_id_1 from following where user_id_2 = :id)", nativeQuery = true)
     List<User> findFollowedBy(long id);
 
+    @Query(value = "SELECT * FROM user ORDER BY experience_points DESC LIMIT 20", nativeQuery = true)
+    List<User> findLeaderboard();
+
 }
 

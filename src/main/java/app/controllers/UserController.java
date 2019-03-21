@@ -337,4 +337,16 @@ public class UserController {
         }
     }
 
+    @GetMapping("/leaderboard")
+    public Response getLeaderboard(){
+
+        if(securityService.findLoggedInUsername() != null) {
+            List<User> query = userService.findLeaderboard();
+            return new Response(true, toUserProjection(query, userService.findByUsername(securityService.findLoggedInUsername()).getId()));
+        }
+        else {
+            return new Response(false, "You are not authorized!");
+        }
+    }
+
 }

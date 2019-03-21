@@ -63,5 +63,9 @@ public class UserServiceImpl {
 
     }
 
+    public List<User> findLeaderboard() {
+        return userRepository.findLeaderboard();
+    }
+
 }
 

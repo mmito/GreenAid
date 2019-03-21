@@ -27,6 +27,7 @@ public class Client {
     private static final String url_add_follow = "http://localhost:8080/user/add-following";
     private static final String url_remove_follow = "http://localhost:8080/user/remove-following";
     private static final String url_recommendation = "http://localhost:8080/user/recommendation";
+    private static final String url_leaderboard = "http://localhost:8080/user/leaderboard";
 
     private static ObjectMapper mapper = new ObjectMapper();
 
@@ -173,6 +174,10 @@ public class Client {
     }
     public static String getRecommendation(String sessionCookie){
         HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, url_recommendation);
+        return (String) response.getBody().getData();
+    }
+    public static String leaderboard(String sessionCookie){
+        HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, url_leaderboard);
         return (String) response.getBody().getData();
     }
 
