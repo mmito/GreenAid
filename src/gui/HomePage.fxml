@@ -33,7 +33,10 @@
                <content>
                   <AnchorPane prefHeight="701.0" prefWidth="689.0">
                      <children>
-                        <Pane layoutX="-9.0" layoutY="-3.0" prefHeight="708.0" prefWidth="727.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;" />
+                        <Pane layoutX="-9.0" layoutY="-3.0" prefHeight="708.0" prefWidth="727.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;">
+                           <children>
+                              <Text layoutX="566.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="xp" wrappingWidth="101.6708984375" fx:id="xp" />
+                           </children></Pane>
                         <ImageView fitHeight="208.0" fitWidth="175.0" layoutX="111.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@profileImage.png" />
@@ -42,7 +45,7 @@
                         <Text fx:id="firstName" fill="WHITE" layoutX="198.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USER'S NAME" wrappingWidth="146.6708984375" />
                         <Text fx:id="lastName" fill="WHITE" layoutX="380.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USER'S SURNAME" wrappingWidth="131.6708984375" />
                         <Text fx:id="field" fill="WHITE" layoutX="123.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THE USERNAME WILL BE HERE" textAlignment="CENTER" wrappingWidth="485.6708984375" />
-                        <ProgressIndicator layoutX="399.0" layoutY="88.0" prefHeight="143.0" prefWidth="196.0" progress="0.0" />
+                        <ProgressIndicator fx:id="progress" layoutX="399.0" layoutY="88.0" onMouseEntered="#Hover" onMouseExited="#exit" prefHeight="143.0" prefWidth="196.0" progress="0.0" />
                         <Text fill="#250000" layoutX="363.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Progress to the next Achievement">
                            <font>
                               <Font size="18.0" />
@@ -63,6 +66,7 @@
                               </Pane>
                            </content>
                         </ScrollPane>
+                        <Text fx:id="level" layoutX="552.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="level" />
                      </children>
                   </AnchorPane>
                </content>
@@ -133,5 +137,6 @@
             <Image url="@logo.PNG" />
          </image>
       </ImageView>
+      <Text layoutX="323.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
    </children>
 </AnchorPane>
