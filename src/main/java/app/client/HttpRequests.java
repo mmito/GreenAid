@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 public class HttpRequests {
 
     /**
-     * Sets headers for the communication betwen server and client.
+     * Sets headers for the communication between server and client.
      * @param sessionCookie uses the sessionCookie to achieve it
      * @return returns the headers of the communication
      */
