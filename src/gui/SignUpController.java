@@ -204,7 +204,7 @@ public class SignUpController implements Initializable {
         if (getPassword().equals(getPasswordConfirm()) && !getLastname().isEmpty()&& !getFirstname().isEmpty()
             && !getUsername().isEmpty() && !getPassword().isEmpty()) {
 
-            
+
             // HttpHeaders
             HttpHeaders headers = new HttpHeaders();
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();

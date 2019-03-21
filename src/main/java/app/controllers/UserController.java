@@ -150,7 +150,7 @@ public class UserController {
         }
 
         else
-            return new Response(false, "You are not authorized");
+            return new Response(false, "You are not authorized!");
 
     }
 
@@ -182,7 +182,7 @@ public class UserController {
         }
 
         else
-            return new Response(false, "Your are not authorized");
+            return new Response(false, "You are not authorized!");
 
     }
 
@@ -244,7 +244,7 @@ public class UserController {
         }
 
         else
-            return new Response(false, "You are not authorized");
+            return new Response(false, "You are not authorized!");
 
     }
 
@@ -273,7 +273,7 @@ public class UserController {
         }
 
         else
-            return new Response(false, "You are not authorized");
+            return new Response(false, "You are not authorized!");
 
     }
     @GetMapping("/recommendation")
