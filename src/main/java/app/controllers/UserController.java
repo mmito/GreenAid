@@ -10,6 +10,7 @@ import app.repository.CategoryRepository;
 import app.responses.Response;
 import app.services.ActivityServiceImpl;
 import app.services.FollowingServiceImpl;
+import app.services.RecommendationRepository;
 import app.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -274,6 +275,66 @@ public class UserController {
         else
             return new Response(false, "You are not authorized");
 
+    }
+    @GetMapping("/recommendation")
+    public Response getRecommendation(){
+        User user = userService.findByUsername(securityService.findLoggedInUsername());
+        RecommendationRepository repo = new RecommendationRepository();
+        List<String> eatRecommendations = repo.getEatRecommendations();
+        List<String> householdRecommendations = repo.getHouseholdRecommendations();
+        List<String> transportRecommendations = repo.getTransportRecommendations();
+        if (user != null) {
+            String username = user.getUsername();
+
+            List<Activity> activities = activityService.findByUser_id(user.getId());
+            List<ActivityProjection> response = new LinkedList<>();
+            int eat = 0, transport = 0 , household = 0;
+            String activityRecom = "";
+            for (Activity a : activities) {
+
+                double amount = a.getAmount();
+
+                switch ((int) a.getCategory_id()){
+                    case 1:
+                        eat += amount;
+                        break;
+                    case 2:
+                        eat += amount;
+                        household += amount;
+                        break;
+                    case 3:
+                        transport += amount;
+                        break;
+                    case 4:
+                        transport += amount;
+                        break;
+                    case 5:
+                        household += amount;
+                    case 6:
+                        household += amount;
+                        break;
+
+                }
+            }
+            if (eat > household && eat > transport ){
+                int rand = (int) (Math.random() * 8);
+                activityRecom += eatRecommendations.get(rand);
+            }
+            else if (household > eat && household > transport){
+                int rand = (int) (Math.random() * 6);
+                activityRecom += householdRecommendations.get(rand);
+            }
+            else if (transport > eat && transport > household) {
+                int rand = (int) (Math.random() * 6);
+                activityRecom += transportRecommendations.get(rand);
+            }
+
+            return new Response(true, "Based on your activities, here's an activity recommendation:\n " + activityRecom);
+
+        }
+        else {
+            return new Response(false, "You are not authorized!");
+        }
     }
 
 }

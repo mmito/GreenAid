@@ -24,9 +24,9 @@ public class Client {
     private static final String url_user_details = "http://localhost:8080/user/details";
     private static final String url_user_followings = "http://localhost:8080/user/followings";
     private static final String url_user_followed_by = "http://localhost:8080/user/followed-by";
-    private static final String url_add_follow = "http://localhost:8080/user//add-following";
+    private static final String url_add_follow = "http://localhost:8080/user/add-following";
     private static final String url_remove_follow = "http://localhost:8080/user/remove-following";
-
+    private static final String url_recommendation = "http://localhost:8080/user/recommendation";
 
     private static ObjectMapper mapper = new ObjectMapper();
 
@@ -34,7 +34,7 @@ public class Client {
     /**
      * Method that retrieves its session cookie with the login data.
      * @param username username of the user
-     * @param password passwrod of the user
+     * @param password password of the user
      * @return returns cookie of the header
      */
     public static String getSessionCookie(String username, String password) {
@@ -170,6 +170,10 @@ public class Client {
 
         return manageFollowRequests(sessionCookie, username, url_remove_follow);
 
+    }
+    public static String getRecommendation(String sessionCookie){
+        HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, url_recommendation);
+        return (String) response.getBody().getData();
     }
 
      public static void main(String[] args) {
