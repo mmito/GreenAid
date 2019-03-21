@@ -216,6 +216,12 @@ public class HomepageController implements Initializable {
             activityText.setText("Since how many days have you been lowering your home's temperature ?");
         }
 
+        spinner.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                spinner.increment(0); // won't change value, but will commit editor
+            }
+        });
+
         addActivity.setOnMouseClicked(event ->{
 
 
