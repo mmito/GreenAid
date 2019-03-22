@@ -1,8 +1,8 @@
-import app.authentication.SecurityServiceImpl;
+
 import app.models.ActivityProjection;
 import app.client.Client;
 import app.models.User;
-import app.services.UserServiceImpl;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 
 import java.net.URL;
@@ -58,10 +58,7 @@ public class HomepageController implements Initializable {
     private double yOffset;
 
     private double y ;
-
-
     // counter for level
-
     private int a ;
 
 
@@ -69,7 +66,7 @@ public class HomepageController implements Initializable {
     private User user = Client.getUserDetails(controller.sessionCookie);
     private List<ActivityProjection> activities = Client.getUserActivities(controller.sessionCookie);
 
- //   private User experience = userService.findByUsername(securityService.findLoggedInUsername());
+
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
@@ -85,7 +82,7 @@ public class HomepageController implements Initializable {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
         experience();
-        level.setText("lvl"+ a);
+
 
         progress.setProgress(y/100.0);
         showUserActivities();
@@ -228,6 +225,7 @@ public class HomepageController implements Initializable {
             postActivity(controller.sessionCookie, categoryId, spinner);
             // Refreshing the user and getting the new info
             user = Client.getUserDetails(controller.sessionCookie);
+            activities = Client.getUserActivities(controller.sessionCookie);
             experience();
             progress.setProgress(y/100.0);
             showUserActivities();
@@ -239,6 +237,7 @@ public class HomepageController implements Initializable {
 
         a= (int)user.getExperience_points()/100;
         y= user.getExperience_points() - a*100;
+        level.setText("lvl"+ a);
     }
 
 
