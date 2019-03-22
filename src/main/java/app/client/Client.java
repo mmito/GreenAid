@@ -63,7 +63,7 @@ public class Client {
     public static String checkAuth(String sessionCookie) {
 
         HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, url_check);
-
+        System.out.println(response);
         return (String) response.getBody().getData();
     }
 
@@ -120,34 +120,49 @@ public class Client {
     public static List<ActivityProjection> getUserActivities(String sessionCookie) {
 
         HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, url_user_activities);
-        List<ActivityProjection> activities = mapper.convertValue(response.getBody().getData(), new TypeReference<List<ActivityProjection>>() {});
-        return activities;
-
+        if (response.getBody().isOk()) {
+            List<ActivityProjection> activities = mapper.convertValue(response.getBody().getData(), new TypeReference<List<ActivityProjection>>() {
+            });
+            return activities;
+        }
+        else
+            return null;
     }
 
     public static User getUserDetails(String sessionCookie) {
 
         HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, url_user_details);
-        User user = mapper.convertValue(response.getBody().getData(), User.class);
-        return user;
+        if (response.getBody().isOk()) {
+            User user = mapper.convertValue(response.getBody().getData(), User.class);
+            return user;
+        }
+        else
+            return null;
 
     }
 
     public static List<UserProjection> getUserFollowings(String sessionCookie) {
 
         HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, url_user_followings);
-        List<UserProjection> followings = mapper.convertValue(response.getBody().getData(), new TypeReference<List<UserProjection>>() {});
-        return followings;
-
-
+        if (response.getBody().isOk()) {
+            List<UserProjection> followings = mapper.convertValue(response.getBody().getData(), new TypeReference<List<UserProjection>>() {
+            });
+            return followings;
+        }
+        else
+            return null;
     }
 
     public static List<UserProjection> getUserFollowedBy(String sessionCookie) {
 
         HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, url_user_followed_by);
-        List<UserProjection> followedBy = mapper.convertValue(response.getBody().getData(), new TypeReference<List<UserProjection>>() {});
-        return followedBy;
-
+        if (response.getBody().isOk()) {
+            List<UserProjection> followedBy = mapper.convertValue(response.getBody().getData(), new TypeReference<List<UserProjection>>() {
+            });
+            return followedBy;
+        }
+        else
+            return null;
     }
 
     public static  String manageFollowRequests(String sessionCookie, String username, String url) {
@@ -184,6 +199,7 @@ public class Client {
      public static void main(String[] args) {
 
         String sessionCookie = getSessionCookie("tommytest", "quadronno");
+//        String sessionCookie = getSessionCookie("UsainBolt", "123456789");
         User user = getUserDetails(sessionCookie);
         System.out.println(user.getExperience_points());
         List<ActivityProjection> activities = getUserActivities(sessionCookie);
@@ -195,9 +211,16 @@ public class Client {
         //System.out.println(addFollow(sessionCookie,"UsainBolt"));
         //System.out.println(removeFollow(sessionCookie, "UsainBolt"));
         List<UserProjection> followings2 = getUserFollowings(sessionCookie);
-        System.out.println(followings2.size());
-        System.out.println(followings2.get(1).isFollowing());
-        System.out.println(removeActivity(sessionCookie, 59));
+        for (UserProjection a : followings2) {
+            System.out.println(a.getUsername() + " " + a.isFollowing());
+        }
+        System.out.println("AICI");
+        for (UserProjection a : followedBy) {
+            System.out.println(a.getUsername() + " " + a.isFollowing());
+        }
+
+//        System.out.println(followings2.get(1).isFollowing());
+//        System.out.println(removeActivity(sessionCookie, 59));
 
      }
 

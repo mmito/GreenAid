@@ -1,5 +1,7 @@
 package app.responses;
 
+import java.util.Objects;
+
 public class Response {
 
     private boolean ok;
@@ -37,4 +39,12 @@ public class Response {
         this.data = data;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Response response = (Response) o;
+        return ok == response.ok &&
+                Objects.equals(data, response.data);
+    }
 }

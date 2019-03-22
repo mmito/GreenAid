@@ -77,10 +77,9 @@ public class UserController {
     @GetMapping("/activities")
     public Response showActivities() {
 
-        User user = userService.findByUsername(securityService.findLoggedInUsername());
-
-        if (user != null) {
-            String username = user.getUsername();
+        String username = securityService.findLoggedInUsername();
+        if (username != null) {
+            User user = userService.findByUsername(username);
 
             List<Activity> activities = activityService.findByUser_id(user.getId());
             List<ActivityProjection> response = new LinkedList<>();
@@ -188,11 +187,11 @@ public class UserController {
 
     @GetMapping("/followings")
     public Response getFollowings() {
-
-        if(securityService.findLoggedInUsername() != null) {
-
-            List<User> query = userService.findFollowings(userService.findByUsername(securityService.findLoggedInUsername()).getId());
-            return new Response(true, toUserProjection(query, userService.findByUsername(securityService.findLoggedInUsername()).getId()));
+        String loggedInUsername = securityService.findLoggedInUsername();
+        if(loggedInUsername != null) {
+            User foundUser = userService.findByUsername(loggedInUsername);
+            List<User> query = userService.findFollowings(foundUser.getId());
+            return new Response(true, toUserProjection(query, foundUser.getId()));
 
         }
 
@@ -203,11 +202,11 @@ public class UserController {
 
     @GetMapping("/followed-by")
     public Response getFollowedBy() {
-
-        if (securityService.findLoggedInUsername() != null) {
-
-            List<User> query = userService.findFollowedBy(userService.findByUsername(securityService.findLoggedInUsername()).getId());
-            return new Response(true, toUserProjection(query, userService.findByUsername(securityService.findLoggedInUsername()).getId()));
+        String loggedInUsername = securityService.findLoggedInUsername();
+        if (loggedInUsername != null) {
+            User foundUser = userService.findByUsername(loggedInUsername);
+            List<User> query = userService.findFollowedBy(foundUser.getId());
+            return new Response(true, toUserProjection(query, foundUser.getId()));
 
         }
 
