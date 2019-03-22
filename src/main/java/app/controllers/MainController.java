@@ -39,7 +39,6 @@ public class MainController {
     public Response welcome() {
 
         return new Response( true, "welcome");
-
     }
 
     /**
@@ -48,9 +47,9 @@ public class MainController {
      */
     @GetMapping("/check")
     public Response checkAuth() {
-
-        if (securityService.findLoggedInUsername() != null) {
-            return new Response(true, "Your username is:" + securityService.findLoggedInUsername());
+        String username = securityService.findLoggedInUsername();
+        if (username != null) {
+            return new Response(true, "Your username is:" + username);
         } else {
             return new Response(false, "User not logged in");
         }
@@ -82,9 +81,8 @@ public class MainController {
     @GetMapping("/getcategories")
     public Response getCategories() {
 
-        User user = userService.findByUsername(securityService.findLoggedInUsername());
-
-        if (user != null) {
+        String username = securityService.findLoggedInUsername();
+        if (username != null) {
             List<Category> categories = categoryRepository.findAll();
             String response = "";
             for (Category c : categories) {
@@ -92,8 +90,8 @@ public class MainController {
                 response += "\n" + c.getId() + " - " + c.getName();
 
             }
-
             return new Response(true, response);
+
         }
         else {
             return new Response(false, "You are not authorized!");
