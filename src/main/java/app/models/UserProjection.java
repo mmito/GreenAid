@@ -1,6 +1,7 @@
 package app.models;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class UserProjection {
 
@@ -72,5 +73,18 @@ public class UserProjection {
 
     public void setFollowing(boolean following) {
         this.following = following;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserProjection that = (UserProjection) o;
+        return Double.compare(that.experience_points, experience_points) == 0 &&
+                following == that.following &&
+                Objects.equals(username, that.username) &&
+                Objects.equals(first_name, that.first_name) &&
+                Objects.equals(last_name, that.last_name) &&
+                Objects.equals(last_update, that.last_update);
     }
 }
