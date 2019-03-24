@@ -1,9 +1,9 @@
 package app.services;
 
-
 import app.models.Activity;
 import app.repository.ActivityRepository;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -11,11 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -27,26 +25,37 @@ public class ActivityServiceImplTest {
     @MockBean
     private ActivityRepository activityRepositoryMock;
 
-    @Test
-    public void saveActivity() {
+    Activity activity_1;
 
-        Activity activity = new Activity();
-        activity.setId(1);
-        activity.setUser_id(2);
-
-        Mockito.when(activityRepositoryMock.save(activity)).thenReturn(activity);
-
-        this.activityService.save(activity);
-        verify(activityRepositoryMock).save(activity);
+    @Before
+    public void setUp() {
+        activity_1 = new Activity();
+        activity_1.setId(1);
+        activity_1.setUser_id(3);
     }
 
     @Test
-    public void findActivityByUserID() {
+    public void saveActivity() {
+        Mockito.when(activityRepositoryMock.save(activity_1)).thenReturn(activity_1);
 
-        Activity activity_1 = new Activity();
-        activity_1.setId(1);
-        activity_1.setUser_id(3);
+        this.activityService.save(activity_1);
+        Mockito.verify(activityRepositoryMock).save(activity_1);
+    }
 
+    @Test
+    public void deleteActivity() {
+        Mockito.when(activityService.findById(1)).thenReturn(activity_1);
+
+        Mockito.doAnswer((i) -> {
+            Assert.assertEquals(activity_1, i.getArgument(0));
+            return null;
+        }).when(activityRepositoryMock).delete(activity_1);
+
+        this.activityService.delete(activity_1);
+    }
+
+    @Test
+    public void findActivityByUserId() {
         Activity activity_2 = new Activity();
         activity_2.setId(2);
         activity_2.setUser_id(3);
@@ -62,4 +71,10 @@ public class ActivityServiceImplTest {
         Assert.assertEquals(activityList, result);
     }
 
+    @Test
+    public void findActivityById() {
+        Mockito.when(activityRepositoryMock.findById(1)).thenReturn(activity_1);
+
+        Assert.assertEquals(activity_1, activityService.findById(1));
+    }
 }
