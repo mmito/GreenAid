@@ -51,15 +51,15 @@ public class UserServiceImpl {
         return userRepository.findByUsername(loggedInUserUsername);
     }
 
-    public List<User> findFollowings(long id) {
+    public List<User> findFollowings(long userId) {
 
-        return userRepository.findFollowings(id);
+        return userRepository.findFollowings(userId);
 
     }
 
-    public List<User> findFollowedBy(long id) {
+    public List<User> findFollowedBy(long userId) {
 
-        return userRepository.findFollowedBy(id);
+        return userRepository.findFollowedBy(userId);
 
     }
 

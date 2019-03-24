@@ -16,7 +16,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class CategoryServiceImplTest {
 
-
     @Autowired
     private CategoryServiceImpl categoryService;
 
@@ -24,7 +23,7 @@ public class CategoryServiceImplTest {
     private CategoryRepository categoryRepositoryMock;
 
     @Test
-    public void findExistingCategory() throws Exception {
+    public void findExistingCategory() {
 
         Category category = new Category();
         category.setId(55);
@@ -38,7 +37,7 @@ public class CategoryServiceImplTest {
     }
 
     @Test
-    public void findNonexistingCategory() throws Exception {
+    public void findNonexistingCategory() {
 
         Mockito.when(categoryRepositoryMock.findById(55)).thenReturn(null);
 
@@ -46,5 +45,4 @@ public class CategoryServiceImplTest {
 
         Assert.assertNull(result);
     }
-
 }
