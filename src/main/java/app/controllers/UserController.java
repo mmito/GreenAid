@@ -115,7 +115,7 @@ public class UserController {
 
                 }
 
-                response.add(new ActivityProjection(id, username, category, amount, xp_points));
+                response.add(new ActivityProjection(username, category, amount, xp_points));
 
             }
 
@@ -283,10 +283,7 @@ public class UserController {
         List<String> householdRecommendations = repo.getHouseholdRecommendations();
         List<String> transportRecommendations = repo.getTransportRecommendations();
         if (user != null) {
-            String username = user.getUsername();
-
             List<Activity> activities = activityService.findByUser_id(user.getId());
-            List<ActivityProjection> response = new LinkedList<>();
             int eat = 0, transport = 0 , household = 0;
             String activityRecom = "";
             for (Activity a : activities) {
@@ -315,20 +312,27 @@ public class UserController {
 
                 }
             }
-            if (eat > household && eat > transport ){
+            int max = 0;
+            if (eat > max)
+                max = eat;
+            if (transport > max)
+                max = transport;
+            if (household > max)
+                max = household;
+            if (eat == max){
                 int rand = (int) (Math.random() * 8);
-                activityRecom += eatRecommendations.get(rand);
+                activityRecom += "Food\n" + eatRecommendations.get(rand);
             }
-            else if (household > eat && household > transport){
+            else if (household == max){
                 int rand = (int) (Math.random() * 6);
-                activityRecom += householdRecommendations.get(rand);
+                activityRecom += "Household\n" + householdRecommendations.get(rand);
             }
-            else if (transport > eat && transport > household) {
+            else {
                 int rand = (int) (Math.random() * 6);
-                activityRecom += transportRecommendations.get(rand);
+                activityRecom += "Transportation\n" + transportRecommendations.get(rand);
             }
 
-            return new Response(true, "Based on your activities, here's an activity recommendation:\n " + activityRecom);
+            return new Response(true, "Based on your activities, here's an activity recommendation:\nCategory: " + activityRecom);
 
         }
         else {
