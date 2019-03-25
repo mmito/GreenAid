@@ -102,22 +102,31 @@ public class HomepageController implements Initializable {
     }
     public void showUserActivities() {
         int sz = activities.size();
-        history.getChildren().clear();
 
-        Text start = new Text();
-        start.setText(activities.get(0).getUsername() + ", here is your list of activities!");
+        if(activities.isEmpty()){
+            Text start = new Text();
+            start.setText("No activities");
+            history.getChildren().add(start);
 
-        for(int i = 0; i < sz; i++){
-            Text temp = new Text();
+        }
+        else {
+            history.getChildren().clear();
 
-            String ret = i + " - ";
-            ret += activities.get(i).getCategory() + " done ";
-            ret += activities.get(i).getAmount() + " times for a total of ";
-            ret += Double.valueOf(new DecimalFormat("#.##").format(activities.get(i).getXp_points())) + " XP point.";
+            Text start = new Text();
+            start.setText(activities.get(0).getUsername() + ", here is your list of activities!");
+            history.getChildren().add(start);
 
-            temp.setText(ret);
-            history.getChildren().add(temp);
+            for (int i = 0; i < sz; i++) {
+                Text temp = new Text();
 
+                String ret = i + " - ";
+                ret += activities.get(i).getCategory() + " done ";
+                ret += activities.get(i).getAmount() + " times for a total of ";
+                ret += Double.valueOf(new DecimalFormat("#.##").format(activities.get(i).getXp_points())) + " XP point.";
+
+                temp.setText(ret);
+                history.getChildren().add(temp);
+            }
         }
     }
 
