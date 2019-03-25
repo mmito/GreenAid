@@ -1,10 +1,10 @@
-# Sprint Review/Week 5
+# Sprint Review/Week 4
 
 ## Opening/Teamwork
 Everyone attended the actual and extra meetings throughouot the week.
 
 ## Main problems encountered during this Sprint
-We had problems with database onnection due to the database servers. Also testing was also a problem at times as result we decided to split some classes.
+We had problems with database connection due to the database servers. Also testing was also a problem at times as result we decided to split some classes.
 
 Also, we experienced hardship to connect client-side to the GUI.
 
