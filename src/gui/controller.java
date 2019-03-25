@@ -129,7 +129,7 @@ public class controller implements Initializable {
 
             try {
 
-                Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+                Parent root = (Parent)FXMLLoader.<Parent>load(getClass().getResource("./HomePage.fxml"));
                 Stage stage = new Stage();
                 stage.setTitle("HomePage");
                 stage.setScene(new Scene(root, 1398, 954));

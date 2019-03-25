@@ -92,7 +92,7 @@ public class HomepageController implements Initializable {
 
     public  void Hover(){
         experience();
-        xp.setText(Double.valueOf(new DecimalFormat("#.##").format(y))+ "/100");
+        xp.setText(new DecimalFormat("#.##").format(y)+ "/100");
         xp.setVisible(true);
 
 
@@ -100,6 +100,7 @@ public class HomepageController implements Initializable {
     public void exit(){
         xp.setVisible(false);
     }
+
     public void showUserActivities() {
         int sz = activities.size();
 
@@ -122,7 +123,8 @@ public class HomepageController implements Initializable {
                 String ret = i + " - ";
                 ret += activities.get(i).getCategory() + " done ";
                 ret += activities.get(i).getAmount() + " times for a total of ";
-                ret += Double.valueOf(new DecimalFormat("#.##").format(activities.get(i).getXp_points())) + " XP point.";
+                ret += new DecimalFormat("#.##").format(activities.get(i).getXp_points()) + " XP point.";
+
 
                 temp.setText(ret);
                 history.getChildren().add(temp);
