@@ -20,12 +20,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class controller implements Initializable{
+public class controller implements Initializable {
 
     @FXML
     Hyperlink register;
@@ -49,109 +48,118 @@ public class controller implements Initializable{
     public static String Name = null;
 
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1){
+    public void initialize(URL arg0, ResourceBundle arg1) {
         invalid.setVisible(false);
-    password.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        password.setOnKeyPressed(new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
             if (event.getCode().equals(KeyCode.ENTER))
-            {
-                handleLoginClicked();
+            { handleLoginClicked();
             }
         }
     });
     }
 
     // Closes the program
-    public void handleClose(){
+    public void handleClose() {
         System.exit(0);
     }
 
     //Minimizes the program
-    public void handleMinimizeButton(MouseEvent mouse){
+    public void handleMinimizeButton(MouseEvent mouse) {
 
         JavaFXMain.stage.setIconified(true);
     }
 
     // Goes to the register screen
-    public void handleRegisterClicked(){
-        try{
-            Window window = register.getScene().getWindow();
+
+    /**
+     * Controls the register click
+     */
+    public void handleRegisterClicked() {
+        try {
+
             Parent root = FXMLLoader.load(getClass().getResource("signUp.fxml"));
             Stage stage = new Stage();
             stage.setTitle("signUp");
             stage.setScene(new Scene(root, 700, 655));
             stage.initStyle(StageStyle.UNDECORATED);
-            this.stage= stage;
+            this.stage = stage;
             stage.show();
+            Window window = register.getScene().getWindow();
             window.hide();
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             System.out.println("Error found in the handleRegisterClicked class");
         }
     }
 
-    // Gets the username from the login
+    /**
+     * Gets the username from the login
+     */
     public String getUsername() {
         this.Name = username.getText();
         return username.getText();
 
     }
 
-    // Gets the password from the login
+
+
+    /**
+     * Gets the password from the login
+     * @return
+     */
     public String getPassword() {
         return password.getText();
     }
 
 
-    // Goes to the homepage if the information is correct
-    public void handleLoginClicked(){
+
+    /**
+     * Goes to the homepage if the information is correct
+     */
+    public void handleLoginClicked() {
 
         String response = Client.getSessionCookie(getUsername(), getPassword());
 
         // Checks if the information is the same as in the database
-        if(!response.equals("No cookie found.")){
+        if (!response.equals("No cookie found.")) {
 
-            this.sessionCookie= response;
+            this.sessionCookie = response;
 
 
-            try{
-                Window window = login.getScene().getWindow();
+            try {
+
                 Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
                 Stage stage = new Stage();
                 stage.setTitle("HomePage");
                 stage.setScene(new Scene(root, 1398, 954));
                 stage.initStyle(StageStyle.UNDECORATED);
-                this.stage=stage;
+                this.stage = stage;
                 stage.show();
+                Window window = login.getScene().getWindow();
                 window.hide();
-            }
-            catch(IOException e){
+            } catch(IOException e) {
                 System.out.println("Error found in the handleLoginClicked");
-            }
-
-        }
-        // Checks if the username field and password field is empty
-        else if(getUsername().equals("") && getPassword().equals("") ){
+            } }// Checks if the username field and password field is empty
+        else if (getUsername().equals("") && getPassword().equals("") ) {
             invalid.setText("Fill in username and password");
             invalid.setVisible(true);
         }
            // Checks if username field is not empty and if the password field is
-           else if(!getUsername().equals("") && getPassword().equals("") ){
-                invalid.setText("Fill in password");
-                invalid.setVisible(true);
-
+        else if (!getUsername().equals("") && getPassword().equals("") ) {
+            invalid.setText("Fill in password");
+            invalid.setVisible(true);
         }
         // Checks if the username field is empty and the password field is not
-        else if(getUsername().equals("") && !getPassword().equals("") ) {
+        else if (getUsername().equals("") && !getPassword().equals("") ) {
             invalid.setText("Fill in username");
             invalid.setVisible(true);
         }
         /* Sets the error of that username or password is not correct if the combination is not in the database
          on the login screen */
-        else{
-                invalid.setText("Username or password is incorrect");
-                invalid.setVisible(true);
+        else {
+            invalid.setText("Username or password is incorrect");
+            invalid.setVisible(true);
 
         }
 

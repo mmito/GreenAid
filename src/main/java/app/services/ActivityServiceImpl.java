@@ -23,6 +23,10 @@ public class ActivityServiceImpl {
 
     }
 
+    /**
+     * Deletes activity.
+     * @param activity activity to be deleted
+     */
     public void delete(Activity activity) {
 
         activityRepository.delete(activity);
@@ -40,6 +44,11 @@ public class ActivityServiceImpl {
 
     }
 
+    /**
+     * Finds an activity by ID
+     * @param id id to be found
+     * @return returns the activity
+     */
     public Activity findById(long id) {
 
         return activityRepository.findById(id);

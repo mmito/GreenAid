@@ -12,6 +12,9 @@ public class UserProjection {
     Timestamp last_update;
     boolean following;
 
+    /**
+     * User projection class
+     */
     public UserProjection() {
         this.username = "";
         this.first_name = "";
@@ -21,6 +24,15 @@ public class UserProjection {
         this.following = false;
     }
 
+    /**
+     * Constructor for the class
+     * @param username
+     * @param first_name
+     * @param last_name
+     * @param experience_points
+     * @param last_update
+     * @param following
+     */
     public UserProjection(String username, String first_name, String last_name, double experience_points, Timestamp last_update, boolean following) {
         this.username = username;
         this.first_name = first_name;
@@ -80,14 +92,19 @@ public class UserProjection {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if  (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false;}
         UserProjection that = (UserProjection) o;
-        return Double.compare(that.experience_points, experience_points) == 0 &&
-                following == that.following &&
-                Objects.equals(username, that.username) &&
-                Objects.equals(first_name, that.first_name) &&
-                Objects.equals(last_name, that.last_name) &&
+        return Double.compare(that.experience_points, experience_points) == 0
+                &&
+                following == that.following
+                &&
+                Objects.equals(username, that.username)
+                &&
+                Objects.equals(first_name, that.first_name)
+                &&
+                Objects.equals(last_name, that.last_name)
+                &&
                 Objects.equals(last_update, that.last_update);
     }
 }
