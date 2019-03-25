@@ -1,26 +1,93 @@
 package app.models;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class CategoryTest {
 
+    private final static double DELTA = 0;
+    private Category category;
+
+    @Before
+    public void setUp() {
+        category = new Category("name-test", 1, 1.0, 1);
+    }
+
+    @After
+    public void tearDown() {
+        category = null;
+    }
+
     @Test
-    public void setConstructor() {
-        Category c = new Category();
+    public void constructorDefault() {
+        category = new Category();
+        assertNotNull(category);
+    }
 
-        c.setName("eating");
-        c.setId(0);
-        c.setAmount_saved(200);
-        c.setXp_points(50);
-        c.setCategory_type_id(5);
+    @Test
+    public void constructorParameters() {
+        category = new Category("name-test", 1, 1.0, 1);
+        assertNotNull(category);
+    }
 
-        Assert.assertEquals("eating", c.getName());
-        Assert.assertEquals(0, c.getId());
-        Assert.assertEquals(200, c.getAmount_saved());
-        Assert.assertEquals(50, c.getXp_points(), 0.001);
-        Assert.assertEquals(5, c.getCategory_type_id());
+    @Test
+    public void getId() {
+        assertEquals(0, category.getId());
+    }
 
+    @Test
+    public void setId() {
+        category.setId(2);
+        assertEquals(2, category.getId());
+    }
+
+    @Test
+    public void getName() {
+        assertEquals("name-test", category.getName());
+    }
+
+    @Test
+    public void setName() {
+        category.setName("name-test-2");
+        assertEquals("name-test-2", category.getName());
+    }
+
+    @Test
+    public void getAmount_saved() {
+        assertEquals(1, category.getAmount_saved());
+    }
+
+    @Test
+    public void setAmount_saved() {
+        category.setAmount_saved(2);
+        assertEquals(2, category.getAmount_saved());
+    }
+
+    @Test
+    public void getXp_points() {
+        assertEquals(1.0, category.getXp_points(), DELTA);
+    }
+
+    @Test
+    public void setXp_points() {
+        category.setXp_points(2.0);
+        assertEquals(2.0, category.getXp_points(), DELTA);
+    }
+
+    @Test
+    public void getCategory_type_id() {
+        assertEquals(1, category.getCategory_type_id());
+    }
+
+    @Test
+    public void setCategory_type_id() {
+        category.setCategory_type_id(2);
+        assertEquals(2, category.getCategory_type_id());
     }
 }

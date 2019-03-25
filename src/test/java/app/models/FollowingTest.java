@@ -1,29 +1,111 @@
 package app.models;
 
-import org.junit.Assert;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Timestamp;
-import java.util.Date;
+
+import static org.junit.Assert.*;
 
 public class FollowingTest {
 
+    private Following following;
+
+    @Before
+    public void setUp() {
+        following = new Following(1L, 2L, new Timestamp(System.currentTimeMillis()));
+    }
+
+    @After
+    public void tearDown() {
+        following = null;
+    }
+
     @Test
-    public void setConstructor() {
-        Following f = new Following();
+    public void testConstructor() {
+        following = new Following();
+        assertNotNull(following);
+    }
 
-        Date now = new Date();
-        Timestamp timestamp = new Timestamp(now.getTime());
+    @Test
+    public void testConstructorParameters() {
+        following = new Following(1L, 2L, new Timestamp(System.currentTimeMillis()));
+        assertNotNull(following);
+    }
 
-        f.setId(0L);
-        f.setUser_id_1(1L);
-        f.setUser_id_2(2L);
-        f.setLast_update(timestamp);
+    @Test
+    public void getUser_id_1() {
+        assertEquals((Long)1L, following.getUser_id_1());
+    }
 
-        Assert.assertEquals(new Long(0), f.getId());
-        Assert.assertEquals(new Long(1), f.getUser_id_1());
-        Assert.assertEquals(new Long(2), f.getUser_id_2());
-        Assert.assertEquals(timestamp, f.getLast_update());
+    @Test
+    public void setUser_id_1() {
+        following.setUser_id_1(2L);
+        assertEquals((Long)2L, following.getUser_id_1());
+    }
 
+    @Test
+    public void getUser_id_2() {
+        assertEquals((Long)2L, following.getUser_id_2());
+    }
+
+    @Test
+    public void setUser_id_2() {
+        following.setUser_id_2(3L);
+        assertEquals((Long)3L, following.getUser_id_2());
+    }
+
+    @Test
+    public void getLast_update() {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        following = new Following(1L, 2L, timestamp);
+        assertEquals(timestamp, following.getLast_update());
+    }
+
+    @Test
+    public void setLast_update() {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        following.setLast_update(timestamp);
+        assertEquals(timestamp, following.getLast_update());
+    }
+
+    @Test
+    public void getId() {
+        assertNull(following.getId());
+    }
+
+    @Test
+    public void setId() {
+        following.setId(2L);
+        assertEquals((Long)2L, following.getId());
+    }
+
+    @Test
+    public void equalsSameObject() {
+        assertEquals(following, following);
+    }
+
+    @Test
+    public void equalsNullObject() {
+        assertNotEquals(following, null);
+    }
+
+    @Test
+    public void equalsDifferentClass() {
+        assertNotEquals(following, new String());
+    }
+
+    @Test
+    public void equalsDifferentId() {
+        Following following2 = new Following(1L, 2L, new Timestamp(System.currentTimeMillis()));
+        following2.setId(2L);
+        assertNotEquals(following, following2);
+    }
+
+    @Test
+    public void equalsTrue() {
+        Following following2 = new Following(1L, 2L, new Timestamp(System.currentTimeMillis()));
+        assertEquals(following, following2);
     }
 }

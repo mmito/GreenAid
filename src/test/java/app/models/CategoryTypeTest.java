@@ -8,23 +8,33 @@ import static org.junit.Assert.*;
 
 public class CategoryTypeTest {
 
-    CategoryType categoryType;
+    private CategoryType categoryType;
 
     @Before
-    public void setUp() throws Exception {
-        categoryType = new CategoryType();
-        categoryType.setId(1);
-        categoryType.setCategory_name("categoryName");
+    public void setUp() {
+        categoryType = new CategoryType("category-name");
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         categoryType = null;
     }
 
     @Test
     public void getId() {
-        assertEquals(1, categoryType.getId());
+        assertEquals(0, categoryType.getId());
+    }
+
+    @Test
+    public void constructorDefault() {
+        categoryType = new CategoryType();
+        assertNotNull(categoryType);
+    }
+
+    @Test
+    public void constructorParameters() {
+        categoryType = new CategoryType("category-name");
+        assertNotNull(categoryType);
     }
 
     @Test
@@ -35,12 +45,12 @@ public class CategoryTypeTest {
 
     @Test
     public void getCategory_name() {
-        assertEquals("categoryName", categoryType.getCategory_name());
+        assertEquals("category-name", categoryType.getCategory_name());
     }
 
     @Test
     public void setCategory_name() {
-        categoryType.setCategory_name("otherCategoryName");
-        assertEquals("otherCategoryName", categoryType.getCategory_name());
+        categoryType.setCategory_name("category-name-2");
+        assertEquals("category-name-2", categoryType.getCategory_name());
     }
 }
