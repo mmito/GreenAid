@@ -92,7 +92,7 @@ public class HomepageController implements Initializable {
 
     public  void Hover(){
         experience();
-        xp.setText("" + y+ "/100");
+        xp.setText(Double.valueOf(new DecimalFormat("#.##").format(y))+ "/100");
         xp.setVisible(true);
 
 
