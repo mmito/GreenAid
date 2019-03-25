@@ -1,4 +1,4 @@
-# Sprint Review/Meeting 3
+# Sprint Review/Week 2
 
 ## Opening/Teamwork
 First week, Tomasso couldn't show up on meetings as he was at Italy, Germio also

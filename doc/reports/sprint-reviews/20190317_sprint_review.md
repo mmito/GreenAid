@@ -1,4 +1,4 @@
-# Sprint Review
+# Sprint Review/Week 5
 
 ## Things we've done
 - Decision to keep the data for saved CO2 locally, in our database
@@ -17,4 +17,4 @@
 
 ## Adjustments for next sprint
 - Faster progress
-- Focus on the nest demo
+- Focus on the next demo
