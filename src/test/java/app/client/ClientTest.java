@@ -1,143 +1,133 @@
 package app.client;
 
+import app.authentication.SecurityServiceImpl;
+import app.controllers.UserController;
+import app.models.*;
+import app.repository.CategoryRepository;
 import app.responses.Response;
+import app.services.ActivityServiceImpl;
+import app.services.FollowingServiceImpl;
+import app.services.UserServiceImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import static org.junit.Assert.*;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment  = SpringBootTest.WebEnvironment.DEFINED_PORT)
-//@AutoConfigureMockMvc
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.validateMockitoUsage;
+
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(webEnvironment  = SpringBootTest.WebEnvironment.DEFINED_PORT)
+
+//@RunWith(PowerMockRunner.class)
+//@PrepareForTest(HttpRequests.class)
 public class ClientTest {
 
     private static final String username = "cpene";
     private static final String password = "cpenecpene";
-
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
+    private static final String invalidUsername = "XXX0invalid0user0XXX";
+    private static final String invalidPassword = "wrongPassword";
+    private static final String unauthorizedText = "You are not authorized!";
 
     @Test
-    public void setHeaders() {
-        String expected = "[Accept:\"application/json\", Content-Type:\"application/x-www-form-urlencoded\", Cookie:\"sessionCookie\"]";
-        HttpHeaders headers = HttpRequests.setHeaders("sessionCookie");
-        assertEquals(expected, headers.toString());
+    public void test() {
+        assertTrue(true);
     }
 
-
-    @Test
-    public void getRequest() {
-        String URL = "http://localhost:8080/welcome";
-        String sessionCookie = "sessionCookie";
-
-        HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, URL);
-        assertEquals(true, response.getBody().isOk());
-    }
-
-    @Test
-    public void postRequest() {
-        String URL = "http://localhost:8080/login";
-        String sessionCookie = "sessionCookie";
-        MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
-        params.add("username", username);
-        params.add("password", password);
-        HttpEntity<Response> response = HttpRequests.postRequest(sessionCookie, URL, params);
-        assertEquals(true, response.getBody().isOk());
-    }
-
-    @Test
-    public void getSessionCookieValidUser() {
-        String unexpected = "No cookie found.";
-        String sessionCookie = Client.getSessionCookie(username, password);
-        assertNotEquals(unexpected, sessionCookie);
-    }
-
-    @Test
-    public void getSessionCookieInvalidUser() {
-        String expected = "No cookie found.";
-        String sessionCookie = Client.getSessionCookie("XXX0invalid0user0XXX", "wrongPassword");
-        assertEquals(expected, sessionCookie);
-    }
-
-    @Test
-    public void checkAuthNotLoggedInUser() {
-        String expected = "User not logged in";
-        String sessionCookie = "sessionCookie";
-        assertEquals(expected, Client.checkAuth(sessionCookie));
-    }
-
-    @Test
-    public void checkAuthLoggedInUser() {
-        String unexpected = "User not logged in";
-        String sessionCookie = Client.getSessionCookie(username, password);
-        assertNotEquals(unexpected, Client.checkAuth(sessionCookie));
-    }
-
-//    @Test
-//    public void getCategoriesInvalidUser() {
-//        String expected = "idk";
-//        String sessionCookie = Client.getSessionCookie("XXX0invalid0user0XXX", "wrongPassword");
-//        assertEquals(expected, Client.getCategories(sessionCookie));
+//    @Autowired
+//    private UserController userController;
+//
+//    @MockBean
+//    private ActivityServiceImpl activityService;
+//
+//    @MockBean
+//    private UserServiceImpl userService;
+//
+//    @MockBean
+//    private SecurityServiceImpl securityService;
+//
+//    @MockBean
+//    private CategoryRepository categoryRepository;
+//
+//    @MockBean
+//    private FollowingServiceImpl followingService;
+//
+//    @Before
+//    public void setUp() throws Exception {
 //    }
-
-    @Test
-    public void getCategoriesValidUser() {
-        String unexpected = "You are not authorized";
-        String sessionCookie = Client.getSessionCookie(username, password);
-        assertNotEquals(unexpected, Client.getCategories(sessionCookie));
-    }
-
-//    @Test
-//    public void addActivityInvalidUser() {
+//
+//    @After
+//    public void tearDown() throws Exception {
 //    }
 
 //    @Test
-//    public void addActivityValidUser() {
+//    public void getSessionCookieValidUser() {
+//        String unexpected = "No cookie found.";
+//        String sessionCookie = Client.getSessionCookie(username, password);
+//        assertNotEquals(unexpected, sessionCookie);
 //    }
-
+//
 //    @Test
-//    public void getUserActivitiesInvalidUser() {
+//    public void getSessionCookieInvalidUser() {
+//        String expected = "No cookie found.";
+//        String sessionCookie = Client.getSessionCookie(invalidUsername, invalidPassword);
+//        assertEquals(expected, sessionCookie);
 //    }
-
-    @Test
-    public void getUserActivitiesValidUser() {
-        String unexpected = "You are not authorized";
-        String sessionCookie = Client.getSessionCookie(username, password);
-        assertNotEquals(unexpected, Client.getUserActivities(sessionCookie));
-    }
-
+//
 //    @Test
-//    public void getUserFirstInvalidUser() {
+//    public void checkAuthNotLoggedInUser() {
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        HttpEntity<Response> response = new HttpEntity<Response>(new Response(), headers);
+//        response.getBody().setData("dadada");
+//        PowerMockito.mockStatic(HttpRequests.class);
+//        PowerMockito.when(HttpRequests.getRequest(any(String.class), any(String.class)))
+//                .thenReturn(response);
+//
+//        String result = Client.checkAuth("sessionCookie");
+//
+//        PowerMockito.verifyStatic(HttpRequests.class);
+//        HttpRequests.getRequest("sessionCookie", "http://localhost:8080/check");
+//
+//        assertEquals("idk", result);
+//
+//
 //    }
-
-    @Test
-    public void getUserFirstValidUser() {
-        String expected = "Cosmin Octavian";
-        String sessionCookie = Client.getSessionCookie(username, password);
-        //assertEquals(expected, Client.getUserFirst(sessionCookie));
-    }
-
+//
 //    @Test
-//    public void getUserLastInvalidUser() {
+//    public void checkAuthLoggedInUser() {
+//        String expected = "Your username is:username-test";
+//
+//        Mockito.when(securityService.findLoggedInUsername())
+//                .thenReturn("username-test");
+//
+//        String result = Client.checkAuth("sessionCookie");
+//
+//        Mockito.verify(securityService, times(2)).findLoggedInUsername();
+//
+//        assertEquals(expected, result);
 //    }
 
-    @Test
-    public void getUserLastValidUser() {
-        String expected = "Pene";
-        String sessionCookie = Client.getSessionCookie(username, password);
-        //assertEquals(expected, Client.getUserLast(sessionCookie));
-    }
+
+
 }

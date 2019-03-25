@@ -73,4 +73,40 @@ public class ResponseTest {
         response.setData("data");
         assertEquals("data", response.getData());
     }
+
+    @Test
+    public void equalsSameObject() {
+        assertEquals(response, response);
+    }
+
+    @Test
+    public void equalsNullObject() {
+        assertNotEquals(response, null);
+    }
+
+    @Test
+    public void equalsDifferentClass() {
+        assertNotEquals(response, new String());
+    }
+
+    @Test
+    public void equalsDifferentOk() {
+        Response response2 = new Response(false, "data-test");
+        response = new Response(true, "data-test");
+        assertNotEquals(response, response2);
+    }
+
+    @Test
+    public void equalsDifferentData() {
+        Response response2 = new Response(true, "data-test-2");
+        response = new Response(true, "data-test");
+        assertNotEquals(response, response2);
+    }
+
+    @Test
+    public void equalsTrue() {
+        Response response2 = new Response(true, "data-test");
+        response = new Response(true, "data-test");
+        assertEquals(response, response2);
+    }
 }

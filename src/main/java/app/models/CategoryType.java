@@ -15,6 +15,14 @@ public class CategoryType {
     private long id;
     private String category_name;
 
+    public CategoryType() {
+        this.category_name = "";
+    }
+
+    public CategoryType(String category_name) {
+        this.category_name = category_name;
+    }
+
     public long getId() {
         return id;
     }

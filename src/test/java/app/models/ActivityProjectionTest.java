@@ -1,4 +1,4 @@
-package app.client;
+package app.models;
 
 import app.models.ActivityProjection;
 import org.junit.After;
@@ -9,12 +9,12 @@ import static org.junit.Assert.*;
 
 public class ActivityProjectionTest {
 
-    /*private ActivityProjection activityProjection;
-    private final double DELTA = 0.0;
+    private final static double DELTA = 0;
+    private ActivityProjection activityProjection;
 
     @Before
     public void setUp() {
-        activityProjection = new ActivityProjection("username", "category", 1, 100);
+        activityProjection = new ActivityProjection("username-test", "category-test", 1.0, 1.0);
     }
 
     @After
@@ -24,58 +24,58 @@ public class ActivityProjectionTest {
 
     @Test
     public void constructorDefault() {
-        ActivityProjection activityProjection = new ActivityProjection();
-        assertEquals(new ActivityProjection(), activityProjection);
+        activityProjection = new ActivityProjection();
+        assertNotNull(activityProjection);
     }
 
     @Test
-    public void constructorWithParameters() {
-        ActivityProjection expected = new ActivityProjection("username", "category", 1, 100);
-        assertEquals(expected, activityProjection);
+    public void constructorParameters() {
+        activityProjection = new ActivityProjection("username-test", "category-test", 1.0, 1.0);
+        assertNotNull(activityProjection);
     }
 
     @Test
     public void getUsername() {
-        assertEquals("username", activityProjection.getUsername());
+        assertEquals("username-test", activityProjection.getUsername());
     }
 
     @Test
     public void setUsername() {
-        activityProjection.setUsername("changedUsername");
-        assertEquals("changedUsername", activityProjection.getUsername());
+        activityProjection.setUsername("username-test-2");
+        assertEquals("username-test-2", activityProjection.getUsername());
     }
 
     @Test
     public void getCategory() {
-        assertEquals("category", activityProjection.getCategory());
+        assertEquals("category-test", activityProjection.getCategory());
     }
 
     @Test
     public void setCategory() {
-        activityProjection.setCategory("changedCategory");
-        assertEquals("changedCategory", activityProjection.getCategory());
+        activityProjection.setCategory("category-test-2");
+        assertEquals("category-test-2", activityProjection.getCategory());
     }
 
     @Test
     public void getAmount() {
-        assertEquals(1, activityProjection.getAmount(), DELTA);
+        assertEquals(1.0, activityProjection.getAmount(), DELTA);
     }
 
     @Test
     public void setAmount() {
-        activityProjection.setAmount(2);
-        assertEquals(2, activityProjection.getAmount(), DELTA);
+        activityProjection.setAmount(2.0);
+        assertEquals(2.0, activityProjection.getAmount(), DELTA);
     }
 
     @Test
     public void getXp_points() {
-        assertEquals(100, activityProjection.getXp_points(), DELTA);
+        assertEquals(1.0, activityProjection.getXp_points(), DELTA);
     }
 
     @Test
     public void setXp_points() {
-        activityProjection.setXp_points(200);
-        assertEquals(200, activityProjection.getXp_points(), DELTA);
+        activityProjection.setXp_points(2.0);
+        assertEquals(2.0, activityProjection.getXp_points(), DELTA);
     }
 
     @Test
@@ -89,38 +89,39 @@ public class ActivityProjectionTest {
     }
 
     @Test
-    public void equalsDifferentClassObject() {
-        Object falseActivityProjection = "not an ActivityProjection class";
-        assertNotEquals(activityProjection, falseActivityProjection);
-    }
-
-    @Test
-    public void equalsTrue() {
-        ActivityProjection other = new ActivityProjection("username", "category", 1, 100);
-        assertEquals(activityProjection, other);
+    public void equalsDifferentClass() {
+        assertNotEquals(activityProjection, new String());
     }
 
     @Test
     public void equalsDifferentAmount() {
-        ActivityProjection other = new ActivityProjection("username", "category", 2, 100);
-        assertNotEquals(activityProjection, other);
+        ActivityProjection activityProjection2 = new ActivityProjection("username-test", "category-test", 2.0, 1.0);
+        assertNotEquals(activityProjection, activityProjection2);
     }
 
     @Test
     public void equalsDifferentXP() {
-        ActivityProjection other = new ActivityProjection("username", "category", 1, 200);
-        assertNotEquals(activityProjection, other);
+        ActivityProjection activityProjection2 = new ActivityProjection("username-test", "category-test", 1.0, 2.0);
+        assertNotEquals(activityProjection, activityProjection2);
     }
 
     @Test
     public void equalsDifferentUsername() {
-        ActivityProjection other = new ActivityProjection("changedUsername", "category", 1, 100);
-        assertNotEquals(activityProjection, other);
+        ActivityProjection activityProjection2 = new ActivityProjection("username-test-2", "category-test", 1.0, 1.0);
+        assertNotEquals(activityProjection, activityProjection2);
     }
 
     @Test
     public void equalsDifferentCategory() {
-        ActivityProjection other = new ActivityProjection("username", "changedCategory", 1, 100);
-        assertNotEquals(activityProjection, other);
-    }*/
+        ActivityProjection activityProjection2 = new ActivityProjection("username-test", "category-test-2", 1.0, 1.0);
+        assertNotEquals(activityProjection, activityProjection2);
+    }
+
+    @Test
+    public void equalsTrue() {
+        ActivityProjection activityProjection2 = new ActivityProjection("username-test", "category-test", 1.0, 1.0);
+        assertEquals(activityProjection, activityProjection2);
+    }
+
+
 }

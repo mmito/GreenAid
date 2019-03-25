@@ -23,6 +23,21 @@ public class Activity {
     private double xp_points;
     private Timestamp last_update;
 
+    public Activity() {
+        this.user_id = 0;
+        this.category_id = 0;
+        this.amount = 0;
+        this.xp_points = 0;
+        this.last_update = null;
+    }
+
+    public Activity(long user_id, long category_id, double amount, double xp_points, Timestamp last_update) {
+        this.user_id = user_id;
+        this.category_id = category_id;
+        this.amount = amount;
+        this.xp_points = xp_points;
+        this.last_update = last_update;
+    }
 
     public long getUser_id() {
         return user_id;

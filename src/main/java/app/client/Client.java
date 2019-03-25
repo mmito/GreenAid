@@ -208,16 +208,7 @@ public class Client {
         System.out.println(followings.size());
         List<UserProjection> followedBy = getUserFollowedBy(sessionCookie);
         System.out.println(followedBy.size());
-        //System.out.println(addFollow(sessionCookie,"UsainBolt"));
-        //System.out.println(removeFollow(sessionCookie, "UsainBolt"));
-        List<UserProjection> followings2 = getUserFollowings(sessionCookie);
-        for (UserProjection a : followings2) {
-            System.out.println(a.getUsername() + " " + a.isFollowing());
-        }
-        System.out.println("AICI");
-        for (UserProjection a : followedBy) {
-            System.out.println(a.getUsername() + " " + a.isFollowing());
-        }
+
 
 //        System.out.println(followings2.get(1).isFollowing());
 //        System.out.println(removeActivity(sessionCookie, 59));
