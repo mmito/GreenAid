@@ -64,12 +64,13 @@ public class HomepageController implements Initializable {
 
 
     private User user = Client.getUserDetails(controller.sessionCookie);
-    private List<ActivityProjection> activities = Client.getUserActivities(controller.sessionCookie);
+    private List<ActivityProjection> activities = Client
+            .getUserActivities(controller.sessionCookie);
 
 
 
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1){
+    public void initialize(URL arg0, ResourceBundle arg1) {
         field.setText(controller.Name);
         comboBox.getItems().removeAll(comboBox.getItems());
         comboBox.getItems().addAll("Eating A Vegetarian Meal", "Buying Local Produce", "Using Bike Instead of Car", "Using Public transports instead of Car", "Installing Solar Panels", "Lowering the Temperature of your Home");
@@ -84,7 +85,7 @@ public class HomepageController implements Initializable {
         experience();
 
 
-        progress.setProgress(y/100.0);
+        progress.setProgress(y / 100.0);
         showUserActivities();
     }
 

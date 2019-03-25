@@ -9,6 +9,10 @@ public class ActivityProjection {
     double amount;
     double xp_points;
 
+
+    /**
+     * Class that projects user activities.
+     */
     public ActivityProjection() {
         this.username = new String();
         this.category = new String();
@@ -18,7 +22,7 @@ public class ActivityProjection {
 
     /**
      * Constructor of the class that  projects the activities in the homepage of the app.
-     * @param id id of the activity
+     *
      * @param username username of the user
      * @param category category of the activity
      * @param amount amount of the activity
@@ -65,12 +69,15 @@ public class ActivityProjection {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
         ActivityProjection that = (ActivityProjection) o;
-        return Double.compare(that.amount, amount) == 0 &&
-                Double.compare(that.xp_points, xp_points) == 0 &&
-                Objects.equals(username, that.username) &&
+        return Double.compare(that.amount, amount) == 0
+                &&
+                Double.compare(that.xp_points, xp_points) == 0
+                &&
+                Objects.equals(username, that.username)
+                &&
                 Objects.equals(category, that.category);
     }
 

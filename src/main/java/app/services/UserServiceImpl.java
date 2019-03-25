@@ -51,12 +51,20 @@ public class UserServiceImpl {
         return userRepository.findByUsername(loggedInUserUsername);
     }
 
+    /**
+     * Finds followings.
+     * @return returns the followed users
+     */
     public List<User> findFollowings(long userId) {
 
         return userRepository.findFollowings(userId);
 
     }
 
+    /**
+     * Finds follower.
+     * @return returns the followers
+     */
     public List<User> findFollowedBy(long userId) {
 
         return userRepository.findFollowedBy(userId);
