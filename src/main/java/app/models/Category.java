@@ -19,6 +19,20 @@ public class Category {
     private double xp_points;
     private long category_type_id;
 
+    public Category() {
+        this.name = "";
+        this.amount_saved = 0L;
+        this.xp_points = 0.0;
+        this.category_type_id = 0L;
+    }
+
+    public Category(String name, long amount_saved, double xp_points, long category_type_id) {
+        this.name = name;
+        this.amount_saved = amount_saved;
+        this.xp_points = xp_points;
+        this.category_type_id = category_type_id;
+    }
+
     public long getId() {
         return id;
     }
