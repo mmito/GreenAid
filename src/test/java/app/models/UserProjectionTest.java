@@ -3,9 +3,6 @@ package app.models;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.internal.verification.Times;
-
-import java.sql.Time;
 import java.sql.Timestamp;
 
 import static org.junit.Assert.*;

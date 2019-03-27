@@ -10,12 +10,12 @@ public class ResponseTest {
     private Response response;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         response = new Response();
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         response = null;
     }
 
