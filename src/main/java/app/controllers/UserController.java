@@ -79,7 +79,9 @@ public class UserController {
     @PostMapping("/info")
     public Response getUserInfo(String username) {
         if (securityService.findLoggedInUsername() != null) {
-            return new Response(true, userService.findByUsername(username));
+            User user = userService.findByUsername(username);
+            boolean following = followingService.findById1Id2(userService.findByUsername(securityService.findLoggedInUsername()).getId(), user.getId()) != null;
+            return new Response(true, new UserProjection(user.getUsername(), user.getFirst_name(), user.getLast_name(), user.getExperience_points(), user.getLast_update(), following));
         } else { return new Response(false, "User not logged in."); }
     }
 

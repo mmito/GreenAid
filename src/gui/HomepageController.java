@@ -3,22 +3,33 @@ import app.models.ActivityProjection;
 import app.client.Client;
 import app.models.User;
 
+import app.models.UserProjection;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 
-
+import java.awt.event.MouseEvent;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -31,25 +42,25 @@ public class HomepageController implements Initializable {
     @FXML
     private ImageView Home;
     @FXML
-    private Text activityText;
+    private Text activityText, field, firstName, lastName, level, xp, introText;
+    @FXML
+    private TextField friend;
     @FXML
     private HBox hBox;
     @FXML
-    private Text  field;
-    @FXML
-    private Text firstName;
-    @FXML
-    private Text lastName;
+    private VBox followersPane, followingPane;
     @FXML
     private VBox history;
     @FXML
-    private ScrollPane scrollPane;
+    private ScrollPane scrollPane, leaderScrollPane;
     @FXML
     private ProgressIndicator progress;
     @FXML
-    private Text level;
+    private BarChart<String, Double> leaderBoard;
     @FXML
-    private Text xp;
+    private CategoryAxis xAxis;
+    @FXML
+    private NumberAxis yAxis;
 
 
     private long categoryId;
@@ -64,16 +75,16 @@ public class HomepageController implements Initializable {
 
 
     private User user = Client.getUserDetails(controller.sessionCookie);
-    private List<ActivityProjection> activities = Client
-            .getUserActivities(controller.sessionCookie);
-
+    private List<ActivityProjection> activities = Client.getUserActivities(controller.sessionCookie);
+    private List<UserProjection> followers = Client.getUserFollowedBy(controller.sessionCookie);
+    private List<UserProjection> following = Client.getUserFollowings(controller.sessionCookie);
 
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         field.setText(controller.Name);
         comboBox.getItems().removeAll(comboBox.getItems());
-        comboBox.getItems().addAll("Eating A Vegetarian Meal", "Buying Local Produce", "Using Bike Instead of Car", "Using Public transports instead of Car", "Installing Solar Panels", "Lowering the Temperature of your Home");
+        comboBox.getItems().addAll("Eating A Vegetarian Meal", "Buying Local Produce", "Biking instead of Driving", "Using Public Transport instead of Driving", "Installing Solar Panels", "Lowering the Temperature of your Home");
 
         firstName.setText(user.getFirst_name());
         lastName.setText(user.getLast_name());
@@ -81,22 +92,28 @@ public class HomepageController implements Initializable {
 
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        leaderScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        leaderScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
         experience();
 
-
         progress.setProgress(y / 100.0);
+
         showUserActivities();
+
+        setLeaderBoard();
+
+        setFriends(followers, followersPane);
+        setFriends(following, followingPane);
     }
 
 
-    public  void Hover(){
+    public void Hover(){
         experience();
         xp.setText(new DecimalFormat("#.##").format(y)+ "/100");
         xp.setVisible(true);
-
-
     }
+
     public void exit(){
         xp.setVisible(false);
     }
@@ -113,21 +130,27 @@ public class HomepageController implements Initializable {
         else {
             history.getChildren().clear();
 
-            Text start = new Text();
-            start.setText(activities.get(0).getUsername() + ", here is your list of activities!");
-            history.getChildren().add(start);
+            introText.setText("Dear " + activities.get(0).getUsername() + ", here is your list of activities!");
 
             for (int i = 0; i < sz; i++) {
+                HBox hBox = new HBox();
                 Text temp = new Text();
+                Text cross = new Text();
 
                 String ret = i + " - ";
                 ret += activities.get(i).getCategory() + " done ";
                 ret += activities.get(i).getAmount() + " times for a total of ";
                 ret += new DecimalFormat("#.##").format(activities.get(i).getXp_points()) + " XP point.";
 
-
                 temp.setText(ret);
-                history.getChildren().add(temp);
+
+                cross.setOnMouseClicked(event -> activities_removed(cross));
+
+                hBoxHovered(hBox, cross);
+
+                hBox.getChildren().addAll(temp, cross);
+
+                history.getChildren().add(hBox);
             }
         }
     }
@@ -168,10 +191,10 @@ public class HomepageController implements Initializable {
             case "Buying Local Produce":
                 categoryId = 2;
                 break;
-            case "Using Bike Instead of Car":
+            case "Biking instead of Driving":
                 categoryId = 3;
                 break;
-            case "Using Public transports instead of Car" :
+            case "Using Public Transport instead of Driving" :
                 categoryId = 4;
                 break;
             case "Installing Solar Panels":
@@ -187,10 +210,9 @@ public class HomepageController implements Initializable {
         Button addActivity = new Button("Add Activity !");
         Spinner<Double> spinner = new Spinner<>();
 
-
         hBox.getChildren().clear();
 
-        if (!(activity.equals("Using Bike Instead of Car") || activity.equals("Using Public transports instead of Car"))) {
+        if (!(activity.equals("Biking instead of Driving") || activity.equals("Using Public Transport instead of Driving"))) {
 
             spinner.setEditable(true);
             SpinnerValueFactory<Double> spinnerVal = new SpinnerValueFactory.DoubleSpinnerValueFactory(1, Double.MAX_VALUE, 1);
@@ -210,9 +232,9 @@ public class HomepageController implements Initializable {
         }
 
         if(activity.equals("Eating A Vegetarian Meal")){
-            activityText.setText("How many servings have you ate ?");
+            activityText.setText("How many servings have you eaten ?");
         }
-        else if(activity.equals("Using Bike Instead of Car") || activity.equals("Using Public transports instead of Car")){
+        else if(activity.equals("Biking instead of Driving") || activity.equals("Using Public Transport instead of Driving")){
             activityText.setText("For how many kilometer have you used it ?");
         }
         else if(activity.equals("Buying Local Produce")){
@@ -232,7 +254,8 @@ public class HomepageController implements Initializable {
         });
 
         addActivity.setOnMouseClicked(event ->{
-
+            hBox.getChildren().clear();
+            activityText.setText("");
 
             postActivity(controller.sessionCookie, categoryId, spinner);
             // Refreshing the user and getting the new info
@@ -240,8 +263,9 @@ public class HomepageController implements Initializable {
             activities = Client.getUserActivities(controller.sessionCookie);
             experience();
             progress.setProgress(y/100.0);
-            showUserActivities();
 
+            showUserActivities();
+            setLeaderBoard();
         });
     }
 
@@ -252,16 +276,99 @@ public class HomepageController implements Initializable {
         level.setText("lvl"+ a);
     }
 
-
-
-
-
     public void postActivity(String sessionCookie, long CategoryId, Spinner<Double> spinner){
         double amount = spinner.getValue();
 
         Client.addActivity(sessionCookie, CategoryId, amount);
 
         showUserActivities();
+    }
+
+    public void setLeaderBoard(){
+        xAxis.getCategories().clear();
+        leaderBoard.getData().clear();
+
+        int sz = following.size();
+
+        yAxis.setTickLabelFill(Color.WHITE);
+        xAxis.setTickLabelFill(Color.WHITE);
+        xAxis.getCategories().add("Your Score");
+
+        XYChart.Series<String, Double> chart = new XYChart.Series<>();
+        chart.getData().add(new XYChart.Data<>("Your Score", user.getExperience_points()));
+
+        if(!following.isEmpty()) {
+            for (int i = 0; i < sz; i++) {
+                xAxis.getCategories().add(following.get(i).getUsername());
+                chart.getData().add(new XYChart.Data<>(following.get(i).getUsername(), following.get(i).getExperience_points()));
+            }
+        }
+
+        leaderBoard.getData().addAll(chart);
+    }
+
+    public void setFriends(List<UserProjection> follow, VBox pane){
+        int sz = follow.size();
+
+        pane.getChildren().clear();
+
+        if(!follow.isEmpty()) {
+            for (int i = 0; i < sz; i++) {
+                HBox hBox = new HBox();
+                Text temp = new Text();
+                Text cross = new Text();
+                temp.setFill(Color.WHITE);
+
+                String ret = i + " - " + follow.get(i).getUsername();
+
+                temp.setText(ret);
+                hBoxHovered(hBox, cross);
+
+                if(pane.equals(followingPane)) {
+                    cross.setOnMouseClicked(event -> followerRemoved(temp));
+                }
+
+                hBox.getChildren().addAll(temp, cross);
+                pane.getChildren().add(hBox);
+            }
+        }
+    }
+
+    public void activities_removed(Text cross){
+        HBox temp = (HBox)cross.getParent();
+        ObservableList<Node> list = temp.getChildren();
+
+        Text user_info = (Text)list.get(0);
+
+        String[] user_split = user_info.getText().split(" -");
+        int nbr = Integer.parseInt(user_split[0]);
+
+        String result = Client.removeActivity(controller.sessionCookie, activities.get(nbr).getId());
+        System.out.println(result);
+
+    }
+
+    public void hBoxHovered(HBox hBox, Text cross){
+        cross.setText("❌");
+        cross.setVisible(false);
+        hBox.setSpacing(15);
+
+        hBox.setOnMouseEntered(event -> {
+            cross.setVisible(true);
+            cross.setCursor(Cursor.HAND);
+        });
+        hBox.setOnMouseExited(event -> cross.setVisible(false));
+    }
+
+    public void followerRemoved(Text text){
+        String[] temp = text.getText().split(" - ");
+
+        Client.removeFollow(controller.sessionCookie, temp[1]);
+
+        user = Client.getUserDetails(controller.sessionCookie);
+        following = Client.getUserFollowings(controller.sessionCookie);
+
+        setFriends(following, followingPane);
     }
 }
 
