@@ -29,8 +29,7 @@ public class Following {
         this.last_update = null;
     }
 
-    public Following(long id, long user_id_1, long user_id_2, Timestamp last_update) {
-        this.id = id;
+    public Following( long user_id_1, long user_id_2, Timestamp last_update) {
         this.user_id_1 = user_id_1;
         this.user_id_2 = user_id_2;
         this.last_update = last_update;

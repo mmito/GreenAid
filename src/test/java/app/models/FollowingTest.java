@@ -14,7 +14,7 @@ public class FollowingTest {
 
     @Before
     public void setUp() {
-        following = new Following(1,1, 2, new Timestamp(System.currentTimeMillis()));
+        following = new Following(1, 2, new Timestamp(System.currentTimeMillis()));
     }
 
     @After
@@ -30,7 +30,7 @@ public class FollowingTest {
 
     @Test
     public void testConstructorParameters() {
-        following = new Following(1,1, 2, new Timestamp(System.currentTimeMillis()));
+        following = new Following(1, 2, new Timestamp(System.currentTimeMillis()));
         assertNotNull(following);
     }
 
@@ -59,7 +59,7 @@ public class FollowingTest {
     @Test
     public void getLast_update() {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        following = new Following(1, 1, 2, timestamp);
+        following = new Following( 1, 2, timestamp);
         assertEquals(timestamp, following.getLast_update());
     }
 
@@ -72,7 +72,7 @@ public class FollowingTest {
 
     @Test
     public void getId() {
-        assertEquals(1,following.getId());
+        assertEquals(0,following.getId());
     }
 
     @Test
@@ -98,14 +98,14 @@ public class FollowingTest {
 
     @Test
     public void equalsDifferentId() {
-        Following following2 = new Following(1,1, 2, new Timestamp(System.currentTimeMillis()));
+        Following following2 = new Following(1, 2, new Timestamp(System.currentTimeMillis()));
         following2.setId(2);
         assertNotEquals(following, following2);
     }
 
     @Test
     public void equalsTrue() {
-        Following following2 = new Following(1,1, 2, new Timestamp(System.currentTimeMillis()));
+        Following following2 = new Following(1, 2, new Timestamp(System.currentTimeMillis()));
         assertEquals(following, following2);
     }
 }
