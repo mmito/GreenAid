@@ -244,13 +244,20 @@ public class UserController {
 
                 }
 
-                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                following.setUser_id_1(userService.
-                        findByUsername(securityService.findLoggedInUsername()).getId());
-                following.setUser_id_2(userService.findByUsername(username).getId());
-                following.setLast_update(timestamp);
-                followingService.save(following);
-                return new Response(true, "Your followings have been updated!");
+                User followedUser = userService.findByUsername(username);
+
+                if (followingService.findById1Id2(userService.getLoggedInUser().getId(), followedUser.getId()) == null) {
+
+                    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                    following.setUser_id_1(userService.
+                            findByUsername(securityService.findLoggedInUsername()).getId());
+                    following.setUser_id_2(followedUser.getId());
+                    following.setLast_update(timestamp);
+                    followingService.save(following);
+                    return new Response(true, "Your followings have been updated!");
+                }
+
+                else return new Response(false, "You already follow this user!");
 
             } else {
                 return new Response(false, "User not found.");
