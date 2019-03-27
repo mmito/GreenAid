@@ -78,11 +78,14 @@ public class UserController {
      */
     @PostMapping("/info")
     public Response getUserInfo(String username) {
-        if (securityService.findLoggedInUsername() != null) {
+        String loggedInUsername = securityService.findLoggedInUsername();
+        if (loggedInUsername != null) {
             User user = userService.findByUsername(username);
-            boolean following = followingService.findById1Id2(userService.findByUsername(securityService.findLoggedInUsername()).getId(), user.getId()) != null;
+            User loggedInUser = userService.findByUsername(loggedInUsername);
+            boolean following = followingService.findById1Id2(loggedInUser.getId(), user.getId()) != null;
             return new Response(true, new UserProjection(user.getUsername(), user.getFirst_name(), user.getLast_name(), user.getExperience_points(), user.getLast_update(), following));
-        } else { return new Response(false, "User not logged in."); }
+        } else {
+            return new Response(false, "User not logged in."); }
     }
 
     /**
@@ -245,7 +248,6 @@ public class UserController {
                 }
 
                 User followedUser = userService.findByUsername(username);
-
                 if (followingService.findById1Id2(userService.getLoggedInUser().getId(), followedUser.getId()) == null) {
 
                     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
