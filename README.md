@@ -6,7 +6,7 @@ You can download the latest version [here](https://github.com/SERG-Delft/TI1216/
 
 http://stackoverflow.com/a/6466993
 
-## How to import into your IDE
+
 
 Eclipse:
 [http://javapapers.com/java/import-maven-project-into-eclipse/](http://javapapers.com/java/import-maven-project-into-eclipse/)
@@ -14,10 +14,6 @@ Eclipse:
 Intellij:  
 [https://www.jetbrains.com/help/idea/2016.2/importing-project-from-maven-model.html](https://www.jetbrains.com/help/idea/2016.2/importing-project-from-maven-model.html)
 
-## Getting your weekly reports
-
-**Jacoco**:  
-Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getting-started-with-maven.html#execute_maven_goal)/[Eclipse](http://imgur.com/a/6q7pV))
 
 ## Overview
 In today's world, the carbon dioxide consumption is increasing day by day. Unfortunately, the daily life became super-dependent on CO2 that it sometimes feels impossible to reverse this situation. But lots of countries and individuals take initiative in order to prevent the devastation that is created by excessive usage of carbon dioxide. Thus, we also wanted to contribute to this movement. As Group 66, our aim is to deliver one of the best applications of whole CSE class to reflect the amount of work we've put in the project.
@@ -31,12 +27,36 @@ In today's world, the carbon dioxide consumption is increasing day by day. Unfor
  3. Writing quality tests and having a sufficient code/test coverage.
  4. Having a user-friendly user-interface.
  5. Having an efficient and clear database that obeys ACID properties.
+
 ## Text Files about Project
- 1. Proof of choice report:
+ 1. The Final Report:
  2. Responsible Computer Science Report:
  3. Personal Growth Report:
 
 ## Getting started/Installation
+
+### How to import into your IDE
+```
+Eclipse:
+[http://javapapers.com/java/import-maven-project-into-eclipse/](http://javapapers.com/java/import-maven-project-into-eclipse/)
+
+Intellij:  
+[https://www.jetbrains.com/help/idea/2016.2/importing-project-from-maven-model.html](https://www.jetbrains.com/help/idea/2016.2/importing-project-from-maven-model.html)
+
+Go to project's GitLab page [here](https://gitlab.ewi.tudelft.nl/cse1105/2018-2019/oopp-group-66/template)
+Click Clone and follow the instructions above to download the repository into your computer.
+
+First, go to src->main->app->Spring Server and run the server. You can also do it via command line by following steps mentioned [here](https://www.maketecheasier.com/run-java-program-from-command-prompt/)
+
+After that, make sure that you have JavaFX configured on your IDE. 
+Then, go to src->gui->JavaFXMain and run it by right clicking and selecting 'Run'. Then, you are good to go. 
+```
+
+## Getting code coverage reports
+```
+**Jacoco**:  
+Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getting-started-with-maven.html#execute_maven_goal)/[Eclipse](http://imgur.com/a/6q7pV))
+```
 
 ## Example Code Usage/Screenshots from the app
 
@@ -46,15 +66,22 @@ In today's world, the carbon dioxide consumption is increasing day by day. Unfor
 ### Sign-up
 <img src="/images/signup.jpg">
 
+### Homepage
+
+### Leaderboard Page
+
+### Recommendation page 
+
+### Game Page for kids
 
 ## Libraries/Frameworks used
  1. Spring 
  2. Hibernate
  3. JavaFX
- 4. Something for recommendation engine
 
 ## Tests
 
+```
 **Checkstyle**:  
 Run `mvn site`
 
@@ -63,6 +90,7 @@ Run `mvn site`
 If the test is a JUnit test, you can run the them by simply clicking right to that file and select `Run as Junit test`
 
 Run `mvn test` to create a branch/code coverage.
+```
 
 ## Layout of internal code tree
 
@@ -159,4 +187,9 @@ Getting the team to work together as an efficient machine will be the main task,
 I think i have the creativity and team work capabilities to make a great application, yet i still need to learn a lot about programming itself and more importantly programming in a team.
 
 ## Licensing and contributions
+
+1. We used IntelliJ while developing this app. IntelliJ is under the license of Jetbrains.
+2. Spring Framework - [Apache 2.0 License](https://choosealicense.com/licenses/apache-2.0/)
+3. Hibernate License - [GNU Lesser General Public License v3.0](https://choosealicense.com/licenses/lgpl-3.0/)
+4. JavaFXML Scene Builder - [Oracle BSD License](https://www.oracle.com/technetwork/licenses/bsd-license-1835287.html)
 
