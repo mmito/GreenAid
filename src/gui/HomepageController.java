@@ -4,6 +4,7 @@ import app.client.Client;
 import app.models.User;
 
 import app.models.UserProjection;
+import app.responses.Response;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +20,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.scene.layout.HBox;
@@ -42,7 +44,7 @@ public class HomepageController implements Initializable {
     @FXML
     private ImageView Home;
     @FXML
-    private Text activityText, field, firstName, lastName, level, xp, introText;
+    private Text activityText, field, firstName, lastName, level, xp, introText, errorUser;
     @FXML
     private TextField friend;
     @FXML
@@ -322,11 +324,14 @@ public class HomepageController implements Initializable {
                 String ret = i + " - " + follow.get(i).getUsername();
 
                 temp.setText(ret);
-                hBoxHovered(hBox, cross);
 
                 if(pane.equals(followingPane)) {
-                    cross.setOnMouseClicked(event -> followerRemoved(temp));
+                    hBoxHovered(hBox, cross);
                 }
+
+                cross.setOnMouseClicked(event -> {
+                    followerRemoved(temp);
+                });
 
                 hBox.getChildren().addAll(temp, cross);
                 pane.getChildren().add(hBox);
@@ -369,6 +374,19 @@ public class HomepageController implements Initializable {
         following = Client.getUserFollowings(controller.sessionCookie);
 
         setFriends(following, followingPane);
+    }
+
+    public void addFollow(){
+        errorUser.setText("");
+        String add = friend.getText();
+
+        String response = Client.addFollow(controller.sessionCookie, add);
+
+        if(!response.equals("Your followings have been updated!")) {
+            errorUser.setText(response);
+            errorUser.setFill(Color.RED);
+            errorUser.setFont(Font.font(20));
+        }
     }
 }
 
