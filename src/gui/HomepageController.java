@@ -4,7 +4,6 @@ import app.client.Client;
 import app.models.User;
 
 import app.models.UserProjection;
-import app.responses.Response;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,6 +20,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.scene.layout.HBox;
@@ -50,11 +51,9 @@ public class HomepageController implements Initializable {
     @FXML
     private HBox hBox;
     @FXML
-    private VBox followersPane, followingPane;
+    private VBox followersPane, followingPane , history;
     @FXML
-    private VBox history;
-    @FXML
-    private ScrollPane scrollPane, leaderScrollPane;
+    private ScrollPane scrollPane, leaderScrollPane , scrollInfo;
     @FXML
     private ProgressIndicator progress;
     @FXML
@@ -63,6 +62,10 @@ public class HomepageController implements Initializable {
     private CategoryAxis xAxis;
     @FXML
     private NumberAxis yAxis;
+    @FXML
+    private TextFlow info;
+
+
 
 
     private long categoryId;
@@ -88,12 +91,18 @@ public class HomepageController implements Initializable {
         comboBox.getItems().removeAll(comboBox.getItems());
         comboBox.getItems().addAll("Eating A Vegetarian Meal", "Buying Local Produce", "Biking instead of Driving", "Using Public Transport instead of Driving", "Installing Solar Panels", "Lowering the Temperature of your Home");
 
+
         firstName.setText(user.getFirst_name());
         lastName.setText(user.getLast_name());
         xp.setVisible(false);
 
+        text();
+
+
+
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
         leaderScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         leaderScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
@@ -116,8 +125,80 @@ public class HomepageController implements Initializable {
         xp.setVisible(true);
     }
 
+    public void text(){
+        Text text = new Text();
+        text.setFont(Font.font("ALgerian",18));
+        text.setText("How do we calculate your XP Points? \n");
+
+        info.getChildren().add(text);
+
+        Text text1 = new Text();
+        text1.setFont(Font.font(16 ));
+        text1.setText("As you know, a user earns XP Points based on the activity done." +
+                "We calculated the XP Points based on the amount of Carbon Dioxide that activity saves." +
+                "Because we couldn't find any external APIs that we found directly applicable for our activity scope" +
+                "and we decided to store each activity's value on the database.\n\n" +
+                "Using the internet (only reliable .gov, .net and well-known .com websites) we found the amount" +
+                "of carbon dioxide that activity saves. In some cases, for example using public transportation instead of" +
+                "a car, we needed to find how many CO2 a car uses per km and how many CO2 a transportation vehicle" +
+                "uses per km and we calculated the deficit.\n\n" +
+                "Because of the available information online, we used the" +
+                "following parameters for adding an activity:" +
+                "Eating a vegetarian meal/per serving" +
+                "Buying a local produce/per number of items" +
+                "Using a bike instead of car/per km" +
+                "Using public transport instead of car/per km" +
+                "Lowering the temperature of your home by 1 degree Celcius/per day" +
+                "Installing solar panels/per day");
+        info.getChildren().add(text1);
+
+        Text text2 = new Text();
+
+        text2.setText("After the calculation of the amount of carbon dioxide saved, we divided each number by 100 to have different xp points for each activity. We decided to divide by 100 because we thought that it will be easier to convert xp points from amount of co2 saved and vice versa. This also helped us along the design process.  If we used 1000 or more, the value of points would have been too low. We also considered the level ranking of the user and wanted to keep the calculation for gamification as simple as possible for the sustainability of the project.\n\n");
+        info.getChildren().add(text2);
+
+
+        Text text3 = new Text();
+        text3.setText("How do the recommendations work? \n" );
+        text3.setFont(Font.font("Calibre", FontWeight.BOLD,16));
+        info.getChildren().add(text3);
+
+        Text text4 = new Text();
+        text4.setText("Simple. Efficient. Easy-to-understand. We track your activities and categorize them into 3 groups which are food, household, transportation. Some activities like eating a vegetarian meal only belong to one category, that being food. But some like buying local produce belong to more than categories like food and transportation as this both contributes to the prevention of transfer of products and the usage of local food. Based on the number of activities done on each super-category, we give you some recommendations from our recommendation pool. We hope you'll like them!");
+        info.getChildren().add(text4);
+
+        Text text5 = new Text();
+        text5.setText("Credits\n" +
+                "\n" +
+                "The TEAM \n" +
+                "Sina Sen\n" +
+                "Cosmin Octavian Pene\n" +
+                "Sven Van Collenburg\n" +
+                "Warren Akrum\n" +
+                "Julien Lamon\n" +
+                "Tommaso Tofacchi\n" +
+                "\n" +
+                "The Consultant\n" +
+                "Issa Hanou\n" +
+                "\n" +
+                "The TEAM Base\n" +
+                "Pulse Technology Room\n" +
+                "\n" +
+                "\n" +
+                "Special thanks to everyone who supported us! ❤\uD83C\uDF33");
+        info.getChildren().add(text5);
+    }
+
     public void exit(){
         xp.setVisible(false);
+    }
+
+    public  void refresh(){
+
+        user = Client.getUserDetails(controller.sessionCookie);
+        activities = Client.getUserActivities(controller.sessionCookie);
+        followers = Client.getUserFollowedBy(controller.sessionCookie);
+        following = Client.getUserFollowings(controller.sessionCookie);
     }
 
     public void showUserActivities() {
@@ -261,8 +342,7 @@ public class HomepageController implements Initializable {
 
             postActivity(controller.sessionCookie, categoryId, spinner);
             // Refreshing the user and getting the new info
-            user = Client.getUserDetails(controller.sessionCookie);
-            activities = Client.getUserActivities(controller.sessionCookie);
+            refresh();
             experience();
             progress.setProgress(y/100.0);
 
@@ -348,7 +428,14 @@ public class HomepageController implements Initializable {
         String[] user_split = user_info.getText().split(" -");
         int nbr = Integer.parseInt(user_split[0]);
 
+
         String result = Client.removeActivity(controller.sessionCookie, activities.get(nbr).getId());
+
+        refresh();
+        setLeaderBoard();
+        experience();
+        showUserActivities();
+        progress.setProgress(y/100.0);
         System.out.println(result);
 
     }
@@ -369,10 +456,7 @@ public class HomepageController implements Initializable {
         String[] temp = text.getText().split(" - ");
 
         Client.removeFollow(controller.sessionCookie, temp[1]);
-
-        user = Client.getUserDetails(controller.sessionCookie);
-        following = Client.getUserFollowings(controller.sessionCookie);
-
+        refresh();
         setFriends(following, followingPane);
     }
 
@@ -387,6 +471,10 @@ public class HomepageController implements Initializable {
             errorUser.setFill(Color.RED);
             errorUser.setFont(Font.font(20));
         }
+
+        refresh();
+        setFriends(following, followingPane);
+        setLeaderBoard();
     }
 }
 

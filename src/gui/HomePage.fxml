@@ -146,11 +146,11 @@
                      <children>
                         <Pane layoutX="-1.0" layoutY="-4.0" prefHeight="707.0" prefWidth="717.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;">
                            <children>
-                              <Text fill="WHITE" layoutX="217.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THIS IS THE INFO PANE">
-                                 <font>
-                                    <Font name="System Bold" size="30.0" />
-                                 </font>
-                              </Text>
+                              <ScrollPane fx:id="scrollInfo" layoutX="14.0" layoutY="14.0" maxWidth="694.0" minWidth="694.0" prefHeight="680.0" prefWidth="694.0" stylesheets="@CSS/scrollpane.css">
+                                 <content>
+                                    <TextFlow fx:id="info" prefHeight="669.0" prefWidth="673.0" />
+                                 </content>
+                              </ScrollPane>
                            </children></Pane>
                      </children>
                   </AnchorPane>
