@@ -179,7 +179,7 @@ public class UserControllerTest {
         activity.setCategory_id(1);
         activities.add(activity);
 
-        list.add(new ActivityProjection("username-test", "Eating a vegetarian meal", 1.0, 1.0));
+        list.add(new ActivityProjection(1,"username-test", "Eating a vegetarian meal", 1.0, 1.0));
 
         expected = new Response(true, list);
 
@@ -217,7 +217,7 @@ public class UserControllerTest {
         activity.setCategory_id(2);
         activities.add(activity);
 
-        list.add(new ActivityProjection("username-test", "Buying local produce", 1.0, 1.0));
+        list.add(new ActivityProjection(1, "username-test", "Buying local produce", 1.0, 1.0));
 
         expected = new Response(true, list);
 
@@ -255,7 +255,7 @@ public class UserControllerTest {
         activity.setCategory_id(3);
         activities.add(activity);
 
-        list.add(new ActivityProjection("username-test", "Using bike instead of car", 1.0, 1.0));
+        list.add(new ActivityProjection(1, "username-test", "Using bike instead of car", 1.0, 1.0));
 
         expected = new Response(true, list);
 
@@ -293,7 +293,7 @@ public class UserControllerTest {
         activity.setCategory_id(4);
         activities.add(activity);
 
-        list.add(new ActivityProjection("username-test", "Using public transport instead of car", 1.0, 1.0));
+        list.add(new ActivityProjection(1, "username-test", "Using public transport instead of car", 1.0, 1.0));
 
         expected = new Response(true, list);
 
@@ -331,7 +331,7 @@ public class UserControllerTest {
         activity.setCategory_id(5);
         activities.add(activity);
 
-        list.add(new ActivityProjection("username-test", "Installing solar panels", 1.0, 1.0));
+        list.add(new ActivityProjection(1, "username-test", "Installing solar panels", 1.0, 1.0));
 
         expected = new Response(true, list);
 
@@ -369,7 +369,7 @@ public class UserControllerTest {
         activity.setCategory_id(6);
         activities.add(activity);
 
-        list.add(new ActivityProjection("username-test", "Lowering the temperature of your home", 1.0, 1.0));
+        list.add(new ActivityProjection(1, "username-test", "Lowering the temperature of your home", 1.0, 1.0));
 
         expected = new Response(true, list);
 
@@ -407,7 +407,7 @@ public class UserControllerTest {
         activity.setCategory_id(0);
         activities.add(activity);
 
-        list.add(new ActivityProjection("username-test", "unknown", 1.0, 1.0));
+        list.add(new ActivityProjection(1, "username-test", "unknown", 1.0, 1.0));
 
         expected = new Response(true, list);
 

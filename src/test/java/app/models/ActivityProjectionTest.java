@@ -14,7 +14,7 @@ public class ActivityProjectionTest {
 
     @Before
     public void setUp() {
-        activityProjection = new ActivityProjection("username-test", "category-test", 1.0, 1.0);
+        activityProjection = new ActivityProjection(0, "username-test", "category-test", 1.0, 1.0);
     }
 
     @After
@@ -30,7 +30,7 @@ public class ActivityProjectionTest {
 
     @Test
     public void constructorParameters() {
-        activityProjection = new ActivityProjection("username-test", "category-test", 1.0, 1.0);
+        activityProjection = new ActivityProjection(0, "username-test", "category-test", 1.0, 1.0);
         assertNotNull(activityProjection);
     }
 
@@ -79,6 +79,17 @@ public class ActivityProjectionTest {
     }
 
     @Test
+    public void getId() {
+        assertEquals(0, activityProjection.getId());
+    }
+
+    @Test
+    public void setId() {
+        activityProjection.setId(1);
+        assertEquals(1, activityProjection.getId());
+    }
+
+    @Test
     public void equalsSameObject() {
         assertEquals(activityProjection, activityProjection);
     }
@@ -94,32 +105,14 @@ public class ActivityProjectionTest {
     }
 
     @Test
-    public void equalsDifferentAmount() {
-        ActivityProjection activityProjection2 = new ActivityProjection("username-test", "category-test", 2.0, 1.0);
-        assertNotEquals(activityProjection, activityProjection2);
-    }
-
-    @Test
-    public void equalsDifferentXP() {
-        ActivityProjection activityProjection2 = new ActivityProjection("username-test", "category-test", 1.0, 2.0);
-        assertNotEquals(activityProjection, activityProjection2);
-    }
-
-    @Test
-    public void equalsDifferentUsername() {
-        ActivityProjection activityProjection2 = new ActivityProjection("username-test-2", "category-test", 1.0, 1.0);
-        assertNotEquals(activityProjection, activityProjection2);
-    }
-
-    @Test
-    public void equalsDifferentCategory() {
-        ActivityProjection activityProjection2 = new ActivityProjection("username-test", "category-test-2", 1.0, 1.0);
+    public void equalsDifferentid() {
+        ActivityProjection activityProjection2 = new ActivityProjection(1, "username-test", "category-test", 1.0, 1.0);
         assertNotEquals(activityProjection, activityProjection2);
     }
 
     @Test
     public void equalsTrue() {
-        ActivityProjection activityProjection2 = new ActivityProjection("username-test", "category-test", 1.0, 1.0);
+        ActivityProjection activityProjection2 = new ActivityProjection(0, "username-test", "category-test", 1.0, 1.0);
         assertEquals(activityProjection, activityProjection2);
     }
 

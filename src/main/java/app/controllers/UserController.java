@@ -128,7 +128,7 @@ public class UserController {
 
                 }
 
-                response.add(new ActivityProjection(username, category, amount, xp_points));
+                response.add(new ActivityProjection(id, username, category, amount, xp_points));
 
             }
 
