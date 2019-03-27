@@ -191,4 +191,5 @@ I think i have the creativity and team work capabilities to make a great applica
 1. We used IntelliJ while developing this app. IntelliJ is under the license of Jetbrains.
 2. Spring Framework - [Apache 2.0 License](https://choosealicense.com/licenses/apache-2.0/)
 3. Hibernate License - [GNU Lesser General Public License v3.0](https://choosealicense.com/licenses/lgpl-3.0/)
+4. JavaFXML Scene Builder - [Oracle BSD License](https://www.oracle.com/technetwork/licenses/bsd-license-1835287.html)
 
