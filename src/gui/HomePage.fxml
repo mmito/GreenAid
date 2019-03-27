@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -33,10 +35,7 @@
                <content>
                   <AnchorPane prefHeight="701.0" prefWidth="689.0">
                      <children>
-                        <Pane layoutX="-9.0" layoutY="-3.0" prefHeight="708.0" prefWidth="727.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;">
-                           <children>
-                              <Text layoutX="566.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="xp" wrappingWidth="101.6708984375" fx:id="xp" />
-                           </children></Pane>
+                        <Pane prefHeight="703.0" prefWidth="717.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;" />
                         <ImageView fitHeight="208.0" fitWidth="175.0" layoutX="111.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@profileImage.png" />
@@ -51,22 +50,18 @@
                               <Font size="18.0" />
                            </font>
                         </Text>
-                        <ScrollPane fx:id="scrollPane" layoutX="20.0" layoutY="352.0" prefHeight="328.0" prefWidth="692.0" stylesheets="@test.css">
+                        <ScrollPane fx:id="scrollPane" layoutX="13.0" layoutY="374.0" prefHeight="306.0" prefWidth="649.0" stylesheets="@CSS/scrollpane.css">
                            <content>
-                              <Pane maxWidth="675.0" minHeight="327.0" minWidth="675.0" prefWidth="675.0">
+                              <Pane minHeight="300.0" minWidth="641.0">
                                  <children>
-                                    <VBox fx:id="history" maxWidth="665.0" minHeight="324.0" minWidth="665.0" prefWidth="665.0">
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding></VBox>
+                                    <VBox fx:id="history" minHeight="301.0" minWidth="638.0" />
                                  </children>
-                                 <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding>
                               </Pane>
                            </content>
                         </ScrollPane>
                         <Text fx:id="level" layoutX="552.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="level" />
+                        <Text layoutX="574.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="xp" fx:id="xp" />
+                        <Text fx:id="introText" layoutX="20.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INTRODUCTION SENTENCE" />
                      </children>
                   </AnchorPane>
                </content>
@@ -75,15 +70,74 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Pane layoutX="-1.0" layoutY="-4.0" prefHeight="707.0" prefWidth="717.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;" />
-                        <Text fill="WHITE" layoutX="120.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THIS IS THE LEADERBOARD PANE">
+                        <Pane layoutX="1.0" layoutY="-5.0" prefHeight="708.0" prefWidth="717.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;" />
+                        <ScrollPane fx:id="leaderScrollPane" layoutX="5.0" layoutY="5.0" prefHeight="695.0" prefWidth="710.0" stylesheets="@CSS/scrollpane.css">
+                           <content>
+                              <BarChart fx:id="leaderBoard" prefHeight="693.0" prefWidth="704.0" stylesheets="@CSS/chart.css" title="LeaderBoard">
+                                <xAxis>
+                                  <CategoryAxis side="BOTTOM" fx:id="xAxis">
+                                       <tickLabelFont>
+                                          <Font size="16.0" />
+                                       </tickLabelFont>
+                                    </CategoryAxis>
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis fx:id="yAxis" side="LEFT" tickLabelFill="WHITE">
+                                       <tickLabelFont>
+                                          <Font size="16.0" />
+                                       </tickLabelFont>
+                                    </NumberAxis>
+                                </yAxis>
+                              </BarChart>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Idk how to call it">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane layoutX="1.0" prefHeight="704.0" prefWidth="717.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;" />
+                        <Text fill="WHITE" layoutX="61.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You want to add a Friend ? Give us his username !">
                            <font>
-                              <Font name="System Bold" size="30.0" />
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="friend" layoutX="457.0" layoutY="47.0" promptText="Username" />
+                        <Button layoutX="538.0" layoutY="93.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="106.0" text="Add A friend" />
+                        <ScrollPane layoutX="35.0" layoutY="228.0" prefHeight="437.0" prefWidth="319.0" stylesheets="@CSS/scrollpane.css">
+                           <content>
+                              <VBox fx:id="followersPane" maxHeight="-Infinity" maxWidth="316.0" minHeight="434.0" minWidth="316.0" prefHeight="434.0" prefWidth="316.0" spacing="5.0">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane layoutX="385.0" layoutY="228.0" prefHeight="437.0" prefWidth="311.0" stylesheets="@CSS/scrollpane.css">
+                           <content>
+                              <VBox fx:id="followingPane" maxHeight="-Infinity" maxWidth="308.0" minHeight="433.0" minWidth="308.0" prefHeight="433.0" prefWidth="308.0" spacing="5.0">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                        <Text fill="WHITE" layoutX="153.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Followers">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="508.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Following">
+                           <font>
+                              <Font size="20.0" />
                            </font>
                         </Text>
                      </children>
                   </AnchorPane>
-               </content>
+              </content>
             </Tab>
             <Tab text="Info">
               <content>
