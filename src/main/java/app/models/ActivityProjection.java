@@ -1,9 +1,8 @@
 package app.models;
 
-import java.util.Objects;
-
 public class ActivityProjection {
 
+    long id;
     String username;
     String category;
     double amount;
@@ -14,6 +13,7 @@ public class ActivityProjection {
      * Class that projects user activities.
      */
     public ActivityProjection() {
+        this.id = 0;
         this.username = new String();
         this.category = new String();
         this.amount = 0.0;
@@ -28,11 +28,21 @@ public class ActivityProjection {
      * @param amount amount of the activity
      * @param xp_points xp points of that activity given the amount
      */
-    public ActivityProjection(String username, String category, double amount, double xp_points) {
+
+    public ActivityProjection(long id, String username, String category, double amount, double xp_points) {
+        this.id = id;
         this.username = username;
         this.category = category;
         this.amount = amount;
         this.xp_points = xp_points;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -69,16 +79,10 @@ public class ActivityProjection {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) { return true; }
-        if (o == null || getClass() != o.getClass()) { return false; }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         ActivityProjection that = (ActivityProjection) o;
-        return Double.compare(that.amount, amount) == 0
-                &&
-                Double.compare(that.xp_points, xp_points) == 0
-                &&
-                Objects.equals(username, that.username)
-                &&
-                Objects.equals(category, that.category);
+        return id == that.id;
     }
 
 }
