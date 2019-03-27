@@ -309,7 +309,7 @@ public class UserController {
                         break;
                     case 2:
                         eat += amount;
-                        household += amount;
+                        transport += amount;
                         break;
                     case 3:
                         transport += amount;
