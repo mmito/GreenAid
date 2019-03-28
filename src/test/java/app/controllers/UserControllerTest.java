@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -132,17 +130,20 @@ public class UserControllerTest {
         User user = new User();
         user.setId(1);
 
-        expected = new Response(true, user);
+        UserProjection expectedProjection =  new UserProjection(user.getUsername(), user.getFirst_name(), user.getLast_name(), user.getExperience_points(), user.getLast_update(), false);
+
+        expected = new Response(true, expectedProjection);
 
         Mockito.when(securityService.findLoggedInUsername())
                 .thenReturn("username-test");
         Mockito.when(userService.findByUsername(any(String.class)))
                 .thenReturn(user);
+        Mockito.when(followingService.findById1Id2(1, 1)).thenReturn(null);
 
         Response result = userController.getUserInfo("username-test");
 
         Mockito.verify(securityService).findLoggedInUsername();
-        Mockito.verify(userService).findByUsername(any(String.class));
+        Mockito.verify(userService, times(2)).findByUsername(any(String.class));
 
         assertEquals(expected, result);
     }
@@ -735,6 +736,9 @@ public class UserControllerTest {
                 .thenReturn(user);
         Mockito.when(userService.findByUsername("username-test2"))
                 .thenReturn(user2);
+        Mockito.when(userService.getLoggedInUser())
+                .thenReturn(user);
+
         Mockito.doAnswer((i) -> null).when(followingService).save(any(Following.class));
 
         Response result = userController.addFollowing(new Following(), "username-test2");

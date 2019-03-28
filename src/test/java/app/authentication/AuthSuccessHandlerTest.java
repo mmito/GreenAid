@@ -7,9 +7,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.Authentication;
-
 import javax.servlet.ServletException;
-
 import java.io.IOException;
 
 import static org.junit.Assert.*;
@@ -22,7 +20,7 @@ public class AuthSuccessHandlerTest {
     Authentication authentication;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         auth = new AuthSuccessHandler();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
@@ -30,7 +28,7 @@ public class AuthSuccessHandlerTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         auth = null;
         request = null;
         response = null;
