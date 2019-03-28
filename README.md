@@ -1,20 +1,5 @@
 # CSE1105 Group 66 Project
 
-This a template repository to help you get started on making the best project possible!
-
-You can download the latest version [here](https://github.com/SERG-Delft/TI1216/releases)
-
-http://stackoverflow.com/a/6466993
-
-
-
-Eclipse:
-[http://javapapers.com/java/import-maven-project-into-eclipse/](http://javapapers.com/java/import-maven-project-into-eclipse/)
-
-Intellij:  
-[https://www.jetbrains.com/help/idea/2016.2/importing-project-from-maven-model.html](https://www.jetbrains.com/help/idea/2016.2/importing-project-from-maven-model.html)
-
-
 ## Overview
 In today's world, the carbon dioxide consumption is increasing day by day. Unfortunately, the daily life became super-dependent on CO2 that it sometimes feels impossible to reverse this situation. But lots of countries and individuals take initiative in order to prevent the devastation that is created by excessive usage of carbon dioxide. Thus, we also wanted to contribute to this movement. As Group 66, our aim is to deliver one of the best applications of whole CSE class to reflect the amount of work we've put in the project.
 
@@ -36,7 +21,7 @@ In today's world, the carbon dioxide consumption is increasing day by day. Unfor
 ## Getting started/Installation
 
 ### How to import into your IDE
-```
+
 Eclipse:
 [http://javapapers.com/java/import-maven-project-into-eclipse/](http://javapapers.com/java/import-maven-project-into-eclipse/)
 
@@ -47,16 +32,16 @@ Go to project's GitLab page [here](https://gitlab.ewi.tudelft.nl/cse1105/2018-20
 Click Clone and follow the instructions above to download the repository into your computer.
 
 First, go to src->main->app->Spring Server and run the server. You can also do it via command line by following steps mentioned [here](https://www.maketecheasier.com/run-java-program-from-command-prompt/)
-
+```
 After that, make sure that you have JavaFX configured on your IDE. 
 Then, go to src->gui->JavaFXMain and run it by right clicking and selecting 'Run'. Then, you are good to go. 
 ```
 
 ## Getting code coverage reports
-```
+
 **Jacoco**:  
 Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getting-started-with-maven.html#execute_maven_goal)/[Eclipse](http://imgur.com/a/6q7pV))
-```
+
 
 ## Example Code Usage/Screenshots from the app
 
@@ -75,13 +60,13 @@ Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getti
 ### Game Page for kids
 
 ## Libraries/Frameworks used
- 1. Spring 
- 2. Hibernate
- 3. JavaFX
+ 1. Spring: Java Framework for developing web, mobile and desktop apps and offers lots of ease on server side and database. 
+ 2. Hibernate: It's used for application-database connection. It is also integrated into Spring.
+ 3. JavaFX: Used for GUI.
 
 ## Tests
 
-```
+
 **Checkstyle**:  
 Run `mvn site`
 
@@ -90,7 +75,7 @@ Run `mvn site`
 If the test is a JUnit test, you can run the them by simply clicking right to that file and select `Run as Junit test`
 
 Run `mvn test` to create a branch/code coverage.
-```
+
 
 ## Layout of internal code tree
 
@@ -104,6 +89,16 @@ Run `mvn test` to create a branch/code coverage.
     	   		             /   Communication with database
     	   		            /  
     	     Authentication/Authorization
+
+## The Joel Test Score
+
+10/11 
+
+Click [here](https://www.joelonsoftware.com/2000/08/09/the-joel-test-12-steps-to-better-code/) to see what The Joel Test and its result signify.
+
+The Joel Test File: [click here](https://gitlab.ewi.tudelft.nl/cse1105/2018-2019/oopp-group-66/template/blob/master/doc/TheJoelTest.md)
+Bugs/Errors Database: [click here](https://docs.google.com/spreadsheets/d/1UN-ubZHSt0T9_UY-3CYMR_IJuuNDgU6KRNW3YR8UtbQ/edit#gid=0)
+
 ## Group members
 
 #### Tommaso Tofacchi netID: ttofacchi - 4933249
