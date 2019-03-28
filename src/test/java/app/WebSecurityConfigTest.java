@@ -43,7 +43,7 @@ public class WebSecurityConfigTest {
 
     @Test
     public void customAuthenticationManager() throws Exception{
-        securityService.autoLogin("cpene", "cpenecpene");
+        //        securityService.autoLogin("cpene", "cpenecpene");
         AuthenticationManager authenticationManager;
         authenticationManager = webSecurityConfig.customAuthenticationManager();
         assertNotNull(authenticationManager);
