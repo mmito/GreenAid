@@ -20,8 +20,8 @@ public class HttpRequestsTest {
 
     HttpRequests httpRequests;
 
-    private static final String username = "cpene";
-    private static final String password = "cpenecpene";
+    private static final String username = "johnDoe";
+    private static final String password = "verySecret";
 
     @Test
     public void constructorDefault() {
@@ -48,13 +48,23 @@ public class HttpRequestsTest {
 
     @Test
     public void postRequest() {
+        String registrationURL = "http://localhost:8080/registration";
+        String registrationSessionCookie = "sessionCookie";
+        MultiValueMap<String, Object> registrationParams = new LinkedMultiValueMap<>();
+
+        registrationParams.add("first_name", "John");
+        registrationParams.add("last_name", "Doe");
+        registrationParams.add("username", username);
+        registrationParams.add("password", password);
+
+        HttpRequests.postRequest(registrationSessionCookie, registrationURL, registrationParams);
+
         String URL = "http://localhost:8080/login";
         String sessionCookie = "sessionCookie";
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("username", username);
         params.add("password", password);
         HttpEntity<Response> response = HttpRequests.postRequest(sessionCookie, URL, params);
-        assertEquals(true, response.getBody().isOk());
+        assertTrue( response.getBody().isOk());
     }
-
 }
