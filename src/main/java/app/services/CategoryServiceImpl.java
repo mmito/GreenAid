@@ -4,6 +4,7 @@ import app.models.Category;
 import app.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class CategoryServiceImpl {
@@ -15,5 +16,15 @@ public class CategoryServiceImpl {
         return categoryRepository.findById(id);
     }
 
+    public String getCategoryAsText() {
+        List<Category> categories = categoryRepository.findAll();
+        String result = "";
+        for (Category c : categories) {
+
+            result += "\n" + c.getId() + " - " + c.getName();
+
+        }
+        return result;
+    }
 
 }
