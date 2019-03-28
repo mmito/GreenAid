@@ -1,19 +1,15 @@
 package app.controllers;
 
 import app.authentication.SecurityServiceImpl;
-import app.models.Category;
 import app.models.User;
-import app.repository.CategoryRepository;
 import app.responses.Response;
-import app.services.ActivityServiceImpl;
+import app.services.CategoryServiceImpl;
 import app.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.sql.Timestamp;
-import java.util.List;
 
 
 @RestController
@@ -26,10 +22,8 @@ public class MainController {
     private SecurityServiceImpl securityService;
 
     @Autowired
-    private ActivityServiceImpl activityService;
+    private CategoryServiceImpl categoryService;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
 
     /**
      * Routes to /welcome.
@@ -83,15 +77,9 @@ public class MainController {
 
         String username = securityService.findLoggedInUsername();
         if (username != null) {
-            List<Category> categories = categoryRepository.findAll();
-            String response = "";
-            for (Category c : categories) {
+          String response = categoryService.getCategoryAsText();
 
-                response += "\n" + c.getId() + " - " + c.getName();
-
-            }
             return new Response(true, response);
-
         }
         else {
             return new Response(false, "You are not authorized!");

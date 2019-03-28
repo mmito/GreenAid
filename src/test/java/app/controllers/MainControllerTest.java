@@ -1,10 +1,8 @@
 package app.controllers;
 
 import app.authentication.SecurityServiceImpl;
-import app.models.Category;
-import app.repository.CategoryRepository;
 import app.responses.Response;
-import app.services.ActivityServiceImpl;
+import app.services.CategoryServiceImpl;
 import app.services.UserServiceImpl;
 import app.models.User;
 import org.junit.Test;
@@ -14,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -35,10 +31,7 @@ public class MainControllerTest {
     private SecurityServiceImpl securityService;
 
     @MockBean
-    private ActivityServiceImpl activityService;
-
-    @MockBean
-    private CategoryRepository categoryRepository;
+    private CategoryServiceImpl categoryService;
 
     @Test
     public void welcomeTest() {
@@ -131,22 +124,15 @@ public class MainControllerTest {
     public void getCategoriesSuccess() {
         Response expected = new Response(true, "\n1 - category-test");
 
-        Category category = new Category();
-        category.setId(1);
-        category.setName("category-test");
-
-        List<Category> categories = new ArrayList<>();
-        categories.add(category);
-
         Mockito.when(securityService.findLoggedInUsername())
                 .thenReturn("username-test");
-        Mockito.when(categoryRepository.findAll())
-                .thenReturn(categories);
+        Mockito.when(categoryService.getCategoryAsText())
+                .thenReturn("\n1 - category-test");
 
         Response result = mainController.getCategories();
 
         Mockito.verify(securityService).findLoggedInUsername();
-        Mockito.verify(categoryRepository).findAll();
+        Mockito.verify(categoryService).getCategoryAsText();
 
         assertEquals(expected.getData(), result.getData());
     }
