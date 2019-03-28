@@ -60,9 +60,9 @@ Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getti
 ### Game Page for kids
 
 ## Libraries/Frameworks used
- 1. Spring 
- 2. Hibernate
- 3. JavaFX
+ 1. Spring: Java Framework for developing web, mobile and desktop apps and offers lots of ease on server side and database. 
+ 2. Hibernate: It's used for application-database connection. It is also integrated into Spring.
+ 3. JavaFX: Used for GUI.
 
 ## Tests
 
@@ -91,6 +91,13 @@ Run `mvn test` to create a branch/code coverage.
     	     Authentication/Authorization
 
 ## The Joel Test Score
+
+10/11 
+
+Click [here](https://www.joelonsoftware.com/2000/08/09/the-joel-test-12-steps-to-better-code/) to see what The Joel Test and its result signify.
+
+The Joel Test File: [click here](https://gitlab.ewi.tudelft.nl/cse1105/2018-2019/oopp-group-66/template/blob/master/doc/TheJoelTest.md)
+Bugs/Errors Database: [click here](https://docs.google.com/spreadsheets/d/1UN-ubZHSt0T9_UY-3CYMR_IJuuNDgU6KRNW3YR8UtbQ/edit#gid=0)
 
 ## Group members
 

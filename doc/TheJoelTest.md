@@ -8,6 +8,8 @@ Yes, we use GitLab and SourceTree to utilize source control and allow each team 
 
 ## Can you make a build in one step?
 
+Not applicable. 
+
 ## Do you make daily builds?
 
 Yes, we both have CI/CD and we also do daily builds to ensure our code is well-developed.
@@ -46,4 +48,11 @@ Not applicable, again.
 
 ## Do you do hallway usability testing?
 
-Yes, you can access the data in [here.]()
+Yes, hallway usability testing asserts that getting feedback from 5 people should be enough, so we just did that. (We asked permission to use their names and first letter of their surnames for privacy.)
+
+Here are the results:
+
+Defne E. - Liked the background and the look of the panel. Suggested to change the font color and type from black to white. 
+
+Zeynep Y. - Suggested to rename the tab names. Also the font type.
+
