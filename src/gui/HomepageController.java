@@ -19,20 +19,14 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextFlow;
+import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 
 
-import java.awt.event.MouseEvent;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -51,7 +45,7 @@ public class HomepageController implements Initializable {
     @FXML
     private HBox hBox;
     @FXML
-    private VBox followersPane, followingPane , history;
+    private VBox followersPane, followingPane , history , list;
     @FXML
     private ScrollPane scrollPane, leaderScrollPane , scrollInfo;
     @FXML
@@ -64,8 +58,8 @@ public class HomepageController implements Initializable {
     private NumberAxis yAxis;
     @FXML
     private TextFlow info;
-
-
+    @FXML
+    ChoiceBox<String> choiceBox;
 
 
     private long categoryId;
@@ -83,6 +77,7 @@ public class HomepageController implements Initializable {
     private List<ActivityProjection> activities = Client.getUserActivities(controller.sessionCookie);
     private List<UserProjection> followers = Client.getUserFollowedBy(controller.sessionCookie);
     private List<UserProjection> following = Client.getUserFollowings(controller.sessionCookie);
+    private List <UserProjection> top20leaderboard = Client.getLeaderboard(controller.sessionCookie);
 
 
     @Override
@@ -92,13 +87,14 @@ public class HomepageController implements Initializable {
         comboBox.getItems().addAll("Eating A Vegetarian Meal", "Buying Local Produce", "Biking instead of Driving", "Using Public Transport instead of Driving", "Installing Solar Panels", "Lowering the Temperature of your Home");
 
 
+        choiceBox.getItems().add("Friends");
+        choiceBox.getItems().add("Top 20");
+
         firstName.setText(user.getFirst_name());
         lastName.setText(user.getLast_name());
         xp.setVisible(false);
 
         text();
-
-
 
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -112,10 +108,12 @@ public class HomepageController implements Initializable {
 
         showUserActivities();
 
-        setLeaderBoard();
+        leaderboardChoosed();
+
 
         setFriends(followers, followersPane);
         setFriends(following, followingPane);
+
     }
 
 
@@ -129,6 +127,7 @@ public class HomepageController implements Initializable {
         Text text = new Text();
         text.setFont(Font.font("ALgerian",18));
         text.setText("How do we calculate your XP Points? \n");
+
 
         info.getChildren().add(text);
 
@@ -199,6 +198,7 @@ public class HomepageController implements Initializable {
         activities = Client.getUserActivities(controller.sessionCookie);
         followers = Client.getUserFollowedBy(controller.sessionCookie);
         following = Client.getUserFollowings(controller.sessionCookie);
+        top20leaderboard = Client.getLeaderboard(controller.sessionCookie);
     }
 
     public void showUserActivities() {
@@ -260,6 +260,17 @@ public class HomepageController implements Initializable {
         Stage stage = JavaFXMain.stage;
         stage.show();
         window.hide();
+    }
+
+    public void leaderboardChoosed(){
+        choiceBox.getSelectionModel().selectedItemProperty().addListener( (v,oldValue,newValue) -> {
+            if (newValue.equals("Friends")){
+                setLeaderBoard();
+            }
+            else {
+                top20leaderboard();
+            }
+        }  );
     }
 
     public void activityChoosed(){
@@ -366,7 +377,60 @@ public class HomepageController implements Initializable {
         showUserActivities();
     }
 
+
+    public void top20leaderboard(){
+        leaderBoard.setVisible(false);
+        list.setVisible(true);
+        list.getChildren().clear();
+        int sz = top20leaderboard.size();
+        Text empty = new Text();
+        empty.setText("\n");
+        list.getChildren().add(empty);
+
+        Text title = new Text();
+        title.setText("Top 20 LeaderBoard");
+        title.setFont(Font.font(18));
+        title.setTextAlignment(TextAlignment.CENTER);
+        list.getChildren().add(title);
+
+        if(activities.isEmpty()){
+            Text start = new Text();
+            start.setText("No activities");
+            list.getChildren().add(start);
+
+        }
+        else {
+            //list.getChildren().clear();
+            Text blank = new Text();
+            blank.setText("\n");
+            list.getChildren().add(blank);
+
+            for (int i = 0; i < sz; i++) {
+                HBox hBox = new HBox();
+                Text temp = new Text();
+
+
+                String ret = "  ";
+                ret += i+1 + " - ";
+                ret += top20leaderboard.get(i).getUsername() + " with ";
+                ret += top20leaderboard.get(i).getExperience_points() + " XP points " ;
+//                ret += new DecimalFormat("#.##").format(activities.get(i).getXp_points()) + " XP point.";
+
+                temp.setText(ret);
+                temp.setFont(Font.font(18));
+
+                hBox.getChildren().addAll(temp);
+
+                list.getChildren().add(hBox);
+            }
+
+        }
+
+    }
+
     public void setLeaderBoard(){
+        leaderBoard.setVisible(true);
+        list.setVisible(false);
         xAxis.getCategories().clear();
         leaderBoard.getData().clear();
 
