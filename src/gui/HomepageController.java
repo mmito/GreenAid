@@ -1,6 +1,6 @@
 
 import app.models.ActivityProjection;
-import app.client.Client;
+import Services.Client;
 import app.models.User;
 
 import app.models.UserProjection;

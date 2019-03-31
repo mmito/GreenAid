@@ -1,4 +1,4 @@
-package app.client;
+package Services;
 
 import app.models.ActivityProjection;
 import app.models.User;
@@ -16,8 +16,8 @@ import java.util.List;
 public class Client {
 
     private static final String url_login = "http://localhost:8080/login";
-    private static final String url_check = "http://localhost:8080/check";
-    private static final String url_categories = "http://localhost:8080/getcategories";
+//    private static final String url_check = "http://localhost:8080/check";
+//    private static final String url_categories = "http://localhost:8080/getcategories";
     private static final String url_add_activity = "http://localhost:8080/user/add-activity";
     private static final String url_remove_activity = "http://localhost:8080/user/remove-activity";
     private static final String url_user_activities = "http://localhost:8080/user/activities";
@@ -26,7 +26,7 @@ public class Client {
     private static final String url_user_followed_by = "http://localhost:8080/user/followed-by";
     private static final String url_add_follow = "http://localhost:8080/user/add-following";
     private static final String url_remove_follow = "http://localhost:8080/user/remove-following";
-    private static final String url_recommendation = "http://localhost:8080/user/recommendation";
+//    private static final String url_recommendation = "http://localhost:8080/user/recommendation";
     private static final String url_leaderboard = "http://localhost:8080/user/leaderboard";
 
     private static ObjectMapper mapper = new ObjectMapper();
@@ -55,33 +55,31 @@ public class Client {
     }
 
 
-    /**
-     * Test method just to check whether the session cookies are working or not.
-     * @param sessionCookie sessionCookie is used for checking
-     * @return returns the data of the user to show whether he/she's logged in or not.
-     */
-    public static String checkAuth(String sessionCookie) {
+//    /**
+//     * Test method just to check whether the session cookies are working or not.
+//     * @param sessionCookie sessionCookie is used for checking
+//     * @return returns the data of the user to show whether he/she's logged in or not.
+//     */
+//    public static String checkAuth(String sessionCookie) {
+//
+//        HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, url_check);
+//        System.out.println(response);
+//        return (String) response.getBody().getData();
+//    }
+//
+//    /**
+//     * Method used to display the list of categories, just if the session is authenticated.
+//     * @param sessionCookie sessionCookie is used for checking
+//     * @return returns the list of categories
+//     */
+//    public static String getCategories(String sessionCookie) {
+//
+//        HttpEntity<Response> categories = HttpRequests.getRequest(sessionCookie, url_categories);
+//
+//        return ((String) categories.getBody().getData()).replaceFirst("\n", "");
+//
+//    }
 
-        HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, url_check);
-        System.out.println(response);
-        return (String) response.getBody().getData();
-    }
-
-    /**
-     * Method used to display the list of categories, just if the session is authenticated.
-     * @param sessionCookie sessionCookie is used for checking
-     * @return returns the list of categories
-     */
-    public static String getCategories(String sessionCookie) {
-
-        HttpEntity<Response> categories = HttpRequests.getRequest(sessionCookie, url_categories);
-
-        return ((String) categories.getBody().getData()).replaceFirst("\n", "");
-
-    }
-
-    // Method used to add an activity in the database given a session,
-    // a category id and the amount of times that activity has been made.
     /**
      * Method used to add an activity in the database given a session, a category id
      * and the amount of times that activity has been made.
@@ -198,7 +196,7 @@ public class Client {
      * @param sessionCookie sessioncookie of user
      * @return returns the follow requests.
      */
-    public static  String manageFollowRequests(String sessionCookie, String username, String url) {
+    private static  String manageFollowRequests(String sessionCookie, String username, String url) {
 
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("username", username);
@@ -230,15 +228,16 @@ public class Client {
 
     }
 
-    /**
-     * Gives a recommendation based on the activities.
-     * @param sessionCookie sessioncookie of user
-     * @return recommendations
-     */
-    public static String getRecommendation(String sessionCookie) {
-        HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, url_recommendation);
-        return (String) response.getBody().getData();
-    }
+//    /**
+//     * Gives a recommendation based on the activities.
+//     * @param sessionCookie sessioncookie of user
+//     * @return recommendations
+//     */
+//    public static String getRecommendation(String sessionCookie) {
+//        HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, url_recommendation);
+//        return (String) response.getBody().getData();
+//    }
+
     /**
      * Creates a top-20 leaderboard.
      * @param sessionCookie sessioncookie of user
