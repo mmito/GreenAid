@@ -674,7 +674,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void addFollowingFail() {
+    public void addFollowingNotAuthorized() {
         Response expected = new Response(false, "You are not authorized!");
 
         Mockito.when(securityService.findLoggedInUsername())
@@ -688,65 +688,31 @@ public class UserControllerTest {
     }
 
     @Test
-    public void addFollowingUserNotFound() {
-        Response expected = new Response(false, "User not found.");
+    public void addFollowingSucces() {
+        Response expected = new Response(true, "Yes, succes");
 
         Mockito.when(securityService.findLoggedInUsername())
                 .thenReturn("username-test");
-        Mockito.when(userService.findByUsername("username-test"))
-                .thenReturn(null);
+        Mockito.when(userService.addFollowing(new Following(), "username-test"))
+                .thenReturn("Yes, succes");
 
         Response result = userController.addFollowing(new Following(), "username-test");
-
         Mockito.verify(securityService).findLoggedInUsername();
-        Mockito.verify(userService).findByUsername("username-test");
 
         assertEquals(expected, result);
     }
 
     @Test
-    public void addFollowingRecursiveFollow() {
-        Response expected = new Response(false, "You already follow yourself...");
+    public void addFollowingExceptie() {
+        Response expected = new Response(false, "Exception scenario");
 
         Mockito.when(securityService.findLoggedInUsername())
                 .thenReturn("username-test");
-        Mockito.when(userService.findByUsername("username-test"))
-                .thenReturn(new User());
+        Mockito.when(userService.addFollowing(new Following(), "username-test"))
+                .thenThrow(new RuntimeException("Exception scenario"));
 
         Response result = userController.addFollowing(new Following(), "username-test");
-
-        Mockito.verify(securityService, times(2)).findLoggedInUsername();
-        Mockito.verify(userService).findByUsername("username-test");
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void addFollowingSuccess() {
-        Response expected = new Response(true, "Your followings have been updated!");
-
-        User user = new User();
-        User user2 = new User();
-        user.setId(1);
-        user2.setId(2);
-
-        Mockito.when(securityService.findLoggedInUsername())
-                .thenReturn("username-test");
-        Mockito.when(userService.findByUsername("username-test"))
-                .thenReturn(user);
-        Mockito.when(userService.findByUsername("username-test2"))
-                .thenReturn(user2);
-        Mockito.when(userService.getLoggedInUser())
-                .thenReturn(user);
-
-        Mockito.doAnswer((i) -> null).when(followingService).save(any(Following.class));
-
-        Response result = userController.addFollowing(new Following(), "username-test2");
-
-        Mockito.verify(securityService, times(3)).findLoggedInUsername();
-        Mockito.verify(userService).findByUsername("username-test");
-        Mockito.verify(userService, times(2)).findByUsername("username-test2");
-        Mockito.verify(followingService).save(any(Following.class));
+        Mockito.verify(securityService).findLoggedInUsername();
 
         assertEquals(expected, result);
     }
