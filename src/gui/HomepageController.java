@@ -47,7 +47,7 @@ public class HomepageController implements Initializable {
     @FXML
     private VBox followersPane, followingPane , history , list;
     @FXML
-    private ScrollPane scrollPane, leaderScrollPane , scrollInfo;
+    private ScrollPane scrollPane, leaderScrollPane ;
     @FXML
     private ProgressIndicator progress;
     @FXML
@@ -57,7 +57,7 @@ public class HomepageController implements Initializable {
     @FXML
     private NumberAxis yAxis;
     @FXML
-    private TextFlow info;
+    private TextFlow info, recommendation;
     @FXML
     ChoiceBox<String> choiceBox;
 
@@ -78,6 +78,7 @@ public class HomepageController implements Initializable {
     private List<UserProjection> followers = Client.getUserFollowedBy(controller.sessionCookie);
     private List<UserProjection> following = Client.getUserFollowings(controller.sessionCookie);
     private List <UserProjection> top20leaderboard = Client.getLeaderboard(controller.sessionCookie);
+    private String advice = Client.getRecommendation(controller.sessionCookie);
 
 
     @Override
@@ -94,6 +95,8 @@ public class HomepageController implements Initializable {
         lastName.setText(user.getLast_name());
         xp.setVisible(false);
 
+
+
         text();
 
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
@@ -107,8 +110,10 @@ public class HomepageController implements Initializable {
         progress.setProgress(y / 100.0);
 
         showUserActivities();
-
+        Recommendation();
         leaderboardChoosed();
+
+        setLeaderBoard();
 
 
         setFriends(followers, followersPane);
@@ -127,11 +132,12 @@ public class HomepageController implements Initializable {
         Text text = new Text();
         text.setFont(Font.font("ALgerian",18));
         text.setText("How do we calculate your XP Points? \n");
-
+        text.setFill(Color.WHITE);
 
         info.getChildren().add(text);
 
         Text text1 = new Text();
+        text1.setFill(Color.WHITE);
         text1.setFont(Font.font(16 ));
         text1.setText("As you know, a user earns XP Points based on the activity done." +
                 "We calculated the XP Points based on the amount of Carbon Dioxide that activity saves." +
@@ -153,20 +159,24 @@ public class HomepageController implements Initializable {
 
         Text text2 = new Text();
 
+        text2.setFill(Color.WHITE);
         text2.setText("After the calculation of the amount of carbon dioxide saved, we divided each number by 100 to have different xp points for each activity. We decided to divide by 100 because we thought that it will be easier to convert xp points from amount of co2 saved and vice versa. This also helped us along the design process.  If we used 1000 or more, the value of points would have been too low. We also considered the level ranking of the user and wanted to keep the calculation for gamification as simple as possible for the sustainability of the project.\n\n");
         info.getChildren().add(text2);
 
 
         Text text3 = new Text();
+        text3.setFill(Color.WHITE);
         text3.setText("How do the recommendations work? \n" );
         text3.setFont(Font.font("Calibre", FontWeight.BOLD,16));
         info.getChildren().add(text3);
 
         Text text4 = new Text();
+        text4.setFill(Color.WHITE);
         text4.setText("Simple. Efficient. Easy-to-understand. We track your activities and categorize them into 3 groups which are food, household, transportation. Some activities like eating a vegetarian meal only belong to one category, that being food. But some like buying local produce belong to more than categories like food and transportation as this both contributes to the prevention of transfer of products and the usage of local food. Based on the number of activities done on each super-category, we give you some recommendations from our recommendation pool. We hope you'll like them!");
         info.getChildren().add(text4);
 
         Text text5 = new Text();
+        text5.setFill(Color.WHITE);
         text5.setText("Credits\n" +
                 "\n" +
                 "The TEAM \n" +
@@ -188,6 +198,15 @@ public class HomepageController implements Initializable {
         info.getChildren().add(text5);
     }
 
+    public void Recommendation (){
+        recommendation.getChildren().clear();
+        Text text = new Text();
+        text.setFont(Font.font("Calibre", 18));
+        text.setText(advice);
+        recommendation.getChildren().add(text);
+
+    }
+
     public void exit(){
         xp.setVisible(false);
     }
@@ -199,12 +218,15 @@ public class HomepageController implements Initializable {
         followers = Client.getUserFollowedBy(controller.sessionCookie);
         following = Client.getUserFollowings(controller.sessionCookie);
         top20leaderboard = Client.getLeaderboard(controller.sessionCookie);
+        advice = Client.getRecommendation(controller.sessionCookie);
     }
 
     public void showUserActivities() {
         int sz = activities.size();
 
         if(activities.isEmpty()){
+            introText.setText("Dear " + user.getUsername() + ", here is your list of activities!");
+
             Text start = new Text();
             start.setText("No activities");
             history.getChildren().add(start);
@@ -264,7 +286,9 @@ public class HomepageController implements Initializable {
 
     public void leaderboardChoosed(){
         choiceBox.getSelectionModel().selectedItemProperty().addListener( (v,oldValue,newValue) -> {
-            if (newValue.equals("Friends")){
+
+
+            if ((choiceBox.getValue()).equals("Friends")){
                 setLeaderBoard();
             }
             else {
@@ -348,6 +372,7 @@ public class HomepageController implements Initializable {
         });
 
         addActivity.setOnMouseClicked(event ->{
+
             hBox.getChildren().clear();
             activityText.setText("");
 
@@ -357,6 +382,7 @@ public class HomepageController implements Initializable {
             experience();
             progress.setProgress(y/100.0);
 
+            Recommendation();
             showUserActivities();
             setLeaderBoard();
         });
@@ -388,19 +414,18 @@ public class HomepageController implements Initializable {
         list.getChildren().add(empty);
 
         Text title = new Text();
-        title.setText("Top 20 LeaderBoard");
+        title.setText(" Top 20 LeaderBoard");
         title.setFont(Font.font(18));
         title.setTextAlignment(TextAlignment.CENTER);
         list.getChildren().add(title);
 
-        if(activities.isEmpty()){
+        if(top20leaderboard.isEmpty()){
             Text start = new Text();
             start.setText("No activities");
             list.getChildren().add(start);
 
         }
         else {
-            //list.getChildren().clear();
             Text blank = new Text();
             blank.setText("\n");
             list.getChildren().add(blank);
@@ -414,7 +439,6 @@ public class HomepageController implements Initializable {
                 ret += i+1 + " - ";
                 ret += top20leaderboard.get(i).getUsername() + " with ";
                 ret += top20leaderboard.get(i).getExperience_points() + " XP points " ;
-//                ret += new DecimalFormat("#.##").format(activities.get(i).getXp_points()) + " XP point.";
 
                 temp.setText(ret);
                 temp.setFont(Font.font(18));
@@ -429,6 +453,11 @@ public class HomepageController implements Initializable {
     }
 
     public void setLeaderBoard(){
+
+        //quick fix for bug might change
+        choiceBox.setValue("Friends");
+
+
         leaderBoard.setVisible(true);
         list.setVisible(false);
         xAxis.getCategories().clear();
@@ -498,8 +527,10 @@ public class HomepageController implements Initializable {
         refresh();
         setLeaderBoard();
         experience();
+        history.getChildren().clear();
         showUserActivities();
         progress.setProgress(y/100.0);
+
         System.out.println(result);
 
     }
@@ -522,6 +553,7 @@ public class HomepageController implements Initializable {
         Client.removeFollow(controller.sessionCookie, temp[1]);
         refresh();
         setFriends(following, followingPane);
+        setLeaderBoard();
     }
 
     public void addFollow(){

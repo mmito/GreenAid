@@ -26,7 +26,7 @@ public class Client {
     private static final String url_user_followed_by = "http://localhost:8080/user/followed-by";
     private static final String url_add_follow = "http://localhost:8080/user/add-following";
     private static final String url_remove_follow = "http://localhost:8080/user/remove-following";
-//    private static final String url_recommendation = "http://localhost:8080/user/recommendation";
+    private static final String url_recommendation = "http://localhost:8080/user/recommendation";
     private static final String url_leaderboard = "http://localhost:8080/user/leaderboard";
 
     private static ObjectMapper mapper = new ObjectMapper();
@@ -228,15 +228,15 @@ public class Client {
 
     }
 
-//    /**
-//     * Gives a recommendation based on the activities.
-//     * @param sessionCookie sessioncookie of user
-//     * @return recommendations
-//     */
-//    public static String getRecommendation(String sessionCookie) {
-//        HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, url_recommendation);
-//        return (String) response.getBody().getData();
-//    }
+    /**
+     * Gives a recommendation based on the activities.
+     * @param sessionCookie sessioncookie of user
+     * @return recommendations
+     */
+    public static String getRecommendation(String sessionCookie) {
+        HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, url_recommendation);
+        return (String) response.getBody().getData();
+    }
 
     /**
      * Creates a top-20 leaderboard.
