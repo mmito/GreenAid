@@ -97,47 +97,11 @@ public class UserController {
         String username = securityService.findLoggedInUsername();
         if (username != null) {
             User user = userService.findByUsername(username);
-
-            List<Activity> activities = activityService.findByUser_id(user.getId());
-            List<ActivityProjection> response = new LinkedList<>();
-
-            for (Activity a : activities) {
-
-                long id = a.getId();
-                double amount = a.getAmount();
-                double xp_points = a.getXp_points();
-                String category;
-                switch ((int) a.getCategory_id()) {
-
-                    case 1:
-                        category = "Eating a vegetarian meal";
-                        break;
-                    case 2:
-                        category = "Buying local produce";
-                        break;
-                    case 3:
-                        category = "Using bike instead of car";
-                        break;
-                    case 4:
-                        category = "Using public transport instead of car";
-                        break;
-                    case 5:
-                        category = "Installing solar panels";
-                        break;
-                    case 6:
-                        category = "Lowering the temperature of your home";
-                        break;
-                    default:
-                        category = "unknown";
-
-                }
-
-                response.add(new ActivityProjection(id, username, category, amount, xp_points));
-
-            }
+            List<ActivityProjection> response = activityService.getActivities(user);
 
             return new Response(true, response);
-        } else { return new Response(false, "You are not authorized!");
+        } else {
+            return new Response(false, "You are not authorized!");
         }
     }
 

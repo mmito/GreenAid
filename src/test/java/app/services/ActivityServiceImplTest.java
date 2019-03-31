@@ -1,7 +1,11 @@
 package app.services;
 
+import app.authentication.SecurityServiceImpl;
 import app.models.Activity;
+import app.models.ActivityProjection;
+import app.models.User;
 import app.repository.ActivityRepository;
+import app.responses.Response;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +17,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 
 
 @RunWith(SpringRunner.class)
@@ -77,4 +84,78 @@ public class ActivityServiceImplTest {
 
         Assert.assertEquals(activity_1, activityService.findById(1));
     }
+
+    @Test
+    public void showActivitiesSuccessUnknownCase() {
+
+        testShowActivityCase(0, "unknown");
+    }
+
+    @Test
+    public void showActivitiesSuccessMealCase() {
+
+        testShowActivityCase(1, "Eating a vegetarian meal");
+    }
+
+    @Test
+    public void showActivitiesSuccessLocalProduceCase() {
+
+        testShowActivityCase(2, "Buying local produce");
+    }
+
+    @Test
+    public void showActivitiesSuccessBikeCase() {
+
+        testShowActivityCase(3, "Using bike instead of car");
+    }
+
+    @Test
+    public void showActivitiesSuccessPublicTransportCase() {
+
+        testShowActivityCase(4, "Using public transport instead of car");
+    }
+
+    @Test
+    public void showActivitiesSuccessSolarPanelsCase() {
+
+        testShowActivityCase(5, "Installing solar panels");
+    }
+
+    @Test
+    public void showActivitiesSuccessHomeTemperatureCase() {
+
+        testShowActivityCase(6, "Lowering the temperature of your home");
+    }
+
+    private void testShowActivityCase(int categoryId, String expectedActivity) {
+        List<ActivityProjection> expected = new ArrayList<>();
+
+        User user = new User();
+        user.setId(1);
+        user.setUsername("username-test");
+
+        List<Activity> activities = new ArrayList<>();
+        Activity activity = new Activity();
+        activity.setId(1);
+        activity.setAmount(1.0);
+        activity.setXp_points(1.0);
+
+        activity.setCategory_id(categoryId);
+        activities.add(activity);
+
+
+        expected.add(new ActivityProjection(1,"username-test", expectedActivity, 1.0, 1.0));
+
+        Mockito.when(activityRepositoryMock.findByUser_id(1))
+                .thenReturn(activities);
+
+        List<ActivityProjection> result = activityService.getActivities(user);
+
+        Mockito.verify(activityRepositoryMock).findByUser_id(1);
+
+        Assert.assertEquals(expected.get(0).getCategory(), result.get(0).getCategory());
+
+    }
+
+
 }
