@@ -244,9 +244,17 @@ public class Client {
      * @param sessionCookie sessioncookie of user
      * @return returns the leaderboard.
      */
-    public static String leaderboard(String sessionCookie) {
+    public static List<UserProjection> getLeaderboard(String sessionCookie) {
         HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, url_leaderboard);
-        return (String) response.getBody().getData();
+        if (response.getBody().isOk()) {
+            List<UserProjection> leaderboard = mapper
+                    .convertValue(response.getBody()
+                            .getData(), new TypeReference<List<UserProjection>>() {
+                    });
+            return leaderboard;
+        } else {
+            return null;
+        }
     }
 
     /**
