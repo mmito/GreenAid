@@ -1,4 +1,4 @@
-import app.client.Client;
+import Services.Client;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

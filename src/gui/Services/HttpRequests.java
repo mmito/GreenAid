@@ -1,4 +1,4 @@
-package app.client;
+package Services;
 
 import app.responses.Response;
 import org.springframework.http.HttpEntity;
