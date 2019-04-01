@@ -1,5 +1,6 @@
 import Services.Client;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,19 +28,17 @@ import java.util.ResourceBundle;
 public class controller implements Initializable {
 
     @FXML
-    Hyperlink register;
+    private Hyperlink register;
     @FXML
-    Button login;
+    private JFXButton login;
     @FXML
-    Button signup;
+    public AnchorPane pane;
     @FXML
-    AnchorPane pane;
+    private TextField username;
     @FXML
-    TextField username;
+    private TextField password;
     @FXML
-    TextField password;
-    @FXML
-    Text invalid;
+    private Text invalid;
 
     public static String sessionCookie = null;
 
@@ -50,14 +49,10 @@ public class controller implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         invalid.setVisible(false);
-        password.setOnKeyPressed(new EventHandler<KeyEvent>() {
-        @Override
-        public void handle(KeyEvent event) {
+        password.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.ENTER))
-            { handleLoginClicked();
-            }
-        }
-    });
+                handleLoginClicked();
+        });
     }
 
     // Closes the program
@@ -66,8 +61,7 @@ public class controller implements Initializable {
     }
 
     //Minimizes the program
-    public void handleMinimizeButton(MouseEvent mouse) {
-
+    public void handleMinimizeButton() {
         JavaFXMain.stage.setIconified(true);
     }
 

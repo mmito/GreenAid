@@ -27,8 +27,6 @@ public class JavaFXMain extends Application {
             root.setOnMousePressed(event -> {
                 xOffset = event.getSceneX();
                 yOffset = event.getSceneY();
-
-
             });
 
             root.setOnMouseDragged(event -> {
