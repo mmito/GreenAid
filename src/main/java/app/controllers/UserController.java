@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
@@ -98,47 +97,11 @@ public class UserController {
         String username = securityService.findLoggedInUsername();
         if (username != null) {
             User user = userService.findByUsername(username);
-
-            List<Activity> activities = activityService.findByUser_id(user.getId());
-            List<ActivityProjection> response = new LinkedList<>();
-
-            for (Activity a : activities) {
-
-                long id = a.getId();
-                double amount = a.getAmount();
-                double xp_points = a.getXp_points();
-                String category;
-                switch ((int) a.getCategory_id()) {
-
-                    case 1:
-                        category = "Eating a vegetarian meal";
-                        break;
-                    case 2:
-                        category = "Buying local produce";
-                        break;
-                    case 3:
-                        category = "Using bike instead of car";
-                        break;
-                    case 4:
-                        category = "Using public transport instead of car";
-                        break;
-                    case 5:
-                        category = "Installing solar panels";
-                        break;
-                    case 6:
-                        category = "Lowering the temperature of your home";
-                        break;
-                    default:
-                        category = "unknown";
-
-                }
-
-                response.add(new ActivityProjection(id, username, category, amount, xp_points));
-
-            }
+            List<ActivityProjection> response = activityService.getActivities(user);
 
             return new Response(true, response);
-        } else { return new Response(false, "You are not authorized!");
+        } else {
+            return new Response(false, "You are not authorized!");
         }
     }
 
@@ -239,30 +202,11 @@ public class UserController {
 
         if (securityService.findLoggedInUsername() != null) {
 
-            if (userService.findByUsername(username) != null) {
-
-                if (securityService.findLoggedInUsername().equals(username)) {
-
-                    return new Response(false, "You already follow yourself...");
-
-                }
-
-                User followedUser = userService.findByUsername(username);
-                if (followingService.findById1Id2(userService.getLoggedInUser().getId(), followedUser.getId()) == null) {
-
-                    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                    following.setUser_id_1(userService.
-                            findByUsername(securityService.findLoggedInUsername()).getId());
-                    following.setUser_id_2(followedUser.getId());
-                    following.setLast_update(timestamp);
-                    followingService.save(following);
-                    return new Response(true, "Your followings have been updated!");
-                }
-
-                else return new Response(false, "You already follow this user!");
-
-            } else {
-                return new Response(false, "User not found.");
+            try {
+                String succesMessage = userService.addFollowing(following, username);
+                return new Response(true, succesMessage);
+            } catch (RuntimeException e) {
+                return new Response(false, e.getMessage());
             }
         } else {
             return new Response(false, "You are not authorized!");

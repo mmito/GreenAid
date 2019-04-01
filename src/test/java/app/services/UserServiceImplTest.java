@@ -6,7 +6,9 @@ import app.models.User;
 import app.repository.UserRepository;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +17,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 
 
 @RunWith(SpringRunner.class)
@@ -28,13 +32,16 @@ public class UserServiceImplTest {
     private UserServiceImpl userService;
 
     @MockBean
-    private UserRepository userRepositoryMock;
-
-    @MockBean
     private BCryptPasswordEncoder bCryptPasswordEncoderMock;
 
     @MockBean
     private SecurityServiceImpl securityServiceMock;
+
+    @MockBean
+    private FollowingServiceImpl followingServiceMock;
+
+    @MockBean
+    private UserRepository userRepositoryMock;
 
     User user;
 
@@ -45,6 +52,9 @@ public class UserServiceImplTest {
         user.setUsername("test");
         user.setPassword("password");
     }
+
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
 
     @Test
     public void saveUser() {
@@ -163,5 +173,57 @@ public class UserServiceImplTest {
         Mockito.when(userRepositoryMock.findLeaderboard()).thenReturn(userList);
 
         Assert.assertEquals(userList, userService.findLeaderboard());
+    }
+
+    @Test
+    public void addFollowingUserNotFound() {
+        String expected = "User not found.";
+
+        Mockito.when(securityServiceMock.findLoggedInUsername())
+                .thenReturn("username-test");
+        Mockito.when(userRepositoryMock.findByUsername("username-test"))
+                .thenReturn(null);
+
+        expectedEx.expect(RuntimeException.class);
+        expectedEx.expectMessage(expected);
+        userService.addFollowing(new Following(), "username-test");
+    }
+
+    @Test
+    public void addFollowingRecursiveFollow() {
+        String expected = "You already follow yourself...";
+
+        Mockito.when(securityServiceMock.findLoggedInUsername())
+                .thenReturn("username-test");
+        Mockito.when(userService.findByUsername("username-test"))
+                .thenReturn(new User());
+
+        expectedEx.expect(RuntimeException.class);
+        expectedEx.expectMessage(expected);
+        userService.addFollowing(new Following(), "username-test");
+    }
+
+    @Test
+    public void addFollowingSuccess() {
+        String expected = "Your followings have been updated!";
+
+        User user2 = new User();
+        user2.setId(2);
+
+        Mockito.when(securityServiceMock.findLoggedInUsername())
+                .thenReturn("username-test");
+
+        Mockito.when(userRepositoryMock.findByUsername("username-test2"))
+                .thenReturn(user2);
+        Mockito.when(userRepositoryMock.findByUsername("username-test"))
+                .thenReturn(user);
+
+        Mockito.doAnswer((i) -> null).when(followingServiceMock).save(any(Following.class));
+
+        String result = userService.addFollowing(new Following(), "username-test2");
+
+        Mockito.verify(securityServiceMock, Mockito.times(3)).findLoggedInUsername();
+
+        assertEquals(expected, result);
     }
 }

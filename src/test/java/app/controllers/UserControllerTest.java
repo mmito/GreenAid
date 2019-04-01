@@ -9,6 +9,7 @@ import app.services.FollowingServiceImpl;
 import app.services.UserServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -163,267 +165,21 @@ public class UserControllerTest {
     }
 
     @Test
-    public void showActivitiesSuccessMealCase() {
-        Response expected;
-
-        List<ActivityProjection> list = new ArrayList<>();
-
+    public void showActivitiesSucces() {
         User user = new User();
-        user.setId(1);
-        user.setUsername("username-test");
+        user.setUsername("Name");
 
-        List<Activity> activities = new ArrayList<>();
-        Activity activity = new Activity();
-        activity.setId(1);
-        activity.setAmount(1.0);
-        activity.setXp_points(1.0);
-        activity.setCategory_id(1);
-        activities.add(activity);
+        List<ActivityProjection> activityArray = new LinkedList<>();
 
-        list.add(new ActivityProjection(1,"username-test", "Eating a vegetarian meal", 1.0, 1.0));
-
-        expected = new Response(true, list);
+        Response expected = new Response(true, activityArray);
 
         Mockito.when(securityService.findLoggedInUsername())
-                .thenReturn("username-test");
-        Mockito.when(userService.findByUsername(any(String.class)))
-                .thenReturn(user);
-        Mockito.when(activityService.findByUser_id(1))
-                .thenReturn(activities);
+                .thenReturn("Name");
+        Mockito.when(activityService.getActivities(user)).thenReturn(activityArray);
 
         Response result = userController.showActivities();
 
         Mockito.verify(securityService).findLoggedInUsername();
-        Mockito.verify(userService).findByUsername(any(String.class));
-        Mockito.verify(activityService).findByUser_id(1);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void showActivitiesSuccessLocalProduceCase() {
-        Response expected;
-
-        List<ActivityProjection> list = new ArrayList<>();
-
-        User user = new User();
-        user.setId(1);
-        user.setUsername("username-test");
-
-        List<Activity> activities = new ArrayList<>();
-        Activity activity = new Activity();
-        activity.setId(1);
-        activity.setAmount(1.0);
-        activity.setXp_points(1.0);
-        activity.setCategory_id(2);
-        activities.add(activity);
-
-        list.add(new ActivityProjection(1, "username-test", "Buying local produce", 1.0, 1.0));
-
-        expected = new Response(true, list);
-
-        Mockito.when(securityService.findLoggedInUsername())
-                .thenReturn("username-test");
-        Mockito.when(userService.findByUsername(any(String.class)))
-                .thenReturn(user);
-        Mockito.when(activityService.findByUser_id(1))
-                .thenReturn(activities);
-
-        Response result = userController.showActivities();
-
-        Mockito.verify(securityService).findLoggedInUsername();
-        Mockito.verify(userService).findByUsername(any(String.class));
-        Mockito.verify(activityService).findByUser_id(1);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void showActivitiesSuccessBikeCase() {
-        Response expected;
-
-        List<ActivityProjection> list = new ArrayList<>();
-
-        User user = new User();
-        user.setId(1);
-        user.setUsername("username-test");
-
-        List<Activity> activities = new ArrayList<>();
-        Activity activity = new Activity();
-        activity.setId(1);
-        activity.setAmount(1.0);
-        activity.setXp_points(1.0);
-        activity.setCategory_id(3);
-        activities.add(activity);
-
-        list.add(new ActivityProjection(1, "username-test", "Using bike instead of car", 1.0, 1.0));
-
-        expected = new Response(true, list);
-
-        Mockito.when(securityService.findLoggedInUsername())
-                .thenReturn("username-test");
-        Mockito.when(userService.findByUsername(any(String.class)))
-                .thenReturn(user);
-        Mockito.when(activityService.findByUser_id(1))
-                .thenReturn(activities);
-
-        Response result = userController.showActivities();
-
-        Mockito.verify(securityService).findLoggedInUsername();
-        Mockito.verify(userService).findByUsername(any(String.class));
-        Mockito.verify(activityService).findByUser_id(1);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void showActivitiesSuccessPublicTransportCase() {
-        Response expected;
-
-        List<ActivityProjection> list = new ArrayList<>();
-
-        User user = new User();
-        user.setId(1);
-        user.setUsername("username-test");
-
-        List<Activity> activities = new ArrayList<>();
-        Activity activity = new Activity();
-        activity.setId(1);
-        activity.setAmount(1.0);
-        activity.setXp_points(1.0);
-        activity.setCategory_id(4);
-        activities.add(activity);
-
-        list.add(new ActivityProjection(1, "username-test", "Using public transport instead of car", 1.0, 1.0));
-
-        expected = new Response(true, list);
-
-        Mockito.when(securityService.findLoggedInUsername())
-                .thenReturn("username-test");
-        Mockito.when(userService.findByUsername(any(String.class)))
-                .thenReturn(user);
-        Mockito.when(activityService.findByUser_id(1))
-                .thenReturn(activities);
-
-        Response result = userController.showActivities();
-
-        Mockito.verify(securityService).findLoggedInUsername();
-        Mockito.verify(userService).findByUsername(any(String.class));
-        Mockito.verify(activityService).findByUser_id(1);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void showActivitiesSuccessSolarPanelsCase() {
-        Response expected;
-
-        List<ActivityProjection> list = new ArrayList<>();
-
-        User user = new User();
-        user.setId(1);
-        user.setUsername("username-test");
-
-        List<Activity> activities = new ArrayList<>();
-        Activity activity = new Activity();
-        activity.setId(1);
-        activity.setAmount(1.0);
-        activity.setXp_points(1.0);
-        activity.setCategory_id(5);
-        activities.add(activity);
-
-        list.add(new ActivityProjection(1, "username-test", "Installing solar panels", 1.0, 1.0));
-
-        expected = new Response(true, list);
-
-        Mockito.when(securityService.findLoggedInUsername())
-                .thenReturn("username-test");
-        Mockito.when(userService.findByUsername(any(String.class)))
-                .thenReturn(user);
-        Mockito.when(activityService.findByUser_id(1))
-                .thenReturn(activities);
-
-        Response result = userController.showActivities();
-
-        Mockito.verify(securityService).findLoggedInUsername();
-        Mockito.verify(userService).findByUsername(any(String.class));
-        Mockito.verify(activityService).findByUser_id(1);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void showActivitiesSuccessHomeTemperatureCase() {
-        Response expected;
-
-        List<ActivityProjection> list = new ArrayList<>();
-
-        User user = new User();
-        user.setId(1);
-        user.setUsername("username-test");
-
-        List<Activity> activities = new ArrayList<>();
-        Activity activity = new Activity();
-        activity.setId(1);
-        activity.setAmount(1.0);
-        activity.setXp_points(1.0);
-        activity.setCategory_id(6);
-        activities.add(activity);
-
-        list.add(new ActivityProjection(1, "username-test", "Lowering the temperature of your home", 1.0, 1.0));
-
-        expected = new Response(true, list);
-
-        Mockito.when(securityService.findLoggedInUsername())
-                .thenReturn("username-test");
-        Mockito.when(userService.findByUsername(any(String.class)))
-                .thenReturn(user);
-        Mockito.when(activityService.findByUser_id(1))
-                .thenReturn(activities);
-
-        Response result = userController.showActivities();
-
-        Mockito.verify(securityService).findLoggedInUsername();
-        Mockito.verify(userService).findByUsername(any(String.class));
-        Mockito.verify(activityService).findByUser_id(1);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void showActivitiesSuccessUnknownCase() {
-        Response expected;
-
-        List<ActivityProjection> list = new ArrayList<>();
-
-        User user = new User();
-        user.setId(1);
-        user.setUsername("username-test");
-
-        List<Activity> activities = new ArrayList<>();
-        Activity activity = new Activity();
-        activity.setId(1);
-        activity.setAmount(1.0);
-        activity.setXp_points(1.0);
-        activity.setCategory_id(0);
-        activities.add(activity);
-
-        list.add(new ActivityProjection(1, "username-test", "unknown", 1.0, 1.0));
-
-        expected = new Response(true, list);
-
-        Mockito.when(securityService.findLoggedInUsername())
-                .thenReturn("username-test");
-        Mockito.when(userService.findByUsername(any(String.class)))
-                .thenReturn(user);
-        Mockito.when(activityService.findByUser_id(1))
-                .thenReturn(activities);
-
-        Response result = userController.showActivities();
-
-        Mockito.verify(securityService).findLoggedInUsername();
-        Mockito.verify(userService).findByUsername(any(String.class));
-        Mockito.verify(activityService).findByUser_id(1);
 
         assertEquals(expected, result);
     }
@@ -674,7 +430,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void addFollowingFail() {
+    public void addFollowingNotAuthorized() {
         Response expected = new Response(false, "You are not authorized!");
 
         Mockito.when(securityService.findLoggedInUsername())
@@ -688,65 +444,31 @@ public class UserControllerTest {
     }
 
     @Test
-    public void addFollowingUserNotFound() {
-        Response expected = new Response(false, "User not found.");
+    public void addFollowingSucces() {
+        Response expected = new Response(true, "Yes, succes");
 
         Mockito.when(securityService.findLoggedInUsername())
                 .thenReturn("username-test");
-        Mockito.when(userService.findByUsername("username-test"))
-                .thenReturn(null);
+        Mockito.when(userService.addFollowing(new Following(), "username-test"))
+                .thenReturn("Yes, succes");
 
         Response result = userController.addFollowing(new Following(), "username-test");
-
         Mockito.verify(securityService).findLoggedInUsername();
-        Mockito.verify(userService).findByUsername("username-test");
 
         assertEquals(expected, result);
     }
 
     @Test
-    public void addFollowingRecursiveFollow() {
-        Response expected = new Response(false, "You already follow yourself...");
+    public void addFollowingExceptie() {
+        Response expected = new Response(false, "Exception scenario");
 
         Mockito.when(securityService.findLoggedInUsername())
                 .thenReturn("username-test");
-        Mockito.when(userService.findByUsername("username-test"))
-                .thenReturn(new User());
+        Mockito.when(userService.addFollowing(new Following(), "username-test"))
+                .thenThrow(new RuntimeException("Exception scenario"));
 
         Response result = userController.addFollowing(new Following(), "username-test");
-
-        Mockito.verify(securityService, times(2)).findLoggedInUsername();
-        Mockito.verify(userService).findByUsername("username-test");
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void addFollowingSuccess() {
-        Response expected = new Response(true, "Your followings have been updated!");
-
-        User user = new User();
-        User user2 = new User();
-        user.setId(1);
-        user2.setId(2);
-
-        Mockito.when(securityService.findLoggedInUsername())
-                .thenReturn("username-test");
-        Mockito.when(userService.findByUsername("username-test"))
-                .thenReturn(user);
-        Mockito.when(userService.findByUsername("username-test2"))
-                .thenReturn(user2);
-        Mockito.when(userService.getLoggedInUser())
-                .thenReturn(user);
-
-        Mockito.doAnswer((i) -> null).when(followingService).save(any(Following.class));
-
-        Response result = userController.addFollowing(new Following(), "username-test2");
-
-        Mockito.verify(securityService, times(3)).findLoggedInUsername();
-        Mockito.verify(userService).findByUsername("username-test");
-        Mockito.verify(userService, times(2)).findByUsername("username-test2");
-        Mockito.verify(followingService).save(any(Following.class));
+        Mockito.verify(securityService).findLoggedInUsername();
 
         assertEquals(expected, result);
     }

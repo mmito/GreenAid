@@ -1,25 +1,33 @@
 package app.services;
 
 import app.authentication.SecurityServiceImpl;
+import app.models.Following;
 import app.models.User;
 import app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import java.sql.Timestamp;
 import java.util.List;
 
 
 @SuppressWarnings("ALL")
 @Service
 public class UserServiceImpl {
-    @Autowired
-    private UserRepository userRepository;
+
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
     private SecurityServiceImpl securityService;
+
+    @Autowired
+    private FollowingServiceImpl followingService;
+
+    @Autowired
+    private UserRepository userRepository;
+
 
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -75,5 +83,31 @@ public class UserServiceImpl {
         return userRepository.findLeaderboard();
     }
 
+    public String addFollowing(Following following, String username) {
+        if (userRepository.findByUsername(username) != null) {
+
+            if (securityService.findLoggedInUsername().equals(username)) {
+               throw new RuntimeException("You already follow yourself...");
+            }
+
+            User followedUser = userRepository.findByUsername(username);
+            if (followingService.findById1Id2(getLoggedInUser().getId(), followedUser.getId()) == null) {
+
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                following.setUser_id_1(
+                        userRepository.findByUsername(securityService.findLoggedInUsername()).getId());
+                following.setUser_id_2(followedUser.getId());
+                following.setLast_update(timestamp);
+                followingService.save(following);
+                return  "Your followings have been updated!";
+            }
+
+            else {
+                throw new RuntimeException("You already follow this user!");
+            }
+        } else {
+            throw new RuntimeException("User not found.");
+        }
+    }
 }
 
