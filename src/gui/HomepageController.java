@@ -78,9 +78,9 @@ public class HomepageController implements Initializable {
     private double xOffset;
     private double yOffset;
 
-    private double y ;
+    private double levelPercentage ;
     // counter for level
-    private int a ;
+    private double levelNumber ;
 
 
 
@@ -119,7 +119,7 @@ public class HomepageController implements Initializable {
 
         experience();
 
-        progress.setProgress(y / 100.0);
+        progress.setProgress(levelPercentage / 100.0);
 
         showUserActivities();
         Recommendation();
@@ -136,7 +136,7 @@ public class HomepageController implements Initializable {
 
     public void Hover(){
         experience();
-        xp.setText(new DecimalFormat("#.##").format(y)+ "/100");
+        xp.setText(new DecimalFormat("#.##").format(levelPercentage)+ "/100");
         xp.setVisible(true);
     }
 
@@ -348,7 +348,7 @@ public class HomepageController implements Initializable {
             // Refreshing the user and getting the new info
             refresh();
             experience();
-            progress.setProgress(y/100.0);
+            progress.setProgress(levelPercentage/100.0);
 
             Recommendation();
             showUserActivities();
@@ -357,9 +357,17 @@ public class HomepageController implements Initializable {
     }
 
     public void experience(){
-        a = (int)user.getExperience_points()/100;
-        y = user.getExperience_points() - a*100;
-        level.setText("lvl"+ a);
+        if(user.getExperience_points() < 1){
+
+            levelNumber = 1;
+            levelPercentage = (user.getExperience_points()/2)*100;
+
+        }
+        else {
+            levelNumber = Math.log(user.getExperience_points()) / Math.log(2) + 1;
+            levelPercentage = (user.getExperience_points() - Math.pow(2, ((int) (levelNumber - 1)))) / (Math.pow(2, ((int) levelNumber)) - Math.pow(2, (int) (levelNumber - 1))) * 100;
+        }
+        level.setText("lvl"+ (int) levelNumber);
     }
 
     public void postActivity(String sessionCookie, long CategoryId, Spinner<Double> spinner){
@@ -405,7 +413,7 @@ public class HomepageController implements Initializable {
                 String ret = "  ";
                 ret += i+1 + " - ";
                 ret += top20leaderboard.get(i).getUsername() + " with ";
-                ret += top20leaderboard.get(i).getExperience_points() + " XP points " ;
+                ret += new DecimalFormat("#.##").format(top20leaderboard.get(i).getExperience_points()) + " XP points " ;
 
                 temp.setText(ret);
                 temp.setFont(Font.font(18));
@@ -486,18 +494,26 @@ public class HomepageController implements Initializable {
         String[] txtSplit = txt.split(" - ");
 
         int i = Integer.parseInt(txtSplit[0]) - 1;
-        int level = (int) following.get(i).getExperience_points()/100;
+        double level;
+        ProgressIndicator userIndic = new ProgressIndicator();
+        if(following.get(i).getExperience_points() < 1){
+
+            level = 1;
+            userIndic.setProgress((following.get(i).getExperience_points()/2));
+
+        }
+        else {
+            level = ((int) (Math.log(following.get(i).getExperience_points()) / Math.log(2) + 1));
+            userIndic.setProgress((following.get(i).getExperience_points() - Math.pow(2, ((int) (level - 1)))) / (Math.pow(2, ((int) level)) - Math.pow(2, (int) (level - 1))));
+        }
 
         VBox vBox = new VBox();
-
-        ProgressIndicator userIndic = new ProgressIndicator();
-        userIndic.setProgress(following.get(i).getExperience_points() - (level * 100));
         userIndic.setPrefSize(130, 115);
 
-        int xp = (int) following.get(i).getExperience_points();
-        Text points = new Text("XP points collected: " + xp);
+        double xp = following.get(i).getExperience_points();
+        Text points = new Text("XP points collected: " + new DecimalFormat("#.##").format(xp));
 
-        Text levelTxt = new Text("He/She is currently on level: " + level);
+        Text levelTxt = new Text("He/She is currently on level: " + ((int)level));
 
         vBox.getChildren().addAll(userIndic, points, levelTxt);
 
@@ -533,7 +549,7 @@ public class HomepageController implements Initializable {
         experience();
         history.getChildren().clear();
         showUserActivities();
-        progress.setProgress(y/100.0);
+        progress.setProgress(levelPercentage/100.0);
 
         System.out.println(result);
     }
