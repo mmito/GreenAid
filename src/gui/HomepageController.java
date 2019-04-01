@@ -7,6 +7,7 @@ import app.models.UserProjection;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXML;
@@ -184,7 +185,7 @@ public class HomepageController implements Initializable {
                 Text temp = new Text();
                 Text cross = new Text();
 
-                String ret = i + " - ";
+                String ret = i + 1 + " - ";
                 ret += activities.get(i).getCategory() + " done ";
                 ret += activities.get(i).getAmount() + " times for a total of ";
                 ret += new DecimalFormat("#.##").format(activities.get(i).getXp_points()) + " XP point.";
@@ -206,7 +207,7 @@ public class HomepageController implements Initializable {
 
     public void alertActivity(StackPane stackPane, String txt, Text cross){
         String[] txtSplit = txt.split(" - ");
-        int i = Integer.parseInt(txtSplit[0]);
+        int i = Integer.parseInt(txtSplit[0]) - 1;
 
         JFXDialogLayout dialogLayout = new JFXDialogLayout();
         dialogLayout.setBody(new Text("Are you sure you want to delete " + activities.get(i).getCategory() + " ?"));
@@ -454,6 +455,7 @@ public class HomepageController implements Initializable {
         }
 
         leaderBoard.getData().addAll(chart);
+
     }
 
     public void setFriends(List<UserProjection> follow, VBox pane){
@@ -469,7 +471,7 @@ public class HomepageController implements Initializable {
                 Text cross = new Text();
                 temp.setFill(Color.WHITE);
 
-                String ret = i + " - " + follow.get(i).getUsername();
+                String ret = i + 1 + " - " + follow.get(i).getUsername();
 
                 temp.setText(ret);
 
@@ -491,7 +493,7 @@ public class HomepageController implements Initializable {
     public void seeFriend(StackPane stackPane, String txt){
         String[] txtSplit = txt.split(" - ");
 
-        int i = Integer.parseInt(txtSplit[0]);
+        int i = Integer.parseInt(txtSplit[0]) - 1;
         double level;
         ProgressIndicator userIndic = new ProgressIndicator();
         if(following.get(i).getExperience_points() < 1){
@@ -504,7 +506,6 @@ public class HomepageController implements Initializable {
             level = ((int) (Math.log(following.get(i).getExperience_points()) / Math.log(2) + 1));
             userIndic.setProgress((following.get(i).getExperience_points() - Math.pow(2, ((int) (level - 1)))) / (Math.pow(2, ((int) level)) - Math.pow(2, (int) (level - 1))));
         }
-
 
         VBox vBox = new VBox();
         userIndic.setPrefSize(130, 115);
@@ -538,7 +539,7 @@ public class HomepageController implements Initializable {
         Text user_info = (Text)list.get(0);
 
         String[] user_split = user_info.getText().split(" -");
-        int nbr = Integer.parseInt(user_split[0]);
+        int nbr = Integer.parseInt(user_split[0]) - 1;
 
 
         String result = Client.removeActivity(controller.sessionCookie, activities.get(nbr).getId());
