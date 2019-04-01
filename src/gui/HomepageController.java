@@ -25,14 +25,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextFlow;
+import javafx.scene.text.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
-import javafx.scene.text.Text;
 
 
 import java.awt.event.MouseEvent;
@@ -80,9 +77,9 @@ public class HomepageController implements Initializable {
     private double xOffset;
     private double yOffset;
 
-    private double y ;
+    private double levelPercentage ;
     // counter for level
-    private int a ;
+    private double levelNumber ;
 
 
 
@@ -121,7 +118,7 @@ public class HomepageController implements Initializable {
 
         experience();
 
-        progress.setProgress(y / 100.0);
+        progress.setProgress(levelPercentage / 100.0);
 
         showUserActivities();
         Recommendation();
@@ -138,78 +135,8 @@ public class HomepageController implements Initializable {
 
     public void Hover(){
         experience();
-        xp.setText(new DecimalFormat("#.##").format(y)+ "/100");
+        xp.setText(new DecimalFormat("#.##").format(levelPercentage)+ "/100");
         xp.setVisible(true);
-    }
-
-    public void text(){
-        Text text = new Text();
-        text.setFont(Font.font("ALgerian",18));
-        text.setText("How do we calculate your XP Points? \n");
-        text.setFill(Color.WHITE);
-
-        info.getChildren().add(text);
-
-        Text text1 = new Text();
-        text1.setFill(Color.WHITE);
-        text1.setFont(Font.font(16 ));
-        text1.setText("As you know, a user earns XP Points based on the activity done." +
-                "We calculated the XP Points based on the amount of Carbon Dioxide that activity saves." +
-                "Because we couldn't find any external APIs that we found directly applicable for our activity scope" +
-                "and we decided to store each activity's value on the database.\n\n" +
-                "Using the internet (only reliable .gov, .net and well-known .com websites) we found the amount" +
-                "of carbon dioxide that activity saves. In some cases, for example using public transportation instead of" +
-                "a car, we needed to find how many CO2 a car uses per km and how many CO2 a transportation vehicle" +
-                "uses per km and we calculated the deficit.\n\n" +
-                "Because of the available information online, we used the" +
-                "following parameters for adding an activity:" +
-                "Eating a vegetarian meal/per serving" +
-                "Buying a local produce/per number of items" +
-                "Using a bike instead of car/per km" +
-                "Using public transport instead of car/per km" +
-                "Lowering the temperature of your home by 1 degree Celcius/per day" +
-                "Installing solar panels/per day");
-        info.getChildren().add(text1);
-
-        Text text2 = new Text();
-
-        text2.setFill(Color.WHITE);
-        text2.setText("After the calculation of the amount of carbon dioxide saved, we divided each number by 100 to have different xp points for each activity. We decided to divide by 100 because we thought that it will be easier to convert xp points from amount of co2 saved and vice versa. This also helped us along the design process.  If we used 1000 or more, the value of points would have been too low. We also considered the level ranking of the user and wanted to keep the calculation for gamification as simple as possible for the sustainability of the project.\n\n");
-        info.getChildren().add(text2);
-
-
-        Text text3 = new Text();
-        text3.setFill(Color.WHITE);
-        text3.setText("How do the recommendations work? \n" );
-        text3.setFont(Font.font("Calibre", FontWeight.BOLD,16));
-        info.getChildren().add(text3);
-
-        Text text4 = new Text();
-        text4.setFill(Color.WHITE);
-        text4.setText("Simple. Efficient. Easy-to-understand. We track your activities and categorize them into 3 groups which are food, household, transportation. Some activities like eating a vegetarian meal only belong to one category, that being food. But some like buying local produce belong to more than categories like food and transportation as this both contributes to the prevention of transfer of products and the usage of local food. Based on the number of activities done on each super-category, we give you some recommendations from our recommendation pool. We hope you'll like them!");
-        info.getChildren().add(text4);
-
-        Text text5 = new Text();
-        text5.setFill(Color.WHITE);
-        text5.setText("Credits\n" +
-                "\n" +
-                "The TEAM \n" +
-                "Sina Sen\n" +
-                "Cosmin Octavian Pene\n" +
-                "Sven Van Collenburg\n" +
-                "Warren Akrum\n" +
-                "Julien Lamon\n" +
-                "Tommaso Tofacchi\n" +
-                "\n" +
-                "The Consultant\n" +
-                "Issa Hanou\n" +
-                "\n" +
-                "The TEAM Base\n" +
-                "Pulse Technology Room\n" +
-                "\n" +
-                "\n" +
-                "Special thanks to everyone who supported us! ❤\uD83C\uDF33");
-        info.getChildren().add(text5);
     }
 
     public void Recommendation (){
@@ -420,7 +347,7 @@ public class HomepageController implements Initializable {
             // Refreshing the user and getting the new info
             refresh();
             experience();
-            progress.setProgress(y/100.0);
+            progress.setProgress(levelPercentage/100.0);
 
             Recommendation();
             showUserActivities();
@@ -429,9 +356,17 @@ public class HomepageController implements Initializable {
     }
 
     public void experience(){
-        a = (int)user.getExperience_points()/100;
-        y = user.getExperience_points() - a*100;
-        level.setText("lvl"+ a);
+        if(user.getExperience_points() < 1){
+
+            levelNumber = 1;
+            levelPercentage = (user.getExperience_points()/2)*100;
+
+        }
+        else {
+            levelNumber = Math.log(user.getExperience_points()) / Math.log(2) + 1;
+            levelPercentage = (user.getExperience_points() - Math.pow(2, ((int) (levelNumber - 1)))) / (Math.pow(2, ((int) levelNumber)) - Math.pow(2, (int) (levelNumber - 1))) * 100;
+        }
+        level.setText("lvl"+ (int) levelNumber);
     }
 
     public void postActivity(String sessionCookie, long CategoryId, Spinner<Double> spinner){
@@ -477,7 +412,7 @@ public class HomepageController implements Initializable {
                 String ret = "  ";
                 ret += i+1 + " - ";
                 ret += top20leaderboard.get(i).getUsername() + " with ";
-                ret += top20leaderboard.get(i).getExperience_points() + " XP points " ;
+                ret += new DecimalFormat("#.##").format(top20leaderboard.get(i).getExperience_points()) + " XP points " ;
 
                 temp.setText(ret);
                 temp.setFont(Font.font(18));
@@ -557,18 +492,27 @@ public class HomepageController implements Initializable {
         String[] txtSplit = txt.split(" - ");
 
         int i = Integer.parseInt(txtSplit[0]);
-        int level = (int) following.get(i).getExperience_points()/100;
+        double level;
+        ProgressIndicator userIndic = new ProgressIndicator();
+        if(following.get(i).getExperience_points() < 1){
+
+            level = 1;
+            userIndic.setProgress((following.get(i).getExperience_points()/2));
+
+        }
+        else {
+            level = ((int) (Math.log(following.get(i).getExperience_points()) / Math.log(2) + 1));
+            userIndic.setProgress((following.get(i).getExperience_points() - Math.pow(2, ((int) (level - 1)))) / (Math.pow(2, ((int) level)) - Math.pow(2, (int) (level - 1))));
+        }
+
 
         VBox vBox = new VBox();
-
-        ProgressIndicator userIndic = new ProgressIndicator();
-        userIndic.setProgress(following.get(i).getExperience_points() - (level * 100));
         userIndic.setPrefSize(130, 115);
 
-        int xp = (int) following.get(i).getExperience_points();
-        Text points = new Text("XP points collected: " + xp);
+        double xp = following.get(i).getExperience_points();
+        Text points = new Text("XP points collected: " + new DecimalFormat("#.##").format(xp));
 
-        Text levelTxt = new Text("He/She is currently on level: " + level);
+        Text levelTxt = new Text("He/She is currently on level: " + ((int)level));
 
         vBox.getChildren().addAll(userIndic, points, levelTxt);
 
@@ -604,7 +548,7 @@ public class HomepageController implements Initializable {
         experience();
         history.getChildren().clear();
         showUserActivities();
-        progress.setProgress(y/100.0);
+        progress.setProgress(levelPercentage/100.0);
 
         System.out.println(result);
     }
