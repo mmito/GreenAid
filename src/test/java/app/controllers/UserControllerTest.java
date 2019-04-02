@@ -7,10 +7,8 @@ import app.responses.Response;
 import app.services.ActivityServiceImpl;
 import app.services.FollowingServiceImpl;
 import app.services.UserServiceImpl;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -518,71 +516,6 @@ public class UserControllerTest {
         assertEquals(expected, result);
     }
 
-
-//    @Test
-//    public void removeFollowingUserNotFound() {
-//        Response expected = new Response(false, "User not found.");
-//
-//        Mockito.when(securityService.findLoggedInUsername())
-//                .thenReturn("username-test");
-//        Mockito.when(userService.findByUsername("username-test"))
-//                .thenReturn(null);
-//
-//        Response result = userController.removeFollowing("username-test");
-//
-//        Mockito.verify(securityService).findLoggedInUsername();
-//        Mockito.verify(userService).findByUsername("username-test");
-//
-//        assertEquals(expected, result);
-//    }
-
-//    @Test
-//    public void removeFollowingRecursiveUnfollow() {
-//        Response expected = new Response(false, "You cannot unfollow yourself...");
-//
-//        Mockito.when(securityService.findLoggedInUsername())
-//                .thenReturn("username-test");
-//        Mockito.when(userService.findByUsername("username-test"))
-//                .thenReturn(new User());
-//
-//        Response result = userController.removeFollowing("username-test");
-//
-//        Mockito.verify(securityService, times(2)).findLoggedInUsername();
-//        Mockito.verify(userService).findByUsername("username-test");
-//
-//        assertEquals(expected, result);
-//    }
-
-//    @Test
-//    public void removeFollowingSuccess() {
-//        Response expected = new Response(true, "Your followings have been updated!");
-//
-//        User user = new User();
-//        User user2 = new User();
-//        user.setId(1);
-//        user2.setId(2);
-//
-//        Mockito.when(securityService.findLoggedInUsername())
-//                .thenReturn("username-test");
-//        Mockito.when(userService.findByUsername("username-test"))
-//                .thenReturn(user);
-//        Mockito.when(userService.findByUsername("username-test2"))
-//                .thenReturn(user2);
-//        Mockito.doAnswer((i) -> null).when(followingService).delete(any(Following.class));
-//        Mockito.when(followingService.findById1Id2(1, 2))
-//                .thenReturn(new Following());
-//
-//        Response result = userController.removeFollowing("username-test2");
-//
-//        Mockito.verify(securityService, times(3)).findLoggedInUsername();
-//        Mockito.verify(userService).findByUsername("username-test");
-//        Mockito.verify(userService, times(2)).findByUsername("username-test2");
-//        Mockito.verify(followingService).delete(any(Following.class));
-//        Mockito.verify(followingService).findById1Id2(1, 2);
-//
-//        assertEquals(expected, result);
-//    }
-
     @Test
     public void getRecommendationFail() {
         Response expected = new Response(false, "You are not authorized!");
@@ -618,116 +551,6 @@ public class UserControllerTest {
 
         assertEquals(expected, result);
     }
-
-//    @Test
-//    public void getRecommendationSuccessFood() {
-//        String expectedToContain = "Category: Food";
-//
-//        User user = new User();
-//        user.setId(1);
-//
-//        List<Activity> activities = new ArrayList<>();
-//        Activity activity1 = new Activity();
-//        Activity activity2 = new Activity();
-//        activity1.setCategory_id(1);
-//        activity2.setCategory_id(2);
-//        activity1.setAmount(1.0);
-//        activity2.setAmount(1.0);
-//
-//        activities.add(activity1);
-//        activities.add(activity2);
-//
-//        Mockito.when(securityService.findLoggedInUsername())
-//                .thenReturn("username-test");
-//        Mockito.when(userService.findByUsername("username-test"))
-//                .thenReturn(user);
-//        Mockito.when(activityService.findByUser_id(1))
-//                .thenReturn(activities);
-//
-//        String result = (String)(userController.getRecommendation().getData());
-//
-//        Mockito.verify(securityService).findLoggedInUsername();
-//        Mockito.verify(userService).findByUsername("username-test");
-//        Mockito.verify(activityService).findByUser_id(1);
-//
-//        assertTrue(result.contains(expectedToContain));
-//    }
-
-//    @Test
-//    public void getRecommendationSuccessHousehold() {
-//        String expectedToContain = "Category: Household";
-//
-//        User user = new User();
-//        user.setId(1);
-//
-//        List<Activity> activities = new ArrayList<>();
-//        Activity activity1 = new Activity();
-//        Activity activity2 = new Activity();
-//        Activity activity3 = new Activity();
-//        activity1.setCategory_id(5);
-//        activity2.setCategory_id(6);
-//        activity3.setCategory_id(40);
-//        activity1.setAmount(1.0);
-//        activity2.setAmount(1.0);
-//        activity3.setAmount(1.0);
-//
-//        activities.add(activity1);
-//        activities.add(activity2);
-//        activities.add(activity3);
-//
-//        Mockito.when(securityService.findLoggedInUsername())
-//                .thenReturn("username-test");
-//        Mockito.when(userService.findByUsername("username-test"))
-//                .thenReturn(user);
-//        Mockito.when(activityService.findByUser_id(1))
-//                .thenReturn(activities);
-//
-//        String result = (String)(userController.getRecommendation().getData());
-//
-//        Mockito.verify(securityService).findLoggedInUsername();
-//        Mockito.verify(userService).findByUsername("username-test");
-//        Mockito.verify(activityService).findByUser_id(1);
-//
-//        assertTrue(result.contains(expectedToContain));
-//    }
-
-//    @Test
-//    public void getRecommendationSuccessTransportation() {
-//        String expectedToContain = "Category: Transportation";
-//
-//        User user = new User();
-//        user.setId(1);
-//
-//        List<Activity> activities = new ArrayList<>();
-//        Activity activity1 = new Activity();
-//        Activity activity2 = new Activity();
-//        Activity activity3 = new Activity();
-//        activity1.setCategory_id(3);
-//        activity2.setCategory_id(4);
-//        activity3.setCategory_id(1);
-//        activity1.setAmount(1.0);
-//        activity2.setAmount(1.0);
-//        activity3.setAmount(1.0);
-//
-//        activities.add(activity1);
-//        activities.add(activity2);
-//        activities.add(activity3);
-//
-//        Mockito.when(securityService.findLoggedInUsername())
-//                .thenReturn("username-test");
-//        Mockito.when(userService.findByUsername("username-test"))
-//                .thenReturn(user);
-//        Mockito.when(activityService.findByUser_id(1))
-//                .thenReturn(activities);
-//
-//        String result = (String)(userController.getRecommendation().getData());
-//
-//        Mockito.verify(securityService).findLoggedInUsername();
-//        Mockito.verify(userService).findByUsername("username-test");
-//        Mockito.verify(activityService).findByUser_id(1);
-//
-//        assertTrue(result.contains(expectedToContain));
-//    }
 
     @Test
     public void getLeaderboardFail() {
