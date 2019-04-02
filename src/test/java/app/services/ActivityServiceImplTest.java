@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 
 
@@ -157,5 +158,95 @@ public class ActivityServiceImplTest {
 
     }
 
+    @Test
+    public void getRecommendationSuccessFood() {
+        String expectedToContain = "Category: Food";
 
+        User user = new User();
+        user.setId(1);
+
+        List<Activity> activities = new ArrayList<>();
+        Activity activity1 = new Activity();
+        Activity activity2 = new Activity();
+        activity1.setCategory_id(1);
+        activity2.setCategory_id(2);
+        activity1.setAmount(1.0);
+        activity2.setAmount(1.0);
+
+        activities.add(activity1);
+        activities.add(activity2);
+
+        Mockito.when(activityRepositoryMock.findByUser_id(1))
+                .thenReturn(activities);
+
+        String result = activityService.getRecommendation(user);
+
+        Mockito.verify(activityRepositoryMock).findByUser_id(1);
+
+        assertTrue(result.contains(expectedToContain));
+    }
+
+    @Test
+    public void getRecommendationSuccessHousehold() {
+        String expectedToContain = "Category: Household";
+
+        User user = new User();
+        user.setId(1);
+
+        List<Activity> activities = new ArrayList<>();
+        Activity activity1 = new Activity();
+        Activity activity2 = new Activity();
+        Activity activity3 = new Activity();
+        activity1.setCategory_id(5);
+        activity2.setCategory_id(6);
+        activity3.setCategory_id(4);
+        activity1.setAmount(1.0);
+        activity2.setAmount(1.0);
+        activity3.setAmount(1.0);
+
+        activities.add(activity1);
+        activities.add(activity2);
+        activities.add(activity3);
+
+        Mockito.when(activityRepositoryMock.findByUser_id(1))
+                .thenReturn(activities);
+
+        String result = activityService.getRecommendation(user);
+
+        Mockito.verify(activityRepositoryMock).findByUser_id(1);
+
+        assertTrue(result.contains(expectedToContain));
+    }
+
+    @Test
+    public void getRecommendationSuccessTransportation() {
+        String expectedToContain = "Category: Transportation";
+
+        User user = new User();
+        user.setId(1);
+
+        List<Activity> activities = new ArrayList<>();
+        Activity activity1 = new Activity();
+        Activity activity2 = new Activity();
+        Activity activity3 = new Activity();
+        activity1.setCategory_id(3);
+        activity2.setCategory_id(4);
+        activity3.setCategory_id(1);
+        activity1.setAmount(1.0);
+        activity2.setAmount(1.0);
+        activity3.setAmount(1.0);
+
+        activities.add(activity1);
+        activities.add(activity2);
+        activities.add(activity3);
+
+        Mockito.when(activityRepositoryMock.findByUser_id(1))
+                .thenReturn(activities);
+
+        String result = activityService.getRecommendation(user);
+
+        Mockito.verify(activityRepositoryMock).findByUser_id(1);
+
+        assertTrue(result.contains(expectedToContain));
+    }
 }
