@@ -1,4 +1,4 @@
-package Services;
+package app.client;
 
 import app.models.ActivityProjection;
 import app.models.User;

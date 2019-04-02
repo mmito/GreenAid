@@ -1,6 +1,6 @@
 //package app.client;
 //
-//import Services.HttpRequests;
+//import app.client.HttpRequests;
 //import app.responses.Response;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
