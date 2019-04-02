@@ -92,4 +92,61 @@ public class ActivityServiceImpl {
         }
         return activityArray;
     }
+
+    public String getRecommendation(User user) {
+        RecommendationRepository repo = new RecommendationRepository();
+        List<String> eatRecommendations = repo.getEatRecommendations();
+        List<String> householdRecommendations = repo.getHouseholdRecommendations();
+        List<String> transportRecommendations = repo.getTransportRecommendations();
+        List<Activity> activities = activityRepository.findByUser_id(user.getId());
+        int eat = 0, transport = 0 , household = 0;
+        String activityRecom = "";
+        for (Activity a : activities) {
+
+            double amount = a.getAmount();
+
+            switch ((int) a.getCategory_id()){
+                case 1:
+                    eat += amount;
+                    break;
+                case 2:
+                    eat += amount;
+                    transport += amount;
+                    break;
+                case 3:
+                    transport += amount;
+                    break;
+                case 4:
+                    transport += amount;
+                    break;
+                case 5:
+                    household += amount;
+                case 6:
+                    household += amount;
+                    break;
+
+            }
+        }
+        int max = 0;
+        if (eat > max) {
+            max = eat; }
+        if (transport > max) {
+            max = transport; }
+        if (household > max) {
+            max = household; }
+        if (eat == max) {
+            int rand = (int) (Math.random() * 8);
+            activityRecom += "Food\n" + eatRecommendations.get(rand);
+        }
+        else if (household == max) {
+            int rand = (int) (Math.random() * 6);
+            activityRecom += "Household\n" + householdRecommendations.get(rand);
+        }
+        else {
+            int rand = (int) (Math.random() * 6);
+            activityRecom += "Transportation\n" + transportRecommendations.get(rand);
+        }
+
+        return "Based on your activities, here's an activity recommendation:\nCategory: " + activityRecom;
+    }
 }
