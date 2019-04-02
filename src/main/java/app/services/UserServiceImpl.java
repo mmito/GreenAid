@@ -102,12 +102,29 @@ public class UserServiceImpl {
                 return  "Your followings have been updated!";
             }
 
-            else {
-                throw new RuntimeException("You already follow this user!");
-            }
+            throw new RuntimeException("You already follow this user!");
+
         } else {
             throw new RuntimeException("User not found.");
         }
+    }
+
+    public String removeFollowing(String username) {
+        if (userRepository.findByUsername(username) != null) {
+
+            if (securityService.findLoggedInUsername().equals(username)) {
+
+                throw new RuntimeException("You cannot unfollow yourself...");
+
+            }
+
+            followingService.delete(followingService
+                    .findById1Id2(userRepository.findByUsername(securityService.findLoggedInUsername()).getId(),
+                            userRepository.findByUsername(username).getId()));
+            return "Your followings have been updated!";
+
+        }
+        throw new RuntimeException("User not found.");
     }
 }
 
