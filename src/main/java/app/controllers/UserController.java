@@ -10,7 +10,6 @@ import app.repository.CategoryRepository;
 import app.responses.Response;
 import app.services.ActivityServiceImpl;
 import app.services.FollowingServiceImpl;
-import app.services.RecommendationRepository;
 import app.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -218,21 +217,11 @@ public class UserController {
 
         if (securityService.findLoggedInUsername() != null) {
 
-            if (userService.findByUsername(username) != null) {
-
-                if (securityService.findLoggedInUsername().equals(username)) {
-
-                    return new Response(false, "You cannot unfollow yourself...");
-
-                }
-
-                followingService.delete(followingService
-                        .findById1Id2(userService.findByUsername(securityService.findLoggedInUsername()).getId(),
-                        userService.findByUsername(username).getId()));
-                return new Response(true, "Your followings have been updated!");
-
-            } else {
-                return new Response(false, "User not found.");
+            try {
+                String succesMessage = userService.removeFollowing(username);
+                return new Response(true, succesMessage);
+            } catch (RuntimeException e) {
+                return new Response(false, e.getMessage());
             }
         } else {
             return new Response(false, "You are not authorized!");
@@ -246,61 +235,9 @@ public class UserController {
     @GetMapping("/recommendation")
     public Response getRecommendation() {
         User user = userService.findByUsername(securityService.findLoggedInUsername());
-        RecommendationRepository repo = new RecommendationRepository();
-        List<String> eatRecommendations = repo.getEatRecommendations();
-        List<String> householdRecommendations = repo.getHouseholdRecommendations();
-        List<String> transportRecommendations = repo.getTransportRecommendations();
         if (user != null) {
-            List<Activity> activities = activityService.findByUser_id(user.getId());
-            int eat = 0, transport = 0 , household = 0;
-            String activityRecom = "";
-            for (Activity a : activities) {
-
-                double amount = a.getAmount();
-
-                switch ((int) a.getCategory_id()){
-                    case 1:
-                        eat += amount;
-                        break;
-                    case 2:
-                        eat += amount;
-                        transport += amount;
-                        break;
-                    case 3:
-                        transport += amount;
-                        break;
-                    case 4:
-                        transport += amount;
-                        break;
-                    case 5:
-                        household += amount;
-                    case 6:
-                        household += amount;
-                        break;
-
-                }
-            }
-            int max = 0;
-            if (eat > max) {
-                max = eat; }
-            if (transport > max) {
-                max = transport; }
-            if (household > max) {
-                max = household; }
-            if (eat == max) {
-                int rand = (int) (Math.random() * 8);
-                activityRecom += "Food\n" + eatRecommendations.get(rand);
-            }
-            else if (household == max) {
-                int rand = (int) (Math.random() * 6);
-                activityRecom += "Household\n" + householdRecommendations.get(rand);
-            }
-            else {
-                int rand = (int) (Math.random() * 6);
-                activityRecom += "Transportation\n" + transportRecommendations.get(rand);
-            }
-
-            return new Response(true, "Based on your activities, here's an activity recommendation:\nCategory: " + activityRecom);
+            String result = activityService.getRecommendation(user);
+            return new Response(true, result);
 
         } else {
             return new Response(false, "You are not authorized!");
