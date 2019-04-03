@@ -45,6 +45,10 @@ public class controller implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         invalid.setVisible(false);
+        username.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.ENTER))
+                handleLoginClicked();
+        });
         password.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.ENTER))
                 handleLoginClicked();

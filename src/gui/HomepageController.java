@@ -61,6 +61,8 @@ public class HomepageController implements Initializable {
     private TextFlow info, recommendation;
     @FXML
     ChoiceBox<String> choiceBox;
+    @FXML
+    StackPane levelPopUp;
 
 
     private long categoryId;
@@ -71,6 +73,7 @@ public class HomepageController implements Initializable {
     private double levelPercentage ;
     // counter for level
     private double levelNumber ;
+    double temp;
 
 
 
@@ -84,7 +87,8 @@ public class HomepageController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        field.setText(controller.Name);
+        field.setText(user.getUsername());
+        field.setFont(Font.font(22));
 
         comboBox.getItems().removeAll(comboBox.getItems());
         comboBox.getItems().addAll("Eating A Vegetarian Meal", "Buying Local Produce", "Biking instead of Driving", "Using Public Transport instead of Driving", "Installing Solar Panels", "Lowering the Temperature of your Home");
@@ -94,7 +98,9 @@ public class HomepageController implements Initializable {
         choiceBox.getItems().add("Top 20");
 
         firstName.setText(user.getFirst_name());
+        firstName.setFont(Font.font(18));
         lastName.setText(user.getLast_name());
+        lastName.setFont(Font.font(18));
         xp.setVisible(false);
 
 
@@ -158,7 +164,7 @@ public class HomepageController implements Initializable {
 
         if(activities.isEmpty()){
             introText.setText("Dear " + user.getUsername() + ", here is your list of activities!");
-
+            introText.setFont(Font.font(18));
             Text start = new Text();
             start.setText("No activities");
             history.getChildren().add(start);
@@ -350,14 +356,46 @@ public class HomepageController implements Initializable {
         if(user.getExperience_points() < 1){
 
             levelNumber = 1;
+            temp = levelNumber;
             levelPercentage = (user.getExperience_points()/2)*100;
 
         }
         else {
+            temp = (int) levelNumber;
+
             levelNumber = Math.log(user.getExperience_points()) / Math.log(2) + 1;
             levelPercentage = (user.getExperience_points() - Math.pow(2, ((int) (levelNumber - 1)))) / (Math.pow(2, ((int) levelNumber)) - Math.pow(2, (int) (levelNumber - 1))) * 100;
+            if((int)levelNumber == (temp + 1)){
+                levelUp();
+            }
         }
         level.setText("lvl"+ (int) levelNumber);
+    }
+
+    public void levelUp(){
+
+        JFXDialogLayout dialogLayout = new JFXDialogLayout();
+        dialogLayout.setBody(new Text("LEVEL UP"));
+
+
+        JFXDialog dialog = new JFXDialog(levelPopUp, dialogLayout, JFXDialog.DialogTransition.NONE);
+
+        dialog.setMaxWidth(levelPopUp.getMaxWidth());
+        dialog.setMaxHeight(levelPopUp.getMaxHeight());
+
+        JFXButton buttonX = new JFXButton("X");
+
+
+        buttonX.setOnAction(event -> {
+            dialog.close();
+        });
+
+
+        dialogLayout.setActions(buttonX);
+
+        dialog.show();
+
+
     }
 
     public void postActivity(String sessionCookie, long CategoryId, Spinner<Double> spinner){
@@ -437,14 +475,27 @@ public class HomepageController implements Initializable {
         XYChart.Series<String, Double> chart = new XYChart.Series<>();
         chart.getData().add(new XYChart.Data<>("Your Score", user.getExperience_points()));
 
+
+
         if(!following.isEmpty()) {
             for (int i = 0; i < sz; i++) {
                 xAxis.getCategories().add(following.get(i).getUsername());
                 chart.getData().add(new XYChart.Data<>(following.get(i).getUsername(), following.get(i).getExperience_points()));
+
             }
+            leaderBoard.setBarGap(0);
+            leaderBoard.getData().addAll(chart);
+
+        }
+        else {
+
+
+            leaderBoard.getData().addAll(chart);
+
+            leaderBoard.setBarGap(200);
+
         }
 
-        leaderBoard.getData().addAll(chart);
 
     }
 
