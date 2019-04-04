@@ -104,12 +104,12 @@ public class SignUpController implements Initializable {
     // Making the signup Page movable
     public void movingSignup() {
         pane.setOnMousePressed(event -> {
-            xOffset = controller.stage.getX() - event.getScreenX();
-            yOffset = controller.stage.getY() - event.getScreenY();
+            xOffset = LogInController.stage.getX() - event.getScreenX();
+            yOffset = LogInController.stage.getY() - event.getScreenY();
         });
         pane.setOnMouseDragged(event -> {
-            controller.stage.setX(event.getScreenX() + xOffset);
-            controller.stage.setY(event.getScreenY() + yOffset);
+            LogInController.stage.setX(event.getScreenX() + xOffset);
+            LogInController.stage.setY(event.getScreenY() + yOffset);
         });
     }
 
@@ -117,7 +117,7 @@ public class SignUpController implements Initializable {
     @FXML
     private void home(){
         Window window = saveUser.getScene().getWindow();
-        Stage stage = JavaFXMain.stage;
+        Stage stage = GoGreenGUI.stage;
         stage.show();
         window.hide();
 
@@ -236,7 +236,7 @@ public class SignUpController implements Initializable {
             // Goes back to the login page
             else {
                     Window window = saveUser.getScene().getWindow();
-                    Stage stage = JavaFXMain.stage;
+                    Stage stage = GoGreenGUI.stage;
                     stage.show();
                     window.hide();
             }

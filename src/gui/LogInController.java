@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class controller implements Initializable {
+public class LogInController implements Initializable {
 
     @FXML
     private Hyperlink register;
@@ -45,6 +45,10 @@ public class controller implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         invalid.setVisible(false);
+        username.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.ENTER))
+                handleLoginClicked();
+        });
         password.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.ENTER))
                 handleLoginClicked();
@@ -58,7 +62,7 @@ public class controller implements Initializable {
 
     //Minimizes the program
     public void handleMinimizeButton() {
-        JavaFXMain.stage.setIconified(true);
+        GoGreenGUI.stage.setIconified(true);
     }
 
     // Goes to the register screen
@@ -69,7 +73,7 @@ public class controller implements Initializable {
     public void handleRegisterClicked() {
         try {
 
-            Parent root = FXMLLoader.load(getClass().getResource("signUp.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("FXML/signUp.fxml"));
             Stage stage = new Stage();
             stage.setTitle("signUp");
             stage.setScene(new Scene(root, 700, 655));
@@ -119,7 +123,7 @@ public class controller implements Initializable {
 
             try {
 
-                Parent root = (Parent)FXMLLoader.<Parent>load(getClass().getResource("./HomePage.fxml"));
+                Parent root = (Parent)FXMLLoader.<Parent>load(getClass().getResource("FXML/HomePage.fxml"));
                 Stage stage = new Stage();
                 stage.setTitle("HomePage");
                 stage.setScene(new Scene(root, 1398, 954));

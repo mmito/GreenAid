@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.web.*?>
 <?import com.jfoenix.controls.*?>
 <?import java.net.*?>
 <?import javafx.scene.chart.*?>
@@ -23,11 +22,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.web.WebView?>
 <AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#movingHome" prefHeight="954.0" prefWidth="1398.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HomepageController">
    <children>
       <ImageView fitHeight="987.0" fitWidth="1698.0" layoutX="-243.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@backgroundImg.jpg" />
+            <Image url="@../images/backgroundImg.jpg" />
          </image>
       </ImageView>
       <Text layoutX="1373.0" layoutY="28.0" onMouseClicked="#handleClose" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" text="❌" />
@@ -40,19 +40,19 @@
                         <Pane prefHeight="703.0" prefWidth="717.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;" />
                         <ImageView fitHeight="208.0" fitWidth="175.0" layoutX="111.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@profileImage.png" />
+                              <Image url="@../images/profileImage.png" />
                            </image>
                         </ImageView>
                         <Text fx:id="firstName" fill="WHITE" layoutX="198.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USER'S NAME" wrappingWidth="146.6708984375" />
                         <Text fx:id="lastName" fill="WHITE" layoutX="380.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USER'S SURNAME" wrappingWidth="131.6708984375" />
-                        <Text fx:id="field" fill="WHITE" layoutX="123.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THE USERNAME WILL BE HERE" textAlignment="CENTER" wrappingWidth="485.6708984375" />
+                        <Text fx:id="field" fill="WHITE" layoutX="111.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THE USERNAME WILL BE HERE" textAlignment="CENTER" wrappingWidth="434.6708984375" />
                         <ProgressIndicator fx:id="progress" layoutX="399.0" layoutY="88.0" onMouseEntered="#Hover" onMouseExited="#exit" prefHeight="143.0" prefWidth="196.0" progress="0.0" />
                         <Text fill="WHITE" layoutX="363.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Progress to the next Achievement">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Text>
-                        <ScrollPane fx:id="scrollPane" layoutX="13.0" layoutY="374.0" prefHeight="306.0" prefWidth="649.0" stylesheets="@CSS/scrollpane.css">
+                        <ScrollPane fx:id="scrollPane" layoutX="13.0" layoutY="374.0" prefHeight="306.0" prefWidth="649.0" stylesheets="@../CSS/scrollpane.css">
                            <content>
                               <VBox fx:id="history" minHeight="301.0" minWidth="638.0" />
                            </content>
@@ -60,6 +60,7 @@
                         <Text fx:id="level" fill="WHITE" layoutX="552.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="level" />
                         <Text fill="WHITE" layoutX="574.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="xp" fx:id="xp" />
                         <Text fx:id="introText" fill="WHITE" layoutX="20.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INTRODUCTION SENTENCE" />
+                        <StackPane fx:id="levelPopUp" layoutX="354.0" layoutY="87.0" prefHeight="146.0" prefWidth="287.0" />
                      </children>
                   </AnchorPane>
                </content>
@@ -74,9 +75,9 @@
                               <Region prefHeight="18.0" prefWidth="717.0" />
                            </children>
                         </VBox>
-                        <ScrollPane fx:id="leaderScrollPane" layoutX="5.0" layoutY="5.0" prefHeight="695.0" prefWidth="710.0" stylesheets="@CSS/scrollpane.css">
+                        <ScrollPane fx:id="leaderScrollPane" layoutX="5.0" layoutY="5.0" prefHeight="695.0" prefWidth="710.0" stylesheets="@../CSS/scrollpane.css">
                            <content>
-                              <BarChart fx:id="leaderBoard" prefHeight="693.0" prefWidth="704.0" stylesheets="@CSS/chart.css" title="LeaderBoard">
+                              <BarChart fx:id="leaderBoard" prefHeight="693.0" prefWidth="704.0" stylesheets="@../CSS/chart.css" title="LeaderBoard">
                                 <xAxis>
                                   <CategoryAxis side="BOTTOM" fx:id="xAxis">
                                        <tickLabelFont>
@@ -121,7 +122,7 @@
                            </font>
                         </Text>
                         <TextField fx:id="friend" layoutX="457.0" layoutY="47.0" promptText="Username" />
-                        <ScrollPane layoutX="35.0" layoutY="228.0" prefHeight="437.0" prefWidth="319.0" stylesheets="@CSS/scrollpane.css">
+                        <ScrollPane layoutX="35.0" layoutY="228.0" prefHeight="437.0" prefWidth="319.0" stylesheets="@../CSS/scrollpane.css">
                            <content>
                               <VBox fx:id="followersPane" maxHeight="-Infinity" maxWidth="316.0" minHeight="434.0" minWidth="316.0" prefHeight="434.0" prefWidth="316.0" spacing="5.0">
                                  <padding>
@@ -130,7 +131,7 @@
                               </VBox>
                            </content>
                         </ScrollPane>
-                        <ScrollPane layoutX="385.0" layoutY="228.0" prefHeight="437.0" prefWidth="311.0" stylesheets="@CSS/scrollpane.css">
+                        <ScrollPane layoutX="385.0" layoutY="228.0" prefHeight="437.0" prefWidth="311.0" stylesheets="@../CSS/scrollpane.css">
                            <content>
                               <VBox fx:id="followingPane" maxHeight="-Infinity" maxWidth="308.0" minHeight="433.0" minWidth="308.0" prefHeight="433.0" prefWidth="308.0" spacing="5.0">
                                  <padding>
@@ -164,7 +165,7 @@
                      <children>
                         <Pane layoutX="-1.0" layoutY="-4.0" prefHeight="707.0" prefWidth="717.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;">
                            <children>
-                              <ScrollPane layoutX="14.0" layoutY="14.0" maxWidth="694.0" minWidth="694.0" prefHeight="680.0" prefWidth="694.0" stylesheets="@CSS/scrollpane.css">
+                              <ScrollPane layoutX="14.0" layoutY="14.0" maxWidth="694.0" minWidth="694.0" prefHeight="680.0" prefWidth="694.0" stylesheets="@../CSS/scrollpane.css">
                                  <content>
                                     <TextFlow fx:id="info" prefHeight="669.0" prefWidth="673.0" />
                                  </content>
@@ -227,6 +228,9 @@
                      <VBox.margin>
                         <Insets />
                      </VBox.margin></HBox>
+                  <Region prefHeight="200.0" prefWidth="200.0" />
+                  <Region prefHeight="200.0" prefWidth="200.0" />
+                  <TextFlow fx:id="recommendation" prefHeight="134.0" prefWidth="375.0" />
                </children></VBox>
             <JFXButton buttonType="RAISED" layoutX="328.0" layoutY="129.0" onMouseClicked="#activityChoosed" prefHeight="31.0" prefWidth="78.0" ripplerFill="BLACK" style="-fx-background-color: #1D7874;" text="Submit" textFill="WHITE">
                <font>
@@ -237,7 +241,7 @@
       </AnchorPane>
       <ImageView fx:id="Home" fitHeight="52.0" fitWidth="55.0" layoutY="1.0" onMouseClicked="#Home" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
          <image>
-            <Image url="@logo.PNG" />
+            <Image url="@../images/logo.PNG" />
          </image>
       </ImageView>
    </children>

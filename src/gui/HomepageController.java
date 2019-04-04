@@ -68,6 +68,8 @@ public class HomepageController implements Initializable {
     private ChoiceBox<String> choiceBox;
     @FXML
     private WebView browser;
+    @FXML
+    StackPane levelPopUp;
 
 
     private long categoryId;
@@ -75,13 +77,14 @@ public class HomepageController implements Initializable {
     private double yOffset;
     private double levelPercentage ;
     private double levelNumber ;
+    double temp;
 
-    private User user = Client.getUserDetails(controller.sessionCookie);
-    private List<ActivityProjection> activities = Client.getUserActivities(controller.sessionCookie);
-    private List<UserProjection> followers = Client.getUserFollowedBy(controller.sessionCookie);
-    private List<UserProjection> following = Client.getUserFollowings(controller.sessionCookie);
-    private List <UserProjection> top20leaderboard = Client.getLeaderboard(controller.sessionCookie);
-    private String advice = Client.getRecommendation(controller.sessionCookie);
+    private User user = Client.getUserDetails(LogInController.sessionCookie);
+    private List<ActivityProjection> activities = Client.getUserActivities(LogInController.sessionCookie);
+    private List<UserProjection> followers = Client.getUserFollowedBy(LogInController.sessionCookie);
+    private List<UserProjection> following = Client.getUserFollowings(LogInController.sessionCookie);
+    private List <UserProjection> top20leaderboard = Client.getLeaderboard(LogInController.sessionCookie);
+    private String advice = Client.getRecommendation(LogInController.sessionCookie);
 
     /**
      * Called to initialize a controller. FXMLLoader will automatically launch the code at start.
@@ -91,7 +94,7 @@ public class HomepageController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         //Sets the User's username, First Name, and Last Name
-        field.setText(controller.Name);
+        field.setText(LogInController.Name);
         firstName.setText(user.getFirst_name());
         lastName.setText(user.getLast_name());
 
@@ -145,12 +148,12 @@ public class HomepageController implements Initializable {
      */
     public void movingHome() {
         pane.setOnMousePressed(event -> {
-            xOffset = controller.stage.getX() - event.getScreenX();
-            yOffset = controller.stage.getY() - event.getScreenY();
+            xOffset = LogInController.stage.getX() - event.getScreenX();
+            yOffset = LogInController.stage.getY() - event.getScreenY();
         });
         pane.setOnMouseDragged(event -> {
-            controller.stage.setX(event.getScreenX() + xOffset);
-            controller.stage.setY(event.getScreenY() + yOffset);
+            LogInController.stage.setX(event.getScreenX() + xOffset);
+            LogInController.stage.setY(event.getScreenY() + yOffset);
         });
     }
 
@@ -160,7 +163,7 @@ public class HomepageController implements Initializable {
     @FXML
     private void Home(){
         Window window = Home.getScene().getWindow();
-        Stage stage = JavaFXMain.stage;
+        Stage stage = GoGreenGUI.stage;
         stage.show();
         window.hide();
     }
@@ -196,12 +199,12 @@ public class HomepageController implements Initializable {
      * Method used to "refresh" the lists when an activity is added / removed, or a friend is added / removed, o
      */
     public  void refresh(){
-        user = Client.getUserDetails(controller.sessionCookie);
-        activities = Client.getUserActivities(controller.sessionCookie);
-        followers = Client.getUserFollowedBy(controller.sessionCookie);
-        following = Client.getUserFollowings(controller.sessionCookie);
-        top20leaderboard = Client.getLeaderboard(controller.sessionCookie);
-        advice = Client.getRecommendation(controller.sessionCookie);
+        user = Client.getUserDetails(LogInController.sessionCookie);
+        activities = Client.getUserActivities(LogInController.sessionCookie);
+        followers = Client.getUserFollowedBy(LogInController.sessionCookie);
+        following = Client.getUserFollowings(LogInController.sessionCookie);
+        top20leaderboard = Client.getLeaderboard(LogInController.sessionCookie);
+        advice = Client.getRecommendation(LogInController.sessionCookie);
     }
 
     /**
@@ -212,7 +215,7 @@ public class HomepageController implements Initializable {
 
         if(activities.isEmpty()){
             introText.setText("Dear " + user.getUsername() + ", here is your list of activities!");
-
+            introText.setFont(Font.font(18));
             Text start = new Text();
             start.setText("No activities");
             history.getChildren().add(start);
@@ -228,12 +231,43 @@ public class HomepageController implements Initializable {
                 HBox hBox = new HBox();
                 Text temp = new Text();
                 Text cross = new Text();
-
                 String ret = i + 1 + " - ";
-                ret += activities.get(i).getCategory() + " done ";
-                ret += activities.get(i).getAmount() + " times for a total of ";
-                ret += new DecimalFormat("#.##").format(activities.get(i).getXp_points()) + " XP point.";
 
+                switch (activities.get(i).getCategory()) {
+                    case "Eating a vegetarian meal":
+                        ret += "You have eaten ";
+                        ret += (int) activities.get(i).getAmount() + " serving(s) of a vegetarian meal and that gave you ";
+                        ret += new DecimalFormat("#.##").format(activities.get(i).getXp_points()) + " XP points!";
+                        break;
+                    case "Buying local produce":
+                        ret += "You have bought ";
+                        ret += (int) activities.get(i).getAmount() + " local product(s) and that gave you ";
+                        ret += new DecimalFormat("#.##").format(activities.get(i).getXp_points()) + " XP points!";
+                        break;
+                    case "Using bike instead of car":
+                        ret += "You have cycled instead of driving for ";
+                        ret += activities.get(i).getAmount() + " km and that gave you ";
+                        ret += new DecimalFormat("#.##").format(activities.get(i).getXp_points()) + " XP points!";
+                        break;
+                    case "Using public transport instead of car":
+                        ret += "You have used public transports instead of driving for ";
+                        ret += activities.get(i).getAmount() + " km and that gave you ";
+                        ret += new DecimalFormat("#.##").format(activities.get(i).getXp_points()) + " XP points!";
+                        break;
+                    case "Installing solar panels":
+                        ret += "You have been using solar panels for ";
+                        ret += (int) activities.get(i).getAmount() + " days and that gave you ";
+                        ret += new DecimalFormat("#.##").format(activities.get(i).getXp_points()) + " XP points!";
+                        break;
+                    case "Lowering the temperature of your home":
+                        ret += "You have lowered the temperature of your home of";
+                        ret += activities.get(i).getAmount() + "°C and that gave you ";
+                        ret += new DecimalFormat("#.##").format(activities.get(i).getXp_points()) + " XP points!";
+                        break;
+                    default:
+                        ret += "Unknown activity...";
+
+                }
                 temp.setText(ret);
                 temp.setFill(Color.WHITE);
 
@@ -373,12 +407,15 @@ public class HomepageController implements Initializable {
 
             //Adds the activity to the List activities
             double amount = spinner.getValue();
-            Client.addActivity(controller.sessionCookie, categoryId, amount);
+            Client.addActivity(LogInController.sessionCookie, categoryId, amount);
 
             // Refreshing the user and getting the new info
             refresh();
             experience();
             progress.setProgress(levelPercentage/100.0);
+            if((int)levelNumber > temp){
+                levelUp(levelNumber);
+            }
 
             Recommendation();
             showUserActivities();
@@ -393,15 +430,53 @@ public class HomepageController implements Initializable {
         if(user.getExperience_points() < 1){
 
             levelNumber = 1;
+            temp = levelNumber;
             levelPercentage = (user.getExperience_points()/2)*100;
 
         }
         else {
+            temp = (int) levelNumber;
+
             levelNumber = Math.log(user.getExperience_points()) / Math.log(2) + 1;
             levelPercentage = (user.getExperience_points() - Math.pow(2, ((int) (levelNumber - 1)))) / (Math.pow(2, ((int) levelNumber)) - Math.pow(2, (int) (levelNumber - 1))) * 100;
         }
         level.setText("lvl"+ (int) levelNumber);
     }
+
+    public void levelUp(double levelNumber){
+
+        JFXDialogLayout dialogLayout = new JFXDialogLayout();
+        dialogLayout.setBody(new Text("Hey, " + user.getUsername() +",\nyou have just levelled up to level " + (int) levelNumber + "!"));
+
+
+        JFXDialog dialog = new JFXDialog(levelPopUp, dialogLayout, JFXDialog.DialogTransition.NONE);
+
+        dialog.setMaxWidth(levelPopUp.getMaxWidth());
+        dialog.setMaxHeight(levelPopUp.getMaxHeight());
+
+        JFXButton buttonX = new JFXButton("X");
+
+
+        buttonX.setOnAction(event -> {
+            dialog.close();
+        });
+
+
+        dialogLayout.setActions(buttonX);
+
+        dialog.show();
+
+
+    }
+
+    public void postActivity(String sessionCookie, long CategoryId, Spinner<Double> spinner){
+        double amount = spinner.getValue();
+
+        Client.addActivity(sessionCookie, CategoryId, amount);
+
+        showUserActivities();
+    }
+
 
     /**
      * Sets the Top20 LeaderBoard
@@ -478,10 +553,14 @@ public class HomepageController implements Initializable {
                 xAxis.getCategories().add(following.get(i).getUsername());
                 chart.getData().add(new XYChart.Data<>(following.get(i).getUsername(), following.get(i).getExperience_points()));
             }
+            leaderBoard.setBarGap(0);
+            leaderBoard.getData().addAll(chart);
+
         }
-
-        leaderBoard.getData().addAll(chart);
-
+        else {
+            leaderBoard.getData().addAll(chart);
+            leaderBoard.setBarGap(200);
+        }
     }
 
     /**
@@ -581,7 +660,7 @@ public class HomepageController implements Initializable {
         String[] user_split = user_info.getText().split(" -");
         int nbr = Integer.parseInt(user_split[0]) - 1;
 
-        Client.removeActivity(controller.sessionCookie, activities.get(nbr).getId());
+        Client.removeActivity(LogInController.sessionCookie, activities.get(nbr).getId());
 
         refresh();
         setLeaderBoard();
@@ -615,7 +694,7 @@ public class HomepageController implements Initializable {
     public void followerRemoved(Text text){
         String[] temp = text.getText().split(" - ");
 
-        Client.removeFollow(controller.sessionCookie, temp[1]);
+        Client.removeFollow(LogInController.sessionCookie, temp[1]);
         refresh();
         setFriends(following, followingPane);
         setLeaderBoard();
@@ -628,7 +707,7 @@ public class HomepageController implements Initializable {
         errorUser.setText("");
         String add = friend.getText();
 
-        String response = Client.addFollow(controller.sessionCookie, add);
+        String response = Client.addFollow(LogInController.sessionCookie, add);
 
         if(!response.equals("Your followings have been updated!")) {
             errorUser.setText(response);
@@ -701,8 +780,7 @@ public class HomepageController implements Initializable {
                 "\n" +
                 "\n" +
                 "Special thanks to everyone who supported us! ❤\uD83C\uDF33");
-
-        info.getChildren().addAll(text1, text2, text3, text4, text5);
+        info.getChildren().add(text5);
     }
 }
 
