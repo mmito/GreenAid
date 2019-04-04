@@ -1,9 +1,11 @@
 package app.services;
 
+import app.authentication.SecurityServiceImpl;
 import app.models.Activity;
 import app.models.ActivityProjection;
 import app.models.User;
 import app.repository.ActivityRepository;
+import app.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,16 @@ import java.util.List;
 public class ActivityServiceImpl {
 
     @Autowired
-    ActivityRepository activityRepository;
+    private SecurityServiceImpl securityService;
+
+    @Autowired
+    private UserServiceImpl userService;
+
+    @Autowired
+    private ActivityRepository activityRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     /**
      * Method that adds an activity to a repository and saves it to the database.
@@ -148,5 +159,22 @@ public class ActivityServiceImpl {
         }
 
         return "Based on your activities, here's an activity recommendation:\nCategory: " + activityRecom;
+    }
+
+    public String removeActivity(Activity activity) {
+        if (activity != null) {
+
+            if (activity.getUser_id() == userService
+                    .findByUsername(securityService.findLoggedInUsername()).getId()) {
+
+                activityRepository.delete(activity);
+                return "Activity \""
+                        + categoryRepository.findById(activity
+                        .getCategory_id()).getName() + "\" removed successfully!";
+
+            }
+            throw new RuntimeException("You can't remove someone else's activity!");
+        }
+        return "Activity not found!";
     }
 }

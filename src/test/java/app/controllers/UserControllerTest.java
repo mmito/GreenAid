@@ -9,6 +9,7 @@ import app.services.FollowingServiceImpl;
 import app.services.UserServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -74,7 +75,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void getUserDetailsFail() {
+    public void getUserDetailsNotAuthorized() {
         Response expected = new Response(false, "User not logged in.");
 
         Mockito.when(securityService.findLoggedInUsername())
@@ -111,7 +112,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void getUserInfoFail() {
+    public void getUserInfoNotAuthorized() {
         Response expected = new Response(false, "User not logged in.");
 
         Mockito.when(securityService.findLoggedInUsername())
@@ -150,7 +151,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void showActivitiesFail() {
+    public void showActivitiesNotAuthorized() {
         Response expected = new Response(false, "You are not authorized!");
 
         Mockito.when(securityService.findLoggedInUsername())
@@ -184,7 +185,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void addActivityFail() {
+    public void addActivityNotAuthorized() {
         Response expected = new Response(false, "You are not authorized!");
 
         Mockito.when(securityService.findLoggedInUsername())
@@ -231,7 +232,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void removeActivityFail() {
+    public void removeActivityNotAuthorized() {
         Response expected = new Response(false, "You are not authorized!");
 
         Mockito.when(securityService.findLoggedInUsername())
@@ -245,85 +246,47 @@ public class UserControllerTest {
     }
 
     @Test
-    public void removeActivityNotFoundActivity() {
-        Response expected = new Response(false, "Activity not found!");
+    public void removeActivityExeption() {
+        Response expected = new Response(false, "Exception scenario");
+
+        Activity activity = new Activity();
+        activity.setId(1);
 
         Mockito.when(securityService.findLoggedInUsername())
                 .thenReturn("username-test");
-        Mockito.when(activityService.findById(1))
-                .thenReturn(null);
+        Mockito.when(activityService.findById(1)).thenReturn(activity);
+        Mockito.when(activityService.removeActivity(activity)).thenThrow(new RuntimeException("Exception scenario"));
 
         Response result = userController.removeActivity(1);
 
         Mockito.verify(securityService).findLoggedInUsername();
         Mockito.verify(activityService).findById(1);
+        Mockito.verify(activityService).removeActivity(activity);
 
         assertEquals(expected, result);
     }
 
     @Test
-    public void removeActivitySomeoneElseActivity() {
-        Response expected = new Response(false, "You can't remove someone else's activity!");
+    public void removeActivitySucces() {
+        Response expected = new Response(true, "succes");
 
         Activity activity = new Activity();
-        activity.setUser_id(1);
 
-        User user = new User();
-        user.setId(2);
-
-        Mockito.when(securityService.findLoggedInUsername())
-                .thenReturn("username-test");
-        Mockito.when(activityService.findById(1))
-                .thenReturn(activity);
-        Mockito.when(userService.findByUsername(any(String.class)))
-                .thenReturn(user);
+        Mockito.when(securityService.findLoggedInUsername()).thenReturn("username-test");
+        Mockito.when(activityService.findById(1)).thenReturn(activity);
+        Mockito.when(activityService.removeActivity(activity)).thenReturn("succes");
 
         Response result = userController.removeActivity(1);
 
-        Mockito.verify(securityService, times(2)).findLoggedInUsername();
+        Mockito.verify(securityService).findLoggedInUsername();
         Mockito.verify(activityService).findById(1);
-        Mockito.verify(userService).findByUsername((any(String.class)));
+        Mockito.verify(activityService).removeActivity(activity);
 
         assertEquals(expected, result);
     }
 
     @Test
-    public void removeActivitySuccess() {
-        Response expected = new Response(true, "Activity \"category-test\" removed successfully!");
-
-        Activity activity = new Activity();
-        activity.setUser_id(1);
-        activity.setCategory_id(1);
-
-        User user = new User();
-        user.setId(1);
-
-        Category category = new Category();
-        category.setName("category-test");
-
-        Mockito.when(securityService.findLoggedInUsername())
-                .thenReturn("username-test");
-        Mockito.when(activityService.findById(1))
-                .thenReturn(activity);
-        Mockito.when(userService.findByUsername(any(String.class)))
-                .thenReturn(user);
-        Mockito.doAnswer((i) -> null).when(activityService).delete(any(Activity.class));
-        Mockito.when(categoryRepository.findById(1))
-                .thenReturn(category);
-
-        Response result = userController.removeActivity(1);
-
-        Mockito.verify(securityService, times(2)).findLoggedInUsername();
-        Mockito.verify(activityService).findById(1);
-        Mockito.verify(userService).findByUsername((any(String.class)));
-        Mockito.verify(activityService).delete(any(Activity.class));
-        Mockito.verify(categoryRepository).findById(1);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void getFollowingsFail() {
+    public void getFollowingsNotAuthorized() {
         Response expected = new Response(false, "You are not authorized!");
 
         Mockito.when(securityService.findLoggedInUsername())
@@ -376,7 +339,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void getFollowedByFail() {
+    public void getFollowedByNotAuthorized() {
         Response expected = new Response(false, "You are not authorized!");
 
         Mockito.when(securityService.findLoggedInUsername())
@@ -443,21 +406,6 @@ public class UserControllerTest {
     }
 
     @Test
-    public void addFollowingSucces() {
-        Response expected = new Response(true, "Yes, succes");
-
-        Mockito.when(securityService.findLoggedInUsername())
-                .thenReturn("username-test");
-        Mockito.when(userService.addFollowing(new Following(), "username-test"))
-                .thenReturn("Yes, succes");
-
-        Response result = userController.addFollowing(new Following(), "username-test");
-        Mockito.verify(securityService).findLoggedInUsername();
-
-        assertEquals(expected, result);
-    }
-
-    @Test
     public void addFollowingException() {
         Response expected = new Response(false, "Exception scenario");
 
@@ -473,7 +421,22 @@ public class UserControllerTest {
     }
 
     @Test
-    public void removeFollowingFail() {
+    public void addFollowingSucces() {
+        Response expected = new Response(true, "Yes, succes");
+
+        Mockito.when(securityService.findLoggedInUsername())
+                .thenReturn("username-test");
+        Mockito.when(userService.addFollowing(new Following(), "username-test"))
+                .thenReturn("Yes, succes");
+
+        Response result = userController.addFollowing(new Following(), "username-test");
+        Mockito.verify(securityService).findLoggedInUsername();
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void removeFollowingNotAuthorized() {
         Response expected = new Response(false, "You are not authorized!");
 
         Mockito.when(securityService.findLoggedInUsername())
@@ -487,7 +450,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void removeFollowingCatch() {
+    public void removeFollowingExeption() {
         Response expected = new Response(false, "exceptionTest");
 
         Mockito.when(securityService.findLoggedInUsername()).thenReturn("username-test");
@@ -517,7 +480,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void getRecommendationFail() {
+    public void getRecommendationNotAuthorized() {
         Response expected = new Response(false, "You are not authorized!");
 
         Mockito.when(securityService.findLoggedInUsername())
@@ -553,7 +516,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void getLeaderboardFail() {
+    public void getLeaderboardNotAuthorized() {
         Response expected = new Response(false, "You are not authorized!");
 
         Mockito.when(securityService.findLoggedInUsername())
