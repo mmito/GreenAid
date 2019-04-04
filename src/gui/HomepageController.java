@@ -313,7 +313,7 @@ public class HomepageController implements Initializable {
     }
 
     /**
-     *
+     * Adds Listener on ChoiceBox from LeaderBoard tab
      */
     public void leaderboardChoosed(){
         setLeaderBoard();
@@ -443,6 +443,10 @@ public class HomepageController implements Initializable {
         level.setText("lvl"+ (int) levelNumber);
     }
 
+    /**
+     * JFXDialog pops up when when increase in level
+     * @param levelNumber
+     */
     public void levelUp(double levelNumber){
 
         JFXDialogLayout dialogLayout = new JFXDialogLayout();
@@ -454,29 +458,14 @@ public class HomepageController implements Initializable {
         dialog.setMaxWidth(levelPopUp.getMaxWidth());
         dialog.setMaxHeight(levelPopUp.getMaxHeight());
 
-        JFXButton buttonX = new JFXButton("X");
+        JFXButton buttonX = new JFXButton("Close");
 
-
-        buttonX.setOnAction(event -> {
-            dialog.close();
-        });
-
+        buttonX.setOnAction(event -> dialog.close());
 
         dialogLayout.setActions(buttonX);
 
         dialog.show();
-
-
     }
-
-    public void postActivity(String sessionCookie, long CategoryId, Spinner<Double> spinner){
-        double amount = spinner.getValue();
-
-        Client.addActivity(sessionCookie, CategoryId, amount);
-
-        showUserActivities();
-    }
-
 
     /**
      * Sets the Top20 LeaderBoard
@@ -750,9 +739,7 @@ public class HomepageController implements Initializable {
                 "Installing solar panels/per day");
 
         Text text2 = new Text();
-
         text2.setText("After the calculation of the amount of carbon dioxide saved, we divided each number by 100 to have different xp points for each activity. We decided to divide by 100 because we thought that it will be easier to convert xp points from amount of co2 saved and vice versa. This also helped us along the design process.  If we used 1000 or more, the value of points would have been too low. We also considered the level ranking of the user and wanted to keep the calculation for gamification as simple as possible for the sustainability of the project.\n\n");
-
 
         Text text3 = new Text();
         text3.setText("How do the recommendations work? \n" );
@@ -780,7 +767,7 @@ public class HomepageController implements Initializable {
                 "\n" +
                 "\n" +
                 "Special thanks to everyone who supported us! ❤\uD83C\uDF33");
-        info.getChildren().add(text5);
+        info.getChildren().addAll(text1, text2, text3, text4, text5);
     }
 }
 
