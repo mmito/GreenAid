@@ -34,7 +34,7 @@ Click Clone and follow the instructions above to download the repository into yo
 First, go to src->main->app->Spring Server and run the server. You can also do it via command line by following steps mentioned [here](https://www.maketecheasier.com/run-java-program-from-command-prompt/)
 ```
 After that, make sure that you have JavaFX configured on your IDE. 
-Then, go to src->gui->JavaFXMain and run it by right clicking and selecting 'Run'. Then, you are good to go. 
+Then, go to src->gui->GoGreenGUI and run it by right clicking and selecting 'Run'. Then, you are good to go. 
 ```
 
 ## Getting code coverage reports

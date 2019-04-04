@@ -14,7 +14,7 @@
    <children>
       <ImageView fitHeight="661.0" fitWidth="1249.0" layoutX="-345.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@backgroundImg.jpg" />
+            <Image url="@../images/backgroundImg.jpg" />
          </image>
       </ImageView>
       <Pane layoutX="54.0" layoutY="112.0" prefHeight="412.0" prefWidth="585.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.5; -fx-background-radius: 10;" />
@@ -62,7 +62,7 @@
       </Text>
       <ImageView fx:id="Home" fitHeight="35.0" fitWidth="38.0" layoutX="7.0" layoutY="6.0" onMouseClicked="#home" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
          <image>
-            <Image url="@logo.PNG" />
+            <Image url="@../images/logo.PNG" />
          </image>
       </ImageView>
    </children>

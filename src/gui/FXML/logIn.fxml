@@ -9,11 +9,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="427.0" prefWidth="759.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="427.0" prefWidth="759.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LogInController">
    <children>
       <ImageView fitHeight="430.0" fitWidth="760.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@backgroundImg.jpg" />
+            <Image url="@../images/backgroundImg.jpg" />
          </image>
       </ImageView>
       <Pane layoutX="250.0" layoutY="115.0" prefHeight="198.0" prefWidth="262.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.5; -fx-background-radius: 10;" />
