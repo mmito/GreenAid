@@ -16,8 +16,6 @@ import java.util.List;
 public class Client {
 
     private static final String url_login = "http://localhost:8080/login";
-//    private static final String url_check = "http://localhost:8080/check";
-//    private static final String url_categories = "http://localhost:8080/getcategories";
     private static final String url_add_activity = "http://localhost:8080/user/add-activity";
     private static final String url_remove_activity = "http://localhost:8080/user/remove-activity";
     private static final String url_user_activities = "http://localhost:8080/user/activities";
@@ -53,32 +51,6 @@ public class Client {
         }
 
     }
-
-
-//    /**
-//     * Test method just to check whether the session cookies are working or not.
-//     * @param sessionCookie sessionCookie is used for checking
-//     * @return returns the data of the user to show whether he/she's logged in or not.
-//     */
-//    public static String checkAuth(String sessionCookie) {
-//
-//        HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, url_check);
-//        System.out.println(response);
-//        return (String) response.getBody().getData();
-//    }
-//
-//    /**
-//     * Method used to display the list of categories, just if the session is authenticated.
-//     * @param sessionCookie sessionCookie is used for checking
-//     * @return returns the list of categories
-//     */
-//    public static String getCategories(String sessionCookie) {
-//
-//        HttpEntity<Response> categories = HttpRequests.getRequest(sessionCookie, url_categories);
-//
-//        return ((String) categories.getBody().getData()).replaceFirst("\n", "");
-//
-//    }
 
     /**
      * Method used to add an activity in the database given a session, a category id
@@ -130,7 +102,7 @@ public class Client {
         if (response.getBody().isOk()) {
             List<ActivityProjection> activities = mapper
                     .convertValue(response.getBody().getData(), new TypeReference<List<ActivityProjection>>() {
-            });
+                    });
             return activities;
         } else {
             return null;
@@ -165,7 +137,7 @@ public class Client {
         if (response.getBody().isOk()) {
             List<UserProjection> followings = mapper
                     .convertValue(response.getBody().getData(), new TypeReference<List<UserProjection>>() {
-            });
+                    });
             return followings;
         } else {
             return null;
@@ -185,7 +157,7 @@ public class Client {
             List<UserProjection> followedBy = mapper
                     .convertValue(response.getBody()
                             .getData(), new TypeReference<List<UserProjection>>() {
-            });
+                    });
             return followedBy;
         } else {
             return null;
@@ -254,29 +226,6 @@ public class Client {
         } else {
             return null;
         }
-    }
-
-    /**
-     * Main method.
-     * @param args
-     */
-    public static void main(String[] args) {
-
-        String sessionCookie = getSessionCookie("tommytest", "quadronno");
-        //        String sessionCookie = getSessionCookie("UsainBolt", "123456789");
-        User user = getUserDetails(sessionCookie);
-        System.out.println(user.getExperience_points());
-        List<ActivityProjection> activities = getUserActivities(sessionCookie);
-        System.out.println(activities.size());
-        List<UserProjection> followings = getUserFollowings(sessionCookie);
-        System.out.println(followings.size());
-        List<UserProjection> followedBy = getUserFollowedBy(sessionCookie);
-        System.out.println(followedBy.size());
-
-
-        //        System.out.println(followings2.get(1).isFollowing());
-        //        System.out.println(removeActivity(sessionCookie, 59));
-
     }
 
 }

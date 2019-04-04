@@ -1,15 +1,13 @@
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
-public class JavaFXMain extends Application {
+public class GoGreenGUI extends Application {
 
     private double xOffset;
     private double yOffset;
@@ -18,7 +16,7 @@ public class JavaFXMain extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("logIn.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("FXML/logIn.fxml"));
             primaryStage.setScene(new Scene(root, 760.0, 420.0));
             primaryStage.initStyle(StageStyle.UNDECORATED);
             this.stage = primaryStage;
@@ -35,7 +33,7 @@ public class JavaFXMain extends Application {
             });
             primaryStage.show();
         } catch (IOException e) {
-            System.out.println("An exception in the start method (JavaFXMain) had an error");
+            System.out.println("An exception in the start method (GoGreenGUI) had an error");
         }
     }
     public static void main(String[] args) {
