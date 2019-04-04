@@ -256,8 +256,6 @@ public class SignUpController implements Initializable {
         passwordConfirm.clear();
     }
 
-
-
 }
 
 
