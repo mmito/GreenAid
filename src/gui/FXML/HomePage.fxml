@@ -22,6 +22,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.web.WebView?>
 <AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#movingHome" prefHeight="954.0" prefWidth="1398.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HomepageController">
    <children>
       <ImageView fitHeight="987.0" fitWidth="1698.0" layoutX="-243.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
@@ -170,6 +171,32 @@
                                  </content>
                               </ScrollPane>
                            </children></Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Recommendation">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="707.0" prefWidth="717.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;">
+                           <children>
+                              <ScrollPane layoutX="14.0" layoutY="14.0" maxWidth="694.0" minWidth="694.0" prefHeight="680.0" prefWidth="694.0" stylesheets="@CSS/scrollpane.css">
+                                 <content>
+                                    <TextFlow fx:id="recommendation" prefHeight="669.0" prefWidth="673.0" />
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Game">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <WebView fx:id="browser" layoutX="2.0" layoutY="1.0" prefHeight="704.0" prefWidth="717.0" />
                      </children>
                   </AnchorPane>
               </content>
