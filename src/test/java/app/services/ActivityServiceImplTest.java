@@ -3,13 +3,18 @@ package app.services;
 import app.authentication.SecurityServiceImpl;
 import app.models.Activity;
 import app.models.ActivityProjection;
+import app.models.Category;
 import app.models.User;
 import app.repository.ActivityRepository;
+import app.repository.CategoryRepository;
 import app.responses.Response;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +26,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 
 
 @RunWith(SpringRunner.class)
@@ -30,8 +36,20 @@ public class ActivityServiceImplTest {
     @Autowired
     private ActivityServiceImpl activityService;
 
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
+
+    @MockBean
+    private SecurityServiceImpl securityServiceMock;
+
+    @MockBean
+    private UserServiceImpl userServiceMock;
+
     @MockBean
     private ActivityRepository activityRepositoryMock;
+
+    @MockBean
+    private CategoryRepository categoryRepositoryMock;
 
     Activity activity_1;
 
@@ -248,5 +266,63 @@ public class ActivityServiceImplTest {
         Mockito.verify(activityRepositoryMock).findByUser_id(1);
 
         assertTrue(result.contains(expectedToContain));
+    }
+
+    @Test
+    public void removeActivityFail() {
+        String expected = "Activity not found!";
+
+        String result = activityService.removeActivity(null);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void removeActivityExeption() {
+        String expected = "You can't remove someone else's activity!";
+
+        Activity activity = new Activity();
+        activity.setUser_id(1);
+
+        User user = new User();
+        user.setId(2);
+
+        Mockito.when(securityServiceMock.findLoggedInUsername())
+                .thenReturn("username-test");
+        Mockito.when(userServiceMock.findByUsername("username-test")).thenReturn(user);
+        Mockito.when(activityService.findById(1))
+                .thenReturn(null);
+
+        expectedEx.expect(RuntimeException.class);
+        expectedEx.expectMessage(expected);
+        activityService.removeActivity(activity);
+    }
+
+    @Test
+    public void removeActivitySucces() {
+        String expected = "Activity \"testCategory\" removed successfully!";
+
+        Activity activity = new Activity();
+        activity.setUser_id(1);
+        activity.setCategory_id(1);
+
+        User user = new User();
+        user.setId(1);
+
+        Category category = new Category();
+        category.setName("testCategory");
+
+        Mockito.when(securityServiceMock.findLoggedInUsername())
+                .thenReturn("username-test");
+        Mockito.when(userServiceMock.findByUsername("username-test")).thenReturn(user);
+        Mockito.when(categoryRepositoryMock.findById(1)).thenReturn(category);
+
+        String result = activityService.removeActivity(activity);
+
+        Mockito.verify(securityServiceMock).findLoggedInUsername();
+        Mockito.verify(userServiceMock).findByUsername("username-test");
+        Mockito.verify(categoryRepositoryMock).findById(1);
+
+        assertEquals(expected, result);
     }
 }
