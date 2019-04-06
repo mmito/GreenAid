@@ -249,7 +249,7 @@ public class ActivityServiceImplTest {
         Activity activity3 = new Activity();
         activity1.setCategory_id(3);
         activity2.setCategory_id(4);
-        activity3.setCategory_id(1);
+        activity3.setCategory_id(7);
         activity1.setAmount(1.0);
         activity2.setAmount(1.0);
         activity3.setAmount(1.0);

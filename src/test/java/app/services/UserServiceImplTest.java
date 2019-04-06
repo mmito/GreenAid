@@ -180,8 +180,8 @@ public class UserServiceImplTest {
     public void addFollowingUserNotFound() {
         String expected = "User not found.";
 
-        Mockito.when(securityServiceMock.findLoggedInUsername())
-                .thenReturn("username-test");
+//        Mockito.when(securityServiceMock.findLoggedInUsername())
+//                .thenReturn("username-test");
         Mockito.when(userRepositoryMock.findByUsername("username-test"))
                 .thenReturn(null);
 
