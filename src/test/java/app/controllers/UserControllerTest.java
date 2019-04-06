@@ -126,7 +126,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void getUserInfoSuccess() {
+    public void getUserInfoSuccessFollowingFalse() {
         Response expected;
 
         User user = new User();
@@ -141,6 +141,31 @@ public class UserControllerTest {
         Mockito.when(userService.findByUsername(any(String.class)))
                 .thenReturn(user);
         Mockito.when(followingService.findById1Id2(1, 1)).thenReturn(null);
+
+        Response result = userController.getUserInfo("username-test");
+
+        Mockito.verify(securityService).findLoggedInUsername();
+        Mockito.verify(userService, times(2)).findByUsername(any(String.class));
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void getUserInfoSuccessFollowingTrue() {
+        Response expected;
+
+        User user = new User();
+        user.setId(1);
+
+        UserProjection expectedProjection =  new UserProjection(user.getUsername(), user.getFirst_name(), user.getLast_name(), user.getExperience_points(), user.getLast_update(), true);
+
+        expected = new Response(true, expectedProjection);
+
+        Mockito.when(securityService.findLoggedInUsername())
+                .thenReturn("username-test");
+        Mockito.when(userService.findByUsername(any(String.class)))
+                .thenReturn(user);
+        Mockito.when(followingService.findById1Id2(1, 1)).thenReturn(new Following());
 
         Response result = userController.getUserInfo("username-test");
 
