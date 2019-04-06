@@ -40,8 +40,10 @@ public class UserDetailsServiceImplTest {
         user.setPassword("password-test");
 
         Mockito.when(userRepositoryMock.findByUsername("username-test")).thenReturn(user);
+
         UserDetails result = userDetailsService.loadUserByUsername("username-test");
 
+        Mockito.verify(userRepositoryMock).findByUsername("username-test");
 
         Assert.assertEquals("username-test", result.getUsername());
     }

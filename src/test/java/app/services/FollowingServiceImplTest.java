@@ -27,9 +27,9 @@ public class FollowingServiceImplTest {
     @Before
     public void setUp() {
         following  = new Following();
-        following.setId(1L);
-        following.setUser_id_1(1L);
-        following.setUser_id_2(2L);
+        following.setId(1);
+        following.setUser_id_1(1);
+        following.setUser_id_2(2);
     }
 
     @Test
@@ -37,26 +37,31 @@ public class FollowingServiceImplTest {
         Mockito.when(followingRepositoryMock.save(following)).thenReturn(following);
 
         this.followingService.save(following);
+
         Mockito.verify(followingRepositoryMock).save(following);
     }
 
     @Test
     public void deleteFollowing() {
-        Mockito.when(followingService.findById1Id2(1L, 2L)).thenReturn(following);
-
         Mockito.doAnswer((i) -> {
             Assert.assertEquals(following, i.getArgument(0));
             return null;
         }).when(followingRepositoryMock).delete(following);
 
         this.followingService.delete(following);
+
+        Mockito.verify(followingRepositoryMock).delete(following);
     }
 
     @Test
     public void findById1Id2() {
-        Mockito.when(followingRepositoryMock.findById1Id2(1L, 2L)).thenReturn(following);
+        Mockito.when(followingRepositoryMock.findById1Id2(1, 2)).thenReturn(following);
 
-        Assert.assertEquals(following, followingService.findById1Id2(1L, 2L));
+        Following result = followingService.findById1Id2(1, 2);
+
+        Mockito.verify(followingRepositoryMock).findById1Id2(1,2);
+
+        Assert.assertEquals(following, result);
     }
 
 }

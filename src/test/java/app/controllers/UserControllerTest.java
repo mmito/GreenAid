@@ -440,6 +440,7 @@ public class UserControllerTest {
                 .thenThrow(new RuntimeException("Exception scenario"));
 
         Response result = userController.addFollowing(new Following(), "username-test");
+
         Mockito.verify(securityService).findLoggedInUsername();
 
         assertEquals(expected, result);
@@ -455,6 +456,7 @@ public class UserControllerTest {
                 .thenReturn("Yes, succes");
 
         Response result = userController.addFollowing(new Following(), "username-test");
+
         Mockito.verify(securityService).findLoggedInUsername();
 
         assertEquals(expected, result);
