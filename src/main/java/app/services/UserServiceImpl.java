@@ -35,7 +35,7 @@ public class UserServiceImpl {
     }
 
     public void delete(User user) {
-        if (this.findByUsername(user.getUsername()) != null)
+        if (userRepository.findByUsername(user.getUsername()) != null)
             userRepository.delete(user);
         else
             throw new UsernameNotFoundException("Username not found");
