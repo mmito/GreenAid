@@ -41,6 +41,8 @@ public class CategoryServiceImplTest {
 
         Category result = this.categoryService.findById(55);
 
+        Mockito.verify(categoryRepositoryMock).findById(55);
+
         Assert.assertEquals(category, result);
     }
 
@@ -50,6 +52,8 @@ public class CategoryServiceImplTest {
         Mockito.when(categoryRepositoryMock.findById(55)).thenReturn(null);
 
         Category result = this.categoryService.findById(55);
+
+        Mockito.verify(categoryRepositoryMock).findById(55);
 
         Assert.assertNull(result);
     }
@@ -62,6 +66,8 @@ public class CategoryServiceImplTest {
         Mockito.when(categoryRepositoryMock.findAll()).thenReturn(categoryList);
 
         String result = this.categoryService.getCategoryAsText();
+
+        Mockito.verify(categoryRepositoryMock).findAll();
 
         Assert.assertEquals("\n55 - TestCategory", result);
     }

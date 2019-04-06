@@ -50,7 +50,7 @@ public class UserServiceImplTest {
     public void setUp() {
         user = new User();
         user.setId(1);
-        user.setUsername("test");
+        user.setUsername("username-test");
         user.setPassword("password");
     }
 
@@ -60,28 +60,36 @@ public class UserServiceImplTest {
     @Test
     public void saveUser() {
         String encodedPassword = "encoded";
+        String originalPassword = user.getPassword();
 
         Mockito.when(bCryptPasswordEncoderMock.encode(user.getPassword())).thenReturn(encodedPassword);
         Mockito.when(userRepositoryMock.save(user)).thenReturn(user);
 
         this.userService.save(user);
+
+        Mockito.verify(bCryptPasswordEncoderMock).encode(originalPassword);
         Mockito.verify(userRepositoryMock).save(user);
     }
 
     @Test
     public void saveUserEncryption() {
         String encodedPassword = "encoded";
+        String originalPassword = user.getPassword();
 
         Mockito.when(bCryptPasswordEncoderMock.encode(user.getPassword())).thenReturn(encodedPassword);
         Mockito.when(userRepositoryMock.save(user)).thenReturn(user);
 
         this.userService.save(user);
+
+        Mockito.verify(bCryptPasswordEncoderMock).encode(originalPassword);
+        Mockito.verify(userRepositoryMock).save(user);
+
         Assert.assertEquals(encodedPassword, user.getPassword());
     }
 
     @Test
     public void deleteExistingUser() {
-        Mockito.when(userService.findByUsername("test")).thenReturn(user);
+        Mockito.when(userRepositoryMock.findByUsername("username-test")).thenReturn(user);
 
         Mockito.doAnswer((i) -> {
             Assert.assertEquals(user, i.getArgument(0));
@@ -89,34 +97,46 @@ public class UserServiceImplTest {
         }).when(userRepositoryMock).delete(user);
 
         this.userService.delete(user);
+
+        Mockito.verify(userRepositoryMock).findByUsername("username-test");
+        Mockito.verify(userRepositoryMock).delete(user);
     }
 
     @Test(expected = UsernameNotFoundException.class)
     public void deleteNonexistingUser() {
-        Mockito.when(userService.findByUsername("test")).thenReturn(null);
+        Mockito.when(userRepositoryMock.findByUsername("username-test")).thenReturn(null);
 
         this.userService.delete(user);
+
+        Mockito.verify(userRepositoryMock).findByUsername("username-test");
     }
 
     @Test
     public void findByUsername() {
-        Mockito.when(userRepositoryMock.findByUsername("test")).thenReturn(user);
+        Mockito.when(userRepositoryMock.findByUsername("username-test")).thenReturn(user);
 
-        Assert.assertEquals(user, userService.findByUsername("test"));
+        User expectedUser =  userService.findByUsername("username-test");
+
+        Mockito.verify(userRepositoryMock).findByUsername("username-test");
+
+        Assert.assertEquals(user, expectedUser);
     }
 
     @Test
     public void getExistingLoggedInUser() {
-        Mockito.when(securityServiceMock.findLoggedInUsername()).thenReturn("test");
-        Mockito.when(userRepositoryMock.findByUsername("test")).thenReturn(user);
+        Mockito.when(securityServiceMock.findLoggedInUsername()).thenReturn("username-test");
+        Mockito.when(userRepositoryMock.findByUsername("username-test")).thenReturn(user);
 
-        Assert.assertEquals(user, userService.getLoggedInUser());
+        User expectedUser = userService.getLoggedInUser();
+
+        Mockito.verify(securityServiceMock).findLoggedInUsername();
+        Mockito.verify(userRepositoryMock).findByUsername("username-test");
+
+        Assert.assertEquals(user, expectedUser);
     }
 
     @Test
     public void getNonexistingLoggedInUser() {
-        Mockito.when(securityServiceMock.findLoggedInUsername()).thenReturn(null);
-
         Assert.assertEquals(null, userService.getLoggedInUser());
     }
 
@@ -139,6 +159,8 @@ public class UserServiceImplTest {
         Mockito.when(userRepositoryMock.findFollowings(1)).thenReturn(followList);
 
         List result = userService.findFollowings(1);
+
+        Mockito.verify(userRepositoryMock).findFollowings(1);
 
         Assert.assertEquals(followList, result);
     }
@@ -163,6 +185,8 @@ public class UserServiceImplTest {
 
         List result = userService.findFollowedBy(3);
 
+        Mockito.verify(userRepositoryMock).findFollowedBy(3);
+
         Assert.assertEquals(followList, result);
     }
 
@@ -179,9 +203,7 @@ public class UserServiceImplTest {
     @Test
     public void addFollowingUserNotFound() {
         String expected = "User not found.";
-
-//        Mockito.when(securityServiceMock.findLoggedInUsername())
-//                .thenReturn("username-test");
+        
         Mockito.when(userRepositoryMock.findByUsername("username-test"))
                 .thenReturn(null);
 
@@ -191,13 +213,33 @@ public class UserServiceImplTest {
     }
 
     @Test
+    public void addFollowingAlreadyFollowing() {
+        String expected = "You already follow this user!";
+
+        User user2 = new User();
+        user2.setId(2);
+
+        Following following = new Following();
+        Following following2 = new Following();
+
+        Mockito.when(userRepositoryMock.findByUsername("username-test2")).thenReturn(user2);
+        Mockito.when(securityServiceMock.findLoggedInUsername()).thenReturn("username-test");
+        Mockito.when(userRepositoryMock.findByUsername("username-test")).thenReturn(user);
+        Mockito.when(followingServiceMock.findById1Id2(1,2)).thenReturn(following2);
+
+        expectedEx.expect(RuntimeException.class);
+        expectedEx.expectMessage(expected);
+        userService.addFollowing(following, "username-test2");
+    }
+
+    @Test
     public void addFollowingRecursiveFollow() {
         String expected = "You already follow yourself...";
 
+        Mockito.when(userRepositoryMock.findByUsername("username-test"))
+                .thenReturn(user);
         Mockito.when(securityServiceMock.findLoggedInUsername())
                 .thenReturn("username-test");
-        Mockito.when(userService.findByUsername("username-test"))
-                .thenReturn(new User());
 
         expectedEx.expect(RuntimeException.class);
         expectedEx.expectMessage(expected);
@@ -211,19 +253,24 @@ public class UserServiceImplTest {
         User user2 = new User();
         user2.setId(2);
 
-        Mockito.when(securityServiceMock.findLoggedInUsername())
-                .thenReturn("username-test");
+        Following following = new Following();
 
         Mockito.when(userRepositoryMock.findByUsername("username-test2"))
                 .thenReturn(user2);
+        Mockito.when(securityServiceMock.findLoggedInUsername())
+                .thenReturn("username-test");
+        Mockito.when(followingServiceMock.findById1Id2(1,2)).thenReturn(null);
         Mockito.when(userRepositoryMock.findByUsername("username-test"))
                 .thenReturn(user);
 
         Mockito.doAnswer((i) -> null).when(followingServiceMock).save(any(Following.class));
 
-        String result = userService.addFollowing(new Following(), "username-test2");
+        String result = userService.addFollowing(following, "username-test2");
 
+        Mockito.verify(userRepositoryMock, times(2)).findByUsername("username-test2");
         Mockito.verify(securityServiceMock, Mockito.times(3)).findLoggedInUsername();
+        Mockito.verify(followingServiceMock).findById1Id2(1,2);
+        Mockito.verify(userRepositoryMock, times(2)).findByUsername("username-test");
 
         assertEquals(expected, result);
     }
@@ -240,9 +287,6 @@ public class UserServiceImplTest {
         expectedEx.expect(RuntimeException.class);
         expectedEx.expectMessage(expected);
         userService.removeFollowing("username-test");
-
-        Mockito.verify(securityServiceMock).findLoggedInUsername();
-        Mockito.verify(userRepositoryMock).findByUsername("username-test");
     }
 
     @Test
@@ -252,23 +296,18 @@ public class UserServiceImplTest {
         Mockito.when(securityServiceMock.findLoggedInUsername())
                 .thenReturn("username-test");
         Mockito.when(userRepositoryMock.findByUsername("username-test"))
-                .thenReturn(new User());
+                .thenReturn(user);
 
         expectedEx.expect(RuntimeException.class);
         expectedEx.expectMessage(expected);
         userService.removeFollowing("username-test");
-
-        Mockito.verify(securityServiceMock).findLoggedInUsername();
-        Mockito.verify(userRepositoryMock).findByUsername("username-test");
     }
 
     @Test
     public void removeFollowingSuccess() {
         String expected = "Your followings have been updated!";
 
-        User user = new User();
         User user2 = new User();
-        user.setId(1);
         user2.setId(2);
 
         Mockito.when(securityServiceMock.findLoggedInUsername())

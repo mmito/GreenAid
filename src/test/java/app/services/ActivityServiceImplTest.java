@@ -7,14 +7,12 @@ import app.models.Category;
 import app.models.User;
 import app.repository.ActivityRepository;
 import app.repository.CategoryRepository;
-import app.responses.Response;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,8 +23,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
 
 
 @RunWith(SpringRunner.class)
@@ -65,19 +61,20 @@ public class ActivityServiceImplTest {
         Mockito.when(activityRepositoryMock.save(activity_1)).thenReturn(activity_1);
 
         this.activityService.save(activity_1);
+
         Mockito.verify(activityRepositoryMock).save(activity_1);
     }
 
     @Test
     public void deleteActivity() {
-        Mockito.when(activityService.findById(1)).thenReturn(activity_1);
-
         Mockito.doAnswer((i) -> {
             Assert.assertEquals(activity_1, i.getArgument(0));
             return null;
         }).when(activityRepositoryMock).delete(activity_1);
 
         this.activityService.delete(activity_1);
+
+        Mockito.verify(activityRepositoryMock).delete(activity_1);
     }
 
     @Test
@@ -94,6 +91,8 @@ public class ActivityServiceImplTest {
 
         List result = this.activityService.findByUser_id(3);
 
+        Mockito.verify(activityRepositoryMock).findByUser_id(3);
+
         Assert.assertEquals(activityList, result);
     }
 
@@ -101,7 +100,11 @@ public class ActivityServiceImplTest {
     public void findActivityById() {
         Mockito.when(activityRepositoryMock.findById(1)).thenReturn(activity_1);
 
-        Assert.assertEquals(activity_1, activityService.findById(1));
+        Activity result = activityService.findById(1);
+
+        Mockito.verify(activityRepositoryMock).findById(1);
+
+        Assert.assertEquals(activity_1, result);
     }
 
     @Test
