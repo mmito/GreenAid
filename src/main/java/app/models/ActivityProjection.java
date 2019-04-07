@@ -29,7 +29,8 @@ public class ActivityProjection {
      * @param xp_points xp points of that activity given the amount
      */
 
-    public ActivityProjection(long id, String username, String category, double amount, double xp_points) {
+    public ActivityProjection(long id, String username, String category
+            , double amount, double xp_points) {
         this.id = id;
         this.username = username;
         this.category = category;
@@ -79,8 +80,12 @@ public class ActivityProjection {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ActivityProjection that = (ActivityProjection) o;
         return id == that.id;
     }
