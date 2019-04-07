@@ -56,7 +56,7 @@ public class ActivityServiceImpl {
     }
 
     /**
-     * Finds an activity by ID
+     * Finds an activity by ID.
      * @param id id to be found
      * @return returns the activity
      */
@@ -65,6 +65,11 @@ public class ActivityServiceImpl {
         return activityRepository.findById(id);
     }
 
+    /**
+     * Returns the activities of a user.
+     * @param user
+     * @return
+     */
     public List<ActivityProjection> getActivities(User user) {
 
         List<Activity> activities = activityRepository.findByUser_id(user.getId());
@@ -99,24 +104,32 @@ public class ActivityServiceImpl {
                 default:
                     category = "unknown";
             }
-            activityArray.add(new ActivityProjection(id, user.getUsername(), category, amount, xp_points));
+            activityArray.add(new ActivityProjection(id, user.getUsername()
+                    , category, amount, xp_points));
         }
         return activityArray;
     }
 
+    /**
+     * Returns recommendations for a user.
+     * @param user
+     * @return
+     */
     public String getRecommendation(User user) {
         RecommendationRepository repo = new RecommendationRepository();
         List<String> eatRecommendations = repo.getEatRecommendations();
         List<String> householdRecommendations = repo.getHouseholdRecommendations();
         List<String> transportRecommendations = repo.getTransportRecommendations();
         List<Activity> activities = activityRepository.findByUser_id(user.getId());
-        int eat = 0, transport = 0 , household = 0;
+        int eat = 0;
+        int transport = 0;
+        int household = 0;
         String activityRecom = "";
         for (Activity a : activities) {
 
             double amount = a.getAmount();
 
-            switch ((int) a.getCategory_id()){
+            switch ((int) a.getCategory_id()) {
                 case 1:
                     eat += amount;
                     break;
@@ -140,11 +153,14 @@ public class ActivityServiceImpl {
         }
         int max = 0;
         if (eat > max) {
-            max = eat; }
+            max = eat;
+        }
         if (transport > max) {
-            max = transport; }
+            max = transport;
+        }
         if (household > max) {
-            max = household; }
+            max = household;
+        }
         if (eat == max) {
             int rand = (int) (Math.random() * 8);
             activityRecom += "Food\n" + eatRecommendations.get(rand);
@@ -161,6 +177,11 @@ public class ActivityServiceImpl {
         return "Based on your activities, here's an activity recommendation:\nCategory: " + activityRecom;
     }
 
+    /**
+     * Removes activity of a user.
+     * @param activity
+     * @return
+     */
     public String removeActivity(Activity activity) {
         if (activity != null) {
 

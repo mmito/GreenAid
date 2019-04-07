@@ -236,33 +236,45 @@ public class HomepageController implements Initializable {
                 switch (activities.get(i).getCategory()) {
                     case "Eating a vegetarian meal":
                         ret += "You have eaten ";
-                        ret += (int) activities.get(i).getAmount() + " serving(s) of a vegetarian meal and that gave you ";
-                        ret += new DecimalFormat("#.##").format(activities.get(i).getXp_points()) + " XP points!";
+                        ret += (int) activities.get(i)
+                                .getAmount() + " serving(s) of a vegetarian meal and that gave you ";
+                        ret += new DecimalFormat("#.##")
+                                .format(activities.get(i).getXp_points()) + " XP points!";
                         break;
                     case "Buying local produce":
                         ret += "You have bought ";
-                        ret += (int) activities.get(i).getAmount() + " local product(s) and that gave you ";
-                        ret += new DecimalFormat("#.##").format(activities.get(i).getXp_points()) + " XP points!";
+                        ret += (int) activities.get(i)
+                                .getAmount() + " local product(s) and that gave you ";
+                        ret += new DecimalFormat("#.##")
+                                .format(activities.get(i).getXp_points()) + " XP points!";
                         break;
                     case "Using bike instead of car":
                         ret += "You have cycled instead of driving for ";
-                        ret += activities.get(i).getAmount() + " km and that gave you ";
-                        ret += new DecimalFormat("#.##").format(activities.get(i).getXp_points()) + " XP points!";
+                        ret += activities.get(i)
+                                .getAmount() + " km and that gave you ";
+                        ret += new DecimalFormat("#.##")
+                                .format(activities.get(i).getXp_points()) + " XP points!";
                         break;
                     case "Using public transport instead of car":
                         ret += "You have used public transports instead of driving for ";
-                        ret += activities.get(i).getAmount() + " km and that gave you ";
-                        ret += new DecimalFormat("#.##").format(activities.get(i).getXp_points()) + " XP points!";
+                        ret += activities.get(i)
+                                .getAmount() + " km and that gave you ";
+                        ret += new DecimalFormat("#.##")
+                                .format(activities.get(i).getXp_points()) + " XP points!";
                         break;
                     case "Installing solar panels":
                         ret += "You have been using solar panels for ";
-                        ret += (int) activities.get(i).getAmount() + " days and that gave you ";
-                        ret += new DecimalFormat("#.##").format(activities.get(i).getXp_points()) + " XP points!";
+                        ret += (int) activities
+                                .get(i).getAmount() + " days and that gave you ";
+                        ret += new DecimalFormat("#.##")
+                                .format(activities.get(i).getXp_points()) + " XP points!";
                         break;
                     case "Lowering the temperature of your home":
                         ret += "You have lowered the temperature of your home of";
-                        ret += activities.get(i).getAmount() + "°C and that gave you ";
-                        ret += new DecimalFormat("#.##").format(activities.get(i).getXp_points()) + " XP points!";
+                        ret += activities.get(i)
+                                .getAmount() + "°C and that gave you ";
+                        ret += new DecimalFormat("#.##")
+                                .format(activities.get(i).getXp_points()) + " XP points!";
                         break;
                     default:
                         ret += "Unknown activity...";
@@ -284,17 +296,18 @@ public class HomepageController implements Initializable {
     }
 
     /**
-     * Method used to show an Alert asking if the activity should really be removed
+     * Method used to show an Alert asking if the activity should really be removed.
      * @param stackPane
      * @param txt
      * @param cross
      */
-    public void alertActivity(StackPane stackPane, String txt, Text cross){
+    public void alertActivity(StackPane stackPane, String txt, Text cross) {
         String[] txtSplit = txt.split(" - ");
         int i = Integer.parseInt(txtSplit[0]) - 1;
 
         JFXDialogLayout dialogLayout = new JFXDialogLayout();
-        dialogLayout.setBody(new Text("Are you sure you want to delete " + activities.get(i).getCategory() + " ?"));
+        dialogLayout.setBody(new Text("Are you sure you want to delete " + activities
+                .get(i).getCategory() + " ?"));
 
         JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
 
@@ -315,10 +328,11 @@ public class HomepageController implements Initializable {
     /**
      * Adds Listener on ChoiceBox from LeaderBoard tab
      */
-    public void leaderboardChoosed(){
+    public void leaderboardChoosed() {
         setLeaderBoard();
 
-        choiceBox.getSelectionModel().selectedItemProperty().addListener( (v,oldValue,newValue) -> {
+        choiceBox.getSelectionModel().selectedItemProperty()
+                .addListener( (v,oldValue,newValue) -> {
             if ((choiceBox.getValue()).equals("Friends")){
                 setLeaderBoard();
             }
@@ -440,7 +454,7 @@ public class HomepageController implements Initializable {
             levelNumber = Math.log(user.getExperience_points()) / Math.log(2) + 1;
             levelPercentage = (user.getExperience_points() - Math.pow(2, ((int) (levelNumber - 1)))) / (Math.pow(2, ((int) levelNumber)) - Math.pow(2, (int) (levelNumber - 1))) * 100;
         }
-        level.setText("lvl"+ (int) levelNumber);
+        level.setText("lvl" + (int) levelNumber);
     }
 
     /**

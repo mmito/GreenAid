@@ -84,8 +84,8 @@ public class Client {
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("id", id);
 
-        HttpEntity<Response> response = HttpRequests.
-                postRequest(sessionCookie, url_remove_activity, params);
+        HttpEntity<Response> response = HttpRequests
+                .postRequest(sessionCookie, url_remove_activity, params);
 
         return (String) response.getBody().getData();
 
@@ -101,7 +101,8 @@ public class Client {
         HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, url_user_activities);
         if (response.getBody().isOk()) {
             List<ActivityProjection> activities = mapper
-                    .convertValue(response.getBody().getData(), new TypeReference<List<ActivityProjection>>() {
+                    .convertValue(response.getBody()
+                            .getData(), new TypeReference<List<ActivityProjection>>() {
                     });
             return activities;
         } else {
