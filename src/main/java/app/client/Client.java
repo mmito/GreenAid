@@ -26,6 +26,7 @@ public class Client {
     private static final String url_remove_follow = "http://localhost:8080/user/remove-following";
     private static final String url_recommendation = "http://localhost:8080/user/recommendation";
     private static final String url_leaderboard = "http://localhost:8080/user/leaderboard";
+    private static final String url_update_profile_picture = "http://localhost:8080/user/update-profile-picture";
 
     private static ObjectMapper mapper = new ObjectMapper();
 
@@ -227,6 +228,18 @@ public class Client {
         } else {
             return null;
         }
+    }
+
+    public static String updateProfilePicture(String sessionCookie, int profile_picture) {
+
+        MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
+        params.add("profile_picture", profile_picture);
+
+        HttpEntity<Response> response = HttpRequests
+                .postRequest(sessionCookie, url_update_profile_picture, params);
+
+        return (String) response.getBody().getData();
+
     }
 
 }

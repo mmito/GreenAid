@@ -1,5 +1,7 @@
 package app.models;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +16,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({"ALL", "CheckStyle"})
 @Entity
 @Table(name = "user")
+@DynamicUpdate
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +33,7 @@ public class User {
     private String first_name;
     private String last_name;
     private double experience_points;
+    private int profile_picture;
     @SuppressWarnings("CheckStyle")
     private Timestamp last_update;
 
@@ -98,4 +102,11 @@ public class User {
         return id == user.id;
     }
 
+    public int getProfile_picture() {
+        return profile_picture;
+    }
+
+    public void setProfile_picture(int profile_picture) {
+        this.profile_picture = profile_picture;
+    }
 }
