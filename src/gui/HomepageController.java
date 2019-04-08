@@ -4,9 +4,7 @@ import app.client.Client;
 import app.models.User;
 
 import app.models.UserProjection;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
+import com.jfoenix.controls.*;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,6 +28,9 @@ import javafx.stage.Window;
 
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -51,7 +52,7 @@ public class HomepageController implements Initializable {
     @FXML
     private HBox hBox;
     @FXML
-    private VBox followersPane, followingPane , history , list;
+    private VBox followersPane, followingPane , history , list, actiBox;
     @FXML
     private ScrollPane scrollPane, leaderScrollPane ;
     @FXML
@@ -273,7 +274,7 @@ public class HomepageController implements Initializable {
                     case "Lowering the temperature of your home":
                         ret += "You have lowered the temperature of your home of";
                         ret += activities.get(i)
-                                .getAmount() + "°C and that gave you ";
+                                .getAmount() + " °C and that gave you ";
                         ret += new DecimalFormat("#.##")
                                 .format(activities.get(i).getXp_points()) + " XP points!";
                         break;
@@ -348,6 +349,8 @@ public class HomepageController implements Initializable {
      */
     public void activityChoosed(){
         hBox.getChildren().clear();
+        actiBox.getChildren().clear();
+        actiBox.getChildren().addAll(activityText, hBox);
 
         String activity = comboBox.getValue();
 
@@ -405,6 +408,25 @@ public class HomepageController implements Initializable {
             activityText.setText("How many times have you bought local produces ?");
         } else if ("Installing Solar Panels".equals(activity)) {
             activityText.setText("How many days have you been using Solar Panels ?");
+
+            JFXDatePicker datePick = new JFXDatePicker();
+
+            datePick.setPrefWidth(200);
+            datePick.setDefaultColor(Color.valueOf("#1D7874"));
+            datePick.getStylesheets().add(getClass().getResource("/CSS/DatePicker.css").toExternalForm());
+            datePick.setDayCellFactory(picker -> new DateCell() {
+                public void updateItem(LocalDate date, boolean empty) {
+                    super.updateItem(date, empty);
+                    LocalDate today = LocalDate.now();
+
+                    setDisable(empty || date.compareTo(today) > 0 );
+                }
+            });
+            datePick.setPromptText("Pick a Date");
+
+            actiBox.getChildren().clear();
+            actiBox.getChildren().addAll(activityText, hBox, datePick);
+
         } else if ("Lowering the Temperature of your Home".equals(activity)) {
             activityText.setText("Since how many days have you been lowering your home's temperature ?");
         }
@@ -419,6 +441,8 @@ public class HomepageController implements Initializable {
         addActivity.setOnMouseClicked(event ->{
             hBox.getChildren().clear();
             activityText.setText("");
+            hBox.getChildren().clear();
+            hBox.getChildren().addAll(activityText, hBox);
 
             //Adds the activity to the List activities
             double amount = spinner.getValue();
