@@ -48,11 +48,15 @@ Not applicable, again.
 
 ## Do you do hallway usability testing?
 
-Yes, hallway usability testing asserts that getting feedback from 5 people should be enough, so we just did that. (We asked permission to use their names and first letter of their surnames for privacy.)
+Yes, hallway usability testing asserts that getting feedback from 5 people should be enough, so we just did that. (We asked permission to use their names for privacy.)
 
 Here are the results:
 
-Defne E. - Liked the background and the look of the panel. Suggested to change the font color and type from black to white. 
+Defne - Liked the background and the look of the panel. Suggested to change the font color and type from black to white. 
 
-Zeynep Y. - Suggested to rename the tab names. Also the font type.
+Zeynep - Suggested to rename the tab names. Also the font type.
+
+Alessia - Liked the background and the frames. Suggested to change the place of the username displayed. Also suggested font type change.
+
+Irem - Suggested to extend the frame of the game tab.
 
