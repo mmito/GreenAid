@@ -131,6 +131,7 @@ public class HomepageController implements Initializable {
 
         //Sets the Computer Game in the "Game" tab
         String url = "https://www3.epa.gov/recyclecity/";
+        browser.setZoom(0.7);
         WebEngine webEngine = browser.getEngine();
         webEngine.load(url);
         browser.getEngine().setUserStyleSheetLocation(getClass().getResource("/CSS/webView.css").toExternalForm());
