@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+@SuppressWarnings("ALL")
 public class LogInController implements Initializable {
 
     @FXML
