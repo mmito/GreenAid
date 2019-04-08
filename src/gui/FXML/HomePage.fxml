@@ -32,6 +32,11 @@
          </image>
       </ImageView>
       <Text layoutX="1373.0" layoutY="28.0" onMouseClicked="#handleClose" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" text="❌" />
+      <Text layoutX="1342.0" layoutY="38.0" onMouseClicked="#handleMinimizeButton" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" text="-" wrappingWidth="15.59619140625">
+         <font>
+            <Font size="58.0" />
+         </font>
+      </Text>
       <Pane layoutX="881.0" layoutY="139.0" prefHeight="757.0" prefWidth="441.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8; -fx-background-radius: 10;" />
       <AnchorPane layoutX="894.0" layoutY="142.0" prefHeight="743.0" prefWidth="425.0">
          <children>
@@ -72,7 +77,7 @@
                   <content>
                       <AnchorPane prefHeight="701.0" prefWidth="689.0">
                           <children>
-                              <Pane prefHeight="703.0" prefWidth="717.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;" >
+                              <Pane prefHeight="703.0" prefWidth="717.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;">
                               <children>
                               <ImageView fx:id="badge" fitHeight="59.0" fitWidth="72.0" layoutX="287.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true" />
                               <ImageView fx:id="place" fitHeight="99.0" fitWidth="113.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" />

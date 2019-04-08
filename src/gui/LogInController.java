@@ -120,7 +120,8 @@ public class LogInController implements Initializable {
         if (!response.equals("No cookie found.")) {
 
             this.sessionCookie = response;
-
+            invalid.setVisible(false);
+            password.clear();
 
             try {
 

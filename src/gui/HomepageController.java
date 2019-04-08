@@ -150,8 +150,11 @@ public class HomepageController implements Initializable {
             Image image = new Image("images/number1.png");
             place.setImage(image);
         }
-        
 
+    }
+
+    public void handleMinimizeButton() {
+        LogInController.stage.setIconified(true);
     }
 
     public  void achievements(){
