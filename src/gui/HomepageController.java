@@ -16,6 +16,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -49,7 +50,7 @@ public class HomepageController implements Initializable {
     @FXML
     ComboBox<String> comboBox;
     @FXML
-    private ImageView Home;
+    private ImageView Home , badge, place;
     @FXML
     private Text activityText, field, firstName, lastName, level, xp, introText, errorUser;
     @FXML
@@ -141,6 +142,77 @@ public class HomepageController implements Initializable {
         WebEngine webEngine = browser.getEngine();
         webEngine.load(url);
         browser.getEngine().setUserStyleSheetLocation(getClass().getResource("/CSS/webView.css").toExternalForm());
+        ranking();
+        achievements();
+    }
+    public void ranking(){
+        if (top20leaderboard.get(0).getUsername().equals(user.getUsername())){
+            Image image = new Image("images/number1.png");
+            place.setImage(image);
+        }
+        
+
+    }
+
+    public  void achievements(){
+        if(levelNumber == 1) {
+            Image image = new Image("images/lvl1.png");
+            badge.setImage(image);
+            badge.setFitHeight(200);
+            badge.setFitWidth(100);
+            badge.setY(-45);
+
+        }
+        else if((int) levelNumber ==  2 ) {
+            Image image = new Image("images/sprout.png");
+            badge.setImage(image);
+            badge.setFitWidth(72);
+            badge.setFitHeight(59);
+            badge.setPreserveRatio(true);
+            badge.setY(0);
+
+        }
+        else if ((int) levelNumber == 3){
+            Image image = new Image("images/sprout.png");
+            badge.setImage(image);
+            badge.setPreserveRatio(false);
+            badge.setFitWidth(72);
+            badge.setFitHeight(72);
+            badge.setY(-13);
+        }
+        else if((int) levelNumber == 4){
+            Image image = new Image("images/sprout.png");
+            badge.setImage(image);
+            badge.setPreserveRatio(false);
+            badge.setFitWidth(72);
+            badge.setFitHeight(82);
+            badge.setY(-20);
+
+        }
+        else if ((int) levelNumber >= 5 && (int) levelNumber < 10){
+            Image image = new Image("images/tree.png");
+            badge.setImage(image);
+            badge.setPreserveRatio(false);
+            badge.setFitHeight(130);
+            badge.setFitWidth(100);
+            badge.setY(-70 );
+        }
+        else if ((int) levelNumber >= 10 && (int) levelNumber <15){
+            Image image = new Image("images/forrest.png");
+            badge.setImage(image);
+            badge.setPreserveRatio(false);
+            badge.setFitHeight(130);
+            badge.setFitWidth(100);
+            badge.setY(-65 );
+        }
+        else if ((int) levelNumber >=15){
+            Image image = new Image("images/final.png");
+            badge.setImage(image);
+            badge.setPreserveRatio(false);
+            badge.setFitHeight(130);
+            badge.setFitWidth(100);
+            badge.setY(-67  );
+        }
     }
 
     /**
@@ -198,6 +270,7 @@ public class HomepageController implements Initializable {
         recommendation.getChildren().clear();
         Text text = new Text();
         text.setFont(Font.font("Calibre", 18));
+        text.setFill(Color.WHITE);
         text.setText(advice);
         recommendation.getChildren().add(text);
     }
@@ -221,6 +294,7 @@ public class HomepageController implements Initializable {
         int sz = activities.size();
 
         if(activities.isEmpty()){
+            history.getChildren().clear();
             introText.setText("Dear " + user.getUsername() + ", here is your list of activities!");
             introText.setFont(Font.font(18));
             Text start = new Text();
@@ -487,6 +561,7 @@ public class HomepageController implements Initializable {
             temp = levelNumber;
             levelPercentage = (user.getExperience_points()/2)*100;
 
+
         }
         else {
             temp = (int) levelNumber;
@@ -494,8 +569,11 @@ public class HomepageController implements Initializable {
             levelNumber = Math.log(user.getExperience_points()) / Math.log(2) + 1;
             levelPercentage = (user.getExperience_points() - Math.pow(2, ((int) (levelNumber - 1)))) / (Math.pow(2, ((int) levelNumber)) - Math.pow(2, (int) (levelNumber - 1))) * 100;
         }
-        level.setText("lvl" + (int) levelNumber);
+        achievements();
+        level.setText("lvl"+ (int) levelNumber);
     }
+
+
 
     /**
      * JFXDialog pops up when when increase in level
@@ -504,7 +582,7 @@ public class HomepageController implements Initializable {
     public void levelUp(double levelNumber){
 
         JFXDialogLayout dialogLayout = new JFXDialogLayout();
-        dialogLayout.setBody(new Text("Hey, " + user.getUsername() +",\nyou have just levelled up to level " + (int) levelNumber + "!"));
+        dialogLayout.setBody(new Text("Hey, " + user.getUsername() +", Congratulations! \nyou have just leveled up to level " + (int) levelNumber + "!"));
 
 
         JFXDialog dialog = new JFXDialog(levelPopUp, dialogLayout, JFXDialog.DialogTransition.NONE);
@@ -770,11 +848,12 @@ public class HomepageController implements Initializable {
         Text text = new Text();
         text.setFont(Font.font("Algerian",18));
         text.setText("How do we calculate your XP Points? \n");
-
+        text.setFill(Color.WHITE);
         info.getChildren().add(text);
 
         Text text1 = new Text();
         text1.setFont(Font.font(16));
+        text1.setFill(Color.WHITE);
         text1.setText("As you know, a user earns XP Points based on the activity done." +
                 "We calculated the XP Points based on the amount of Carbon Dioxide that activity saves." +
                 "Because we couldn't find any external APIs that we found directly applicable for our activity scope" +
@@ -793,16 +872,20 @@ public class HomepageController implements Initializable {
                 "Installing solar panels/per day");
 
         Text text2 = new Text();
+        text2.setFill(Color.WHITE);
         text2.setText("After the calculation of the amount of carbon dioxide saved, we divided each number by 100 to have different xp points for each activity. We decided to divide by 100 because we thought that it will be easier to convert xp points from amount of co2 saved and vice versa. This also helped us along the design process.  If we used 1000 or more, the value of points would have been too low. We also considered the level ranking of the user and wanted to keep the calculation for gamification as simple as possible for the sustainability of the project.\n\n");
 
         Text text3 = new Text();
+        text3.setFill(Color.WHITE);
         text3.setText("How do the recommendations work? \n" );
         text3.setFont(Font.font("Calibre", FontWeight.BOLD,16));
 
         Text text4 = new Text();
+        text4.setFill(Color.WHITE);
         text4.setText("Simple. Efficient. Easy-to-understand. We track your activities and categorize them into 3 groups which are food, household, transportation. Some activities like eating a vegetarian meal only belong to one category, that being food. But some like buying local produce belong to more than categories like food and transportation as this both contributes to the prevention of transfer of products and the usage of local food. Based on the number of activities done on each super-category, we give you some recommendations from our recommendation pool. We hope you'll like them!");
 
         Text text5 = new Text();
+        text5.setFill(Color.WHITE);
         text5.setText("Credits\n" +
                 "\n" +
                 "The TEAM \n" +
