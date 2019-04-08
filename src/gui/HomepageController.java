@@ -5,6 +5,8 @@ import app.models.User;
 
 import app.models.UserProjection;
 import com.jfoenix.controls.*;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,6 +28,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Callback;
 
 
 import java.net.URL;
@@ -351,9 +354,9 @@ public class HomepageController implements Initializable {
                                 .format(activities.get(i).getXp_points()) + " XP!";
                         break;
                     case "Lowering the temperature of your home":
-                        ret += "You have lowered the temperature of your home of";
-                        ret += activities.get(i)
-                                .getAmount() + " °C and that gave you ";
+                        ret += "You have lowered the temperature of your home of ";
+                        ret += new DecimalFormat("#.##")
+                                .format(activities.get(i).getAmount()) + " °C and that gave you ";
                         ret += new DecimalFormat("#.##")
                                 .format(activities.get(i).getXp_points()) + " XP!";
                         break;
@@ -462,6 +465,7 @@ public class HomepageController implements Initializable {
         Spinner<Double> spinner = new Spinner<>();
         spinner.setEditable(true);
         JFXDatePicker datePick = new JFXDatePicker();
+        JFXSlider slider = new JFXSlider();
 
         //Sets a different initialValue (Spinner) for different activities
         if (!(activity.equals("Biking instead of Driving") || activity.equals("Using Public Transport instead of Driving"))) {
@@ -502,12 +506,25 @@ public class HomepageController implements Initializable {
             datePick.setPromptText("Pick a Date");
 
             hBox.getChildren().addAll(datePick, addActivity);
-
-            actiBox.getChildren().clear();
-            actiBox.getChildren().addAll(activityText, hBox);
-
         } else if ("Lowering the Temperature of your Home".equals(activity)) {
             activityText.setText("Since how many days have you been lowering your home's temperature ?");
+            hBox.getChildren().clear();
+
+            slider.getStylesheets().add(getClass().getResource("/CSS/Slider.css").toExternalForm());
+
+            slider.setPrefWidth(270);
+            slider.setMin(0.1);
+            slider.setMax(10);
+
+            slider.setShowTickLabels(true);
+
+            slider.setValueFactory(mySlider ->
+                Bindings.createStringBinding(
+                        () -> (new DecimalFormat("#.#").format(mySlider.getValue())), mySlider.valueProperty()
+                )
+            );
+
+            hBox.getChildren().addAll(slider, addActivity);
         }
 
         //Listener added to change the value of the spinner when it has been entered manually
@@ -518,36 +535,35 @@ public class HomepageController implements Initializable {
         });
 
         addActivity.setOnMouseClicked(event ->{
+            hBox.getChildren().clear();
+            activityText.setText("");
 
-                hBox.getChildren().clear();
-                activityText.setText("");
-
-            if(!activity.equals("Installing Solar Panels")) {
-                //Adds the activity to the List activities
-                double amount = spinner.getValue();
-                Client.addActivity(LogInController.sessionCookie, categoryId, amount);
-            }
-            else {
-
+            if(activity.equals("Installing Solar Panels")) {
                 LocalDate date = datePick.getValue();
                 LocalDate now = LocalDate.now();
                 double amount = DAYS.between(date, now);
                 Client.addActivity(LogInController.sessionCookie, categoryId, amount);
-
+            }
+            else if(activity.equals("Lowering the Temperature of your Home")){
+                double amount = slider.getValue();
+                Client.addActivity(LogInController.sessionCookie, categoryId, amount);
+            }
+            else {
+                double amount = spinner.getValue();
+                Client.addActivity(LogInController.sessionCookie, categoryId, amount);
             }
 
-                // Refreshing the user and getting the new info
-                refresh();
-                experience();
-                progress.setProgress(levelPercentage / 100.0);
-                if ((int) levelNumber > temp) {
-                    levelUp(levelNumber);
-                }
+            // Refreshing the user and getting the new info
+            refresh();
+            experience();
+            progress.setProgress(levelPercentage / 100.0);
+            if ((int) levelNumber > temp) {
+                levelUp(levelNumber);
+            }
 
-                Recommendation();
-                showUserActivities();
-                setLeaderBoard();
-
+            Recommendation();
+            showUserActivities();
+            setLeaderBoard();
         });
     }
 
@@ -611,25 +627,22 @@ public class HomepageController implements Initializable {
 
         Text empty = new Text();
         empty.setText("\n");
-        list.getChildren().add(empty);
+        //list.getChildren().add(empty);
 
         Text title = new Text();
         title.setText(" Top 20 LeaderBoard");
         title.setFont(Font.font(18));
         title.setTextAlignment(TextAlignment.CENTER);
+        title.setFill(Color.WHITE);
         list.getChildren().add(title);
 
         if(top20leaderboard.isEmpty()){
             Text start = new Text();
             start.setText("No activities");
+            start.setFill(Color.WHITE);
             list.getChildren().add(start);
-
         }
         else {
-            Text blank = new Text();
-            blank.setText("\n");
-            list.getChildren().add(blank);
-
             for (int i = 0; i < sz; i++) {
                 HBox hBox = new HBox();
                 Text temp = new Text();
@@ -641,12 +654,14 @@ public class HomepageController implements Initializable {
 
                 temp.setText(ret);
                 temp.setFont(Font.font(18));
+                temp.setFill(Color.WHITE);
 
                 hBox.getChildren().addAll(temp);
 
                 list.getChildren().add(hBox);
             }
         }
+        list.setAlignment(Pos.CENTER);
     }
 
     /**
