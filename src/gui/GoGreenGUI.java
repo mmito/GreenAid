@@ -7,12 +7,16 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
+@SuppressWarnings("CheckStyle")
 public class GoGreenGUI extends Application {
 
+    @SuppressWarnings("CheckStyle")
     private double xOffset;
+    @SuppressWarnings("CheckStyle")
     private double yOffset;
 
     public static Stage stage = null;
+
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -36,6 +40,7 @@ public class GoGreenGUI extends Application {
             System.out.println("An exception in the start method (GoGreenGUI) had an error");
         }
     }
+
     public static void main(String[] args) {
         launch(args);
     }

@@ -13,12 +13,15 @@ public class CategoryType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    // suppressed for naming
+    @SuppressWarnings("CheckStyle")
     private String category_name;
 
     public CategoryType() {
         this.category_name = "";
     }
 
+    @SuppressWarnings("CheckStyle")
     public CategoryType(String category_name) {
         this.category_name = category_name;
     }
@@ -35,6 +38,7 @@ public class CategoryType {
         return category_name;
     }
 
+    @SuppressWarnings("CheckStyle")
     public void setCategory_name(String category_name) {
         this.category_name = category_name;
     }

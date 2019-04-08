@@ -1,11 +1,11 @@
 package app.controllers;
 
 import app.authentication.SecurityServiceImpl;
-import app.models.ActivityProjection;
-import app.models.UserProjection;
 import app.models.Activity;
+import app.models.ActivityProjection;
 import app.models.Following;
 import app.models.User;
+import app.models.UserProjection;
 import app.repository.CategoryRepository;
 import app.responses.Response;
 import app.services.ActivityServiceImpl;
@@ -43,8 +43,8 @@ public class UserController {
     /**
      * Returns JSON into string.
      *
-     * @param input
-     * @param id1
+     * @param input input of the projection
+     * @param id1 id of the user
      * @return
      */
     public List<UserProjection> toUserProjection(List<User> input, long id1) {
@@ -68,9 +68,9 @@ public class UserController {
      */
     @GetMapping("/details")
     public Response getUserDetails() {
-        if
-        (securityService.findLoggedInUsername() != null) {
-            return new Response(true, userService.findByUsername(securityService.findLoggedInUsername()));
+        if (securityService.findLoggedInUsername() != null) {
+            return new Response(true,
+                    userService.findByUsername(securityService.findLoggedInUsername()));
         } else {
             return new Response(false, "User not logged in.");
         }
@@ -87,8 +87,11 @@ public class UserController {
         if (loggedInUsername != null) {
             User user = userService.findByUsername(username);
             User loggedInUser = userService.findByUsername(loggedInUsername);
-            boolean following = followingService.findById1Id2(loggedInUser.getId(), user.getId()) != null;
-            return new Response(true, new UserProjection(user.getUsername(), user.getFirst_name(), user.getLast_name(), user.getExperience_points(), user.getLast_update(), following));
+            boolean following = followingService.findById1Id2(loggedInUser.getId(),
+                    user.getId()) != null;
+            return new Response(true, new UserProjection(user.getUsername(),
+                    user.getFirst_name(), user.getLast_name(),
+                    user.getExperience_points(), user.getLast_update(), following));
         } else {
             return new Response(false, "User not logged in.");
         }
@@ -133,12 +136,19 @@ public class UserController {
             activityService.save(activity);
 
             return new Response(true, "Activity \""
-                    + categoryRepository.findById(activity.getCategory_id()).getName() + "\" saved successfully!");
+                    + categoryRepository.findById(activity.getCategory_id()).getName()
+                    + "\" saved successfully!");
         } else {
             return new Response(false, "You are not authorized!");
         }
     }
 
+    /**
+     * Mapping of remove activity.
+     * @param id id of the user
+     * @return
+     */
+    @SuppressWarnings("CheckStyle")
     @PostMapping("/remove-activity")
     public Response removeActivity(long id) {
 
@@ -147,7 +157,7 @@ public class UserController {
             try {
                 String succesMessage = activityService.removeActivity(activity);
                 return new Response(true, succesMessage);
-            } catch (RuntimeException e) {
+            } catch (Exception e) {
                 return new Response(false, e.getMessage());
             }
         } else {
@@ -157,7 +167,7 @@ public class UserController {
 
 
     /**
-     * Gets the followings
+     * Gets the followings.
      *
      * @return
      */
@@ -195,10 +205,11 @@ public class UserController {
     /**
      * Adds a following.
      *
-     * @param following
-     * @param username
+     * @param following model to be used.
+     * @param username username of the following person
      * @return returns response
      */
+    @SuppressWarnings("CheckStyle")
     @PostMapping("/add-following")
     public Response addFollowing(Following following, String username) {
 
@@ -207,23 +218,7 @@ public class UserController {
             try {
                 String succesMessage = userService.addFollowing(following, username);
                 return new Response(true, succesMessage);
-            } catch (RuntimeException e) {
-                return new Response(false, e.getMessage());
-            }
-        } else {
-            return new Response(false, "You are not authorized!");
-        }
-    }
-
-    @PostMapping("/remove-following")
-    public Response removeFollowing(String username) {
-
-        if (securityService.findLoggedInUsername() != null) {
-
-            try {
-                String succesMessage = userService.removeFollowing(username);
-                return new Response(true, succesMessage);
-            } catch (RuntimeException e) {
+            } catch (Exception e) {
                 return new Response(false, e.getMessage());
             }
         } else {
@@ -232,7 +227,29 @@ public class UserController {
     }
 
     /**
-     * gets recommendations
+     * Removes the following.
+     * @param username username of the user.
+     * @return
+     */
+    @SuppressWarnings("CheckStyle")
+    @PostMapping("/remove-following")
+    public Response removeFollowing(String username) {
+
+        if (securityService.findLoggedInUsername() != null) {
+
+            try {
+                String succesMessage = userService.removeFollowing(username);
+                return new Response(true, succesMessage);
+            } catch (Exception e) {
+                return new Response(false, e.getMessage());
+            }
+        } else {
+            return new Response(false, "You are not authorized!");
+        }
+    }
+
+    /**
+     * gets recommendations.
      *
      * @return
      */
@@ -249,7 +266,7 @@ public class UserController {
     }
 
     /**
-     * Gets leaderboard
+     * Gets leaderboard.
      *
      * @return
      */
@@ -258,14 +275,20 @@ public class UserController {
 
         if (securityService.findLoggedInUsername() != null) {
             List<User> query = userService.findLeaderboard();
-            return new Response(true, toUserProjection(query, userService.findByUsername(securityService.findLoggedInUsername()).getId()));
+            return new Response(true, toUserProjection(query,
+                    userService.findByUsername(securityService.findLoggedInUsername()).getId()));
         } else {
             return new Response(false, "You are not authorized!");
         }
     }
 
+    /**
+     * Updates the profile picture of the user.
+     * @param profile_picture profile picture of the user.
+     * @return
+     */
     @PostMapping("/update-profile-picture")
-    public Response updateUserPicture(int profile_picture) {
+    public Response updateUserPicture(@SuppressWarnings("CheckStyle") int profile_picture) {
 
         if (securityService.findLoggedInUsername() != null) {
             User user = userService.findByUsername(securityService.findLoggedInUsername());

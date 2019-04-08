@@ -50,8 +50,8 @@ public class HttpRequests {
      * @param params parameters of the post request (i.e what will be changed)
      * @return returns the url with the given request.
      */
-    public static HttpEntity<Response> postRequest(String sessionCookie,
-                                                   String url, MultiValueMap<String, Object> params) {
+    public static HttpEntity<Response> postRequest(
+            String sessionCookie, String url, MultiValueMap<String, Object> params) {
 
         HttpHeaders headers = setHeaders(sessionCookie);
         RestTemplate restTemplate = new RestTemplate();

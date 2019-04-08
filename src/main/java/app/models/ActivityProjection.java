@@ -1,5 +1,8 @@
 package app.models;
 
+
+
+@SuppressWarnings("ALL")
 public class ActivityProjection {
 
     long id;
@@ -28,9 +31,8 @@ public class ActivityProjection {
      * @param amount amount of the activity
      * @param xp_points xp points of that activity given the amount
      */
-
-    public ActivityProjection(long id, String username, String category
-            , double amount, double xp_points) {
+    public ActivityProjection(long id, String username, String category,
+                              double amount, double xp_points) {
         this.id = id;
         this.username = username;
         this.category = category;
