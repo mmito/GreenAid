@@ -26,6 +26,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+@SuppressWarnings("ALL")
 public class SignUpController implements Initializable {
 
     private static final String url_registration = "http://localhost:8080/registration";

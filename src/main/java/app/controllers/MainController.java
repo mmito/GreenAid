@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.sql.Timestamp;
 
 
@@ -77,11 +78,10 @@ public class MainController {
 
         String username = securityService.findLoggedInUsername();
         if (username != null) {
-          String response = categoryService.getCategoryAsText();
+            String response = categoryService.getCategoryAsText();
 
             return new Response(true, response);
-        }
-        else {
+        } else {
             return new Response(false, "You are not authorized!");
         }
     }

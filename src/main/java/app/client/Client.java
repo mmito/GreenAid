@@ -104,7 +104,7 @@ public class Client {
             List<ActivityProjection> activities = mapper
                     .convertValue(response.getBody()
                             .getData(), new TypeReference<List<ActivityProjection>>() {
-                    });
+                            });
             return activities;
         } else {
             return null;
@@ -138,8 +138,9 @@ public class Client {
         HttpEntity<Response> response = HttpRequests.getRequest(sessionCookie, url_user_followings);
         if (response.getBody().isOk()) {
             List<UserProjection> followings = mapper
-                    .convertValue(response.getBody().getData(), new TypeReference<List<UserProjection>>() {
-                    });
+                    .convertValue(response.getBody().getData(),
+                            new TypeReference<List<UserProjection>>() {
+                            });
             return followings;
         } else {
             return null;
@@ -159,12 +160,13 @@ public class Client {
             List<UserProjection> followedBy = mapper
                     .convertValue(response.getBody()
                             .getData(), new TypeReference<List<UserProjection>>() {
-                    });
+                            });
             return followedBy;
         } else {
             return null;
         }
     }
+
     /**
      * Manages the follow requests.
      * @param sessionCookie sessioncookie of user
@@ -180,6 +182,7 @@ public class Client {
         return (String) response.getBody().getData();
 
     }
+
     /**
      * Manages the follow requests.
      * @param sessionCookie sessioncookie of user
@@ -223,14 +226,22 @@ public class Client {
             List<UserProjection> leaderboard = mapper
                     .convertValue(response.getBody()
                             .getData(), new TypeReference<List<UserProjection>>() {
-                    });
+                            });
             return leaderboard;
         } else {
             return null;
         }
     }
 
-    public static String updateProfilePicture(String sessionCookie, int profile_picture) {
+    /**
+     * Updates the profile picture of the user.
+     * @param sessionCookie cookie to be used
+     * @param profile_picture profile picture of the user.
+     * @return
+     */
+    @SuppressWarnings("CheckStyle")
+    public static String updateProfilePicture(String sessionCookie,
+                                              int profile_picture) {
 
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("profile_picture", profile_picture);

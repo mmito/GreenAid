@@ -1,6 +1,7 @@
 
-import app.models.ActivityProjection;
+
 import app.client.Client;
+import app.models.ActivityProjection;
 import app.models.User;
 
 import app.models.UserProjection;
@@ -30,13 +31,9 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Callback;
 
-
 import java.net.URL;
-import java.sql.Timestamp;
 import java.text.DecimalFormat;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -46,7 +43,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 /**
  * Class containing all the methods used in the Home Page.
  */
-
+@SuppressWarnings("ALL")
 public class HomepageController implements Initializable {
     @FXML
     private AnchorPane pane;

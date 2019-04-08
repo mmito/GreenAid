@@ -67,7 +67,7 @@ public class ActivityServiceImpl {
 
     /**
      * Returns the activities of a user.
-     * @param user
+     * @param user user of the app
      * @return
      */
     public List<ActivityProjection> getActivities(User user) {
@@ -79,7 +79,7 @@ public class ActivityServiceImpl {
 
             long id = a.getId();
             double amount = a.getAmount();
-            double xp_points = a.getXp_points();
+            @SuppressWarnings("CheckStyle") double xp_points = a.getXp_points();
             String category;
             switch ((int) a.getCategory_id()) {
 
@@ -104,15 +104,15 @@ public class ActivityServiceImpl {
                 default:
                     category = "unknown";
             }
-            activityArray.add(new ActivityProjection(id, user.getUsername()
-                    , category, amount, xp_points));
+            activityArray.add(new ActivityProjection(id, user.getUsername(),
+                    category, amount, xp_points));
         }
         return activityArray;
     }
 
     /**
      * Returns recommendations for a user.
-     * @param user
+     * @param user user of the app
      * @return
      */
     public String getRecommendation(User user) {
@@ -145,10 +145,12 @@ public class ActivityServiceImpl {
                     break;
                 case 5:
                     household += amount;
+                    break;
                 case 6:
                     household += amount;
                     break;
-
+                default:
+                    break;
             }
         }
         int max = 0;
@@ -164,22 +166,21 @@ public class ActivityServiceImpl {
         if (eat == max) {
             int rand = (int) (Math.random() * 8);
             activityRecom += "Food\n" + eatRecommendations.get(rand);
-        }
-        else if (household == max) {
+        } else if (household == max) {
             int rand = (int) (Math.random() * 6);
             activityRecom += "Household\n" + householdRecommendations.get(rand);
-        }
-        else {
+        } else {
             int rand = (int) (Math.random() * 6);
             activityRecom += "Transportation\n" + transportRecommendations.get(rand);
         }
 
-        return "Based on your activities, here's an activity recommendation:\nCategory: " + activityRecom;
+        return "Based on your activities, here's an activity recommendation:\nCategory: "
+                + activityRecom;
     }
 
     /**
      * Removes activity of a user.
-     * @param activity
+     * @param activity selected activity
      * @return
      */
     public String removeActivity(Activity activity) {
