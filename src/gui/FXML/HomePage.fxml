@@ -32,11 +32,6 @@
          </image>
       </ImageView>
       <Text layoutX="1373.0" layoutY="28.0" onMouseClicked="#handleClose" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" text="❌" />
-      <Text layoutX="587.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GOGREEN">
-         <font>
-            <Font size="50.0" />
-         </font>
-      </Text>
       <Pane layoutX="881.0" layoutY="139.0" prefHeight="757.0" prefWidth="441.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8; -fx-background-radius: 10;" />
       <AnchorPane layoutX="894.0" layoutY="142.0" prefHeight="743.0" prefWidth="425.0">
          <children>
@@ -226,5 +221,10 @@
               </Tab>
           </tabs>
       </JFXTabPane>
+      <ImageView fitHeight="177.0" fitWidth="441.0" layoutX="479.0" layoutY="-18.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/GreenAid.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
