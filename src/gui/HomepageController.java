@@ -8,6 +8,7 @@ import com.jfoenix.controls.*;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
@@ -27,12 +28,16 @@ import javafx.stage.Window;
 
 
 import java.net.URL;
+import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static java.time.temporal.ChronoUnit.DAYS;
+
 
 /**
  * Class containing all the methods used in the Home Page.
@@ -241,42 +246,42 @@ public class HomepageController implements Initializable {
                         ret += (int) activities.get(i)
                                 .getAmount() + " serving(s) of a vegetarian meal and that gave you ";
                         ret += new DecimalFormat("#.##")
-                                .format(activities.get(i).getXp_points()) + " XP points!";
+                                .format(activities.get(i).getXp_points()) + " XP!";
                         break;
                     case "Buying local produce":
                         ret += "You have bought ";
                         ret += (int) activities.get(i)
                                 .getAmount() + " local product(s) and that gave you ";
                         ret += new DecimalFormat("#.##")
-                                .format(activities.get(i).getXp_points()) + " XP points!";
+                                .format(activities.get(i).getXp_points()) + " XP!";
                         break;
                     case "Using bike instead of car":
                         ret += "You have cycled instead of driving for ";
                         ret += activities.get(i)
                                 .getAmount() + " km and that gave you ";
                         ret += new DecimalFormat("#.##")
-                                .format(activities.get(i).getXp_points()) + " XP points!";
+                                .format(activities.get(i).getXp_points()) + " XP!";
                         break;
                     case "Using public transport instead of car":
                         ret += "You have used public transports instead of driving for ";
                         ret += activities.get(i)
                                 .getAmount() + " km and that gave you ";
                         ret += new DecimalFormat("#.##")
-                                .format(activities.get(i).getXp_points()) + " XP points!";
+                                .format(activities.get(i).getXp_points()) + " XP!";
                         break;
                     case "Installing solar panels":
                         ret += "You have been using solar panels for ";
                         ret += (int) activities
                                 .get(i).getAmount() + " days and that gave you ";
                         ret += new DecimalFormat("#.##")
-                                .format(activities.get(i).getXp_points()) + " XP points!";
+                                .format(activities.get(i).getXp_points()) + " XP!";
                         break;
                     case "Lowering the temperature of your home":
                         ret += "You have lowered the temperature of your home of";
                         ret += activities.get(i)
                                 .getAmount() + " °C and that gave you ";
                         ret += new DecimalFormat("#.##")
-                                .format(activities.get(i).getXp_points()) + " XP points!";
+                                .format(activities.get(i).getXp_points()) + " XP!";
                         break;
                     default:
                         ret += "Unknown activity...";
@@ -349,8 +354,6 @@ public class HomepageController implements Initializable {
      */
     public void activityChoosed(){
         hBox.getChildren().clear();
-        actiBox.getChildren().clear();
-        actiBox.getChildren().addAll(activityText, hBox);
 
         String activity = comboBox.getValue();
 
@@ -384,6 +387,7 @@ public class HomepageController implements Initializable {
 
         Spinner<Double> spinner = new Spinner<>();
         spinner.setEditable(true);
+        JFXDatePicker datePick = new JFXDatePicker();
 
         //Sets a different initialValue (Spinner) for different activities
         if (!(activity.equals("Biking instead of Driving") || activity.equals("Using Public Transport instead of Driving"))) {
@@ -407,11 +411,10 @@ public class HomepageController implements Initializable {
         } else if ("Buying Local Produce".equals(activity)) {
             activityText.setText("How many times have you bought local produces ?");
         } else if ("Installing Solar Panels".equals(activity)) {
-            activityText.setText("How many days have you been using Solar Panels ?");
+            activityText.setText("Since when have you been using Solar Panels ?");
 
-            JFXDatePicker datePick = new JFXDatePicker();
+            hBox.getChildren().clear();
 
-            datePick.setPrefWidth(200);
             datePick.setDefaultColor(Color.valueOf("#1D7874"));
             datePick.getStylesheets().add(getClass().getResource("/CSS/DatePicker.css").toExternalForm());
             datePick.setDayCellFactory(picker -> new DateCell() {
@@ -424,8 +427,10 @@ public class HomepageController implements Initializable {
             });
             datePick.setPromptText("Pick a Date");
 
+            hBox.getChildren().addAll(datePick, addActivity);
+
             actiBox.getChildren().clear();
-            actiBox.getChildren().addAll(activityText, hBox, datePick);
+            actiBox.getChildren().addAll(activityText, hBox);
 
         } else if ("Lowering the Temperature of your Home".equals(activity)) {
             activityText.setText("Since how many days have you been lowering your home's temperature ?");
@@ -439,26 +444,36 @@ public class HomepageController implements Initializable {
         });
 
         addActivity.setOnMouseClicked(event ->{
-            hBox.getChildren().clear();
-            activityText.setText("");
-            hBox.getChildren().clear();
-            hBox.getChildren().addAll(activityText, hBox);
 
-            //Adds the activity to the List activities
-            double amount = spinner.getValue();
-            Client.addActivity(LogInController.sessionCookie, categoryId, amount);
+                hBox.getChildren().clear();
+                activityText.setText("");
 
-            // Refreshing the user and getting the new info
-            refresh();
-            experience();
-            progress.setProgress(levelPercentage/100.0);
-            if((int)levelNumber > temp){
-                levelUp(levelNumber);
+            if(!activity.equals("Installing Solar Panels")) {
+                //Adds the activity to the List activities
+                double amount = spinner.getValue();
+                Client.addActivity(LogInController.sessionCookie, categoryId, amount);
+            }
+            else {
+
+                LocalDate date = datePick.getValue();
+                LocalDate now = LocalDate.now();
+                double amount = DAYS.between(date, now);
+                Client.addActivity(LogInController.sessionCookie, categoryId, amount);
+
             }
 
-            Recommendation();
-            showUserActivities();
-            setLeaderBoard();
+                // Refreshing the user and getting the new info
+                refresh();
+                experience();
+                progress.setProgress(levelPercentage / 100.0);
+                if ((int) levelNumber > temp) {
+                    levelUp(levelNumber);
+                }
+
+                Recommendation();
+                showUserActivities();
+                setLeaderBoard();
+
         });
     }
 

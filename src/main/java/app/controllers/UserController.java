@@ -264,4 +264,17 @@ public class UserController {
         }
     }
 
+    @PostMapping("/update-profile-picture")
+    public Response updateUserPicture(int profile_picture) {
+
+        if (securityService.findLoggedInUsername() != null) {
+            User user = userService.findByUsername(securityService.findLoggedInUsername());
+            userService.updateProfilePicture(profile_picture, user.getId());
+            return new Response(true, "Your profile picture has been updated!");
+        } else {
+            return new Response(false, "You are not authorized!");
+        }
+
+    }
+
 }

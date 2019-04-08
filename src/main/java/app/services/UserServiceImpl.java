@@ -126,5 +126,12 @@ public class UserServiceImpl {
         }
         throw new RuntimeException("User not found.");
     }
+
+    public void updateProfilePicture(int profile_picture, long id) {
+
+        userRepository.updateProfilePicture(profile_picture, id);
+
+    }
+
 }
 

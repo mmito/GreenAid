@@ -2,9 +2,11 @@ package app.repository;
 
         import app.models.User;
         import org.springframework.data.jpa.repository.JpaRepository;
+        import org.springframework.data.jpa.repository.Modifying;
         import org.springframework.data.jpa.repository.Query;
         import org.springframework.stereotype.Repository;
 
+        import javax.transaction.Transactional;
         import java.util.List;
 
 @Repository
@@ -20,5 +22,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT * FROM user ORDER BY experience_points DESC LIMIT 20", nativeQuery = true)
     List<User> findLeaderboard();
 
-}
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE user u SET u.profile_picture = :profile_picture WHERE u.id = :id", nativeQuery = true)
+    void updateProfilePicture(int profile_picture, long id);
 
+}
