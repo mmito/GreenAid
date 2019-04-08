@@ -6,14 +6,18 @@ import java.util.Objects;
 public class UserProjection {
 
     String username;
+    @SuppressWarnings("CheckStyle")
     String first_name;
+    @SuppressWarnings("CheckStyle")
     String last_name;
+    @SuppressWarnings("CheckStyle")
     double experience_points;
+    @SuppressWarnings("CheckStyle")
     Timestamp last_update;
     boolean following;
 
     /**
-     * User projection class
+     * User projection class.
      */
     public UserProjection() {
         this.username = "";
@@ -25,15 +29,17 @@ public class UserProjection {
     }
 
     /**
-     * Constructor for the class
-     * @param username
-     * @param first_name
-     * @param last_name
-     * @param experience_points
-     * @param last_update
-     * @param following
+     * Constructor for the class.
+     * @param username username of the user
+     * @param first_name first name of the user
+     * @param last_name last name of the user
+     * @param experience_points xp of the user
+     * @param last_update last update of the user
+     * @param following following boolean parameter
      */
-    public UserProjection(String username, String first_name, String last_name, double experience_points, Timestamp last_update, boolean following) {
+    @SuppressWarnings("CheckStyle")
+    public UserProjection(String username, String first_name,
+                          String last_name, double experience_points, Timestamp last_update, boolean following) {
         this.username = username;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -54,6 +60,7 @@ public class UserProjection {
         return first_name;
     }
 
+    @SuppressWarnings("CheckStyle")
     public void setFirst_name(String first_name) {
         this.first_name = first_name;
     }
@@ -62,6 +69,7 @@ public class UserProjection {
         return last_name;
     }
 
+    @SuppressWarnings("CheckStyle")
     public void setLast_name(String last_name) {
         this.last_name = last_name;
     }
@@ -70,6 +78,7 @@ public class UserProjection {
         return experience_points;
     }
 
+    @SuppressWarnings("CheckStyle")
     public void setExperience_points(double experience_points) {
         this.experience_points = experience_points;
     }
@@ -78,6 +87,7 @@ public class UserProjection {
         return last_update;
     }
 
+    @SuppressWarnings("CheckStyle")
     public void setLast_update(Timestamp last_update) {
         this.last_update = last_update;
     }
@@ -90,10 +100,15 @@ public class UserProjection {
         this.following = following;
     }
 
+    @SuppressWarnings("CheckStyle")
     @Override
     public boolean equals(Object o) {
-        if  (this == o) { return true; }
-        if (o == null || getClass() != o.getClass()) { return false;}
+        if  (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         UserProjection that = (UserProjection) o;
         return Double.compare(that.experience_points, experience_points) == 0
                 &&
