@@ -30,6 +30,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Callback;
+import org.springframework.security.core.parameters.P;
 
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -76,7 +77,7 @@ public class HomepageController implements Initializable {
     @FXML
     private WebView browser;
     @FXML
-    StackPane levelPopUp;
+    StackPane levelPopUp , rankPopUp;
 
 
     private long categoryId;
@@ -85,6 +86,7 @@ public class HomepageController implements Initializable {
     private double levelPercentage ;
     private double levelNumber ;
     double temp;
+    static String no1 = null;
 
     private User user = Client.getUserDetails(LogInController.sessionCookie);
     private List<ActivityProjection> activities = Client.getUserActivities(LogInController.sessionCookie);
@@ -100,10 +102,11 @@ public class HomepageController implements Initializable {
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        //Sets the User's username, First Name, and Last Name
+        //Sets the User's username, First Name, Last Name and the number 1 person
         field.setText(LogInController.Name);
         firstName.setText(user.getFirst_name());
         lastName.setText(user.getLast_name());
+        no1 = top20leaderboard.get(0).getUsername();
 
         //Initialize the ComboBox elements
         comboBox.getItems().removeAll(comboBox.getItems());
@@ -127,9 +130,11 @@ public class HomepageController implements Initializable {
         experience();
         progress.setProgress(levelPercentage / 100.0);
 
-        //Sets the List of Activities, List of Followers, List of Followings, the Recommendation Tab
+        //Sets the List of Activities, List of Followers, Sets number 1 rank , Achievements , List of Followings, the Recommendation Tab
         showUserActivities();
         Recommendation();
+        ranking();
+        achievements();
         setFriends(followers, followersPane);
         setFriends(following, followingPane);
 
@@ -142,20 +147,84 @@ public class HomepageController implements Initializable {
         WebEngine webEngine = browser.getEngine();
         webEngine.load(url);
         browser.getEngine().setUserStyleSheetLocation(getClass().getResource("/CSS/webView.css").toExternalForm());
-        ranking();
-        achievements();
-    }
-    public void ranking(){
-        if (top20leaderboard.get(0).getUsername().equals(user.getUsername())){
-            Image image = new Image("images/number1.png");
-            place.setImage(image);
-        }
+
 
     }
+
+    /**
+     * Checks is the user is the current rank number 1
+     */
+    public void ranking(){
+
+        if(no1.equals(user.getUsername()) ){
+            Image image = new Image("images/number1.png");
+            place.setImage(image);
+            place.setVisible(true);
+
+        }
+       else {
+           place.setVisible(false);
+           rankCongratz();
+
+        }
+    }
+
+    /**
+     * Sets the string who is on top so it refreshes
+     */
+    public void  setNo1(){
+        refresh();
+        no1 = top20leaderboard.get(0).getUsername();
+    }
+
+    /**
+     * Checks if you are the new rank and gives a popup
+     */
+    public void rankCongratz(){
+        if (top20leaderboard.get(0).getUsername().equals(user.getUsername())) {
+            place.setVisible(true);
+            Image image = new Image("images/number1.png");
+            place.setImage(image);
+            place.setVisible(true);
+
+            ImageView imageView = new ImageView();
+            imageView.setImage(image);
+            imageView.setFitHeight(100);
+            imageView.setFitWidth(100);
+            JFXDialogLayout dialogLayout = new JFXDialogLayout();
+            dialogLayout.setHeading(new Text("Hey, " + user.getUsername() + ", Congratulations! \nyou have just hit Rank 1!!! \n" +"You have earned this:"));
+            dialogLayout.setBody(imageView);
+
+
+            JFXDialog dialog = new JFXDialog(rankPopUp, dialogLayout, JFXDialog.DialogTransition.NONE);
+
+            dialog.setMaxWidth(rankPopUp.getMaxWidth());
+            dialog.setMaxHeight(rankPopUp.getMaxHeight());
+
+            JFXButton buttonX = new JFXButton("Close");
+
+            buttonX.setOnAction(event -> dialog.close());
+
+            dialogLayout.setActions(buttonX);
+
+            dialog.show();
+        }
+        else {
+            place.setVisible(false);
+        }
+    }
+
+    /**
+     * Minimizes the window
+     */
 
     public void handleMinimizeButton() {
         LogInController.stage.setIconified(true);
     }
+
+    /**
+     * Sets achievements for levels
+     */
 
     public  void achievements(){
         if(levelNumber == 1) {
@@ -586,6 +655,7 @@ public class HomepageController implements Initializable {
             levelPercentage = (user.getExperience_points() - Math.pow(2, ((int) (levelNumber - 1)))) / (Math.pow(2, ((int) levelNumber)) - Math.pow(2, (int) (levelNumber - 1))) * 100;
         }
         achievements();
+        ranking();
         level.setText("lvl"+ (int) levelNumber);
     }
 
@@ -801,6 +871,8 @@ public class HomepageController implements Initializable {
         refresh();
         setLeaderBoard();
         experience();
+        setNo1();
+        ranking();
 
         showUserActivities();
         progress.setProgress(levelPercentage/100.0);
