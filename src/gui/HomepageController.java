@@ -8,6 +8,8 @@ import app.models.UserProjection;
 import com.jfoenix.controls.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -49,7 +51,7 @@ public class HomepageController implements Initializable {
     @FXML
     private AnchorPane pane;
     @FXML
-    ComboBox<String> comboBox;
+    private ComboBox<String> comboBox;
     @FXML
     private ImageView Home , badge, place;
     @FXML
@@ -61,7 +63,7 @@ public class HomepageController implements Initializable {
     @FXML
     private VBox followersPane, followingPane , history , list, actiBox;
     @FXML
-    private ScrollPane scrollPane, leaderScrollPane ;
+    private ScrollPane scrollPane;
     @FXML
     private ProgressIndicator progress;
     @FXML
@@ -77,7 +79,7 @@ public class HomepageController implements Initializable {
     @FXML
     private WebView browser;
     @FXML
-    StackPane levelPopUp , rankPopUp;
+    private StackPane levelPopUp , rankPopUp;
 
 
     private long categoryId;
@@ -123,8 +125,6 @@ public class HomepageController implements Initializable {
         //Sets the Bar Policies for ScrollPanes
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        leaderScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        leaderScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
         //Sets the Users Progress Bar (level)
         experience();
@@ -147,15 +147,12 @@ public class HomepageController implements Initializable {
         WebEngine webEngine = browser.getEngine();
         webEngine.load(url);
         browser.getEngine().setUserStyleSheetLocation(getClass().getResource("/CSS/webView.css").toExternalForm());
-
-
     }
 
     /**
      * Checks is the user is the current rank number 1
      */
     public void ranking(){
-
         if(no1.equals(user.getUsername()) ){
             Image image = new Image("images/number1.png");
             place.setImage(image);
@@ -168,15 +165,6 @@ public class HomepageController implements Initializable {
 
         }
     }
-
-    /**
-     * Sets the string who is on top so it refreshes
-     */
-    public void  setNo1(){
-        refresh();
-        no1 = top20leaderboard.get(0).getUsername();
-    }
-
     /**
      * Checks if you are the new rank and gives a popup
      */
@@ -641,11 +629,9 @@ public class HomepageController implements Initializable {
      */
     public void experience(){
         if(user.getExperience_points() < 1){
-
             levelNumber = 1;
             temp = levelNumber;
             levelPercentage = (user.getExperience_points()/2)*100;
-
 
         }
         else {
@@ -654,6 +640,7 @@ public class HomepageController implements Initializable {
             levelNumber = Math.log(user.getExperience_points()) / Math.log(2) + 1;
             levelPercentage = (user.getExperience_points() - Math.pow(2, ((int) (levelNumber - 1)))) / (Math.pow(2, ((int) levelNumber)) - Math.pow(2, (int) (levelNumber - 1))) * 100;
         }
+
         achievements();
         ranking();
         level.setText("lvl"+ (int) levelNumber);
@@ -871,7 +858,7 @@ public class HomepageController implements Initializable {
         refresh();
         setLeaderBoard();
         experience();
-        setNo1();
+        no1 = top20leaderboard.get(0).getUsername();
         ranking();
 
         showUserActivities();
