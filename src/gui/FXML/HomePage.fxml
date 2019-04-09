@@ -105,6 +105,7 @@
                               <Text fill="WHITE" layoutX="574.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="xp" fx:id="xp" />
                               <Text fx:id="introText" fill="WHITE" layoutX="20.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INTRODUCTION SENTENCE" />
                               <StackPane fx:id="levelPopUp" layoutX="354.0" layoutY="87.0" prefHeight="146.0" prefWidth="287.0" />
+                        <StackPane fx:id="rankPopUp" prefHeight="333.0" prefWidth="332.0" />
                           </children>
                       </AnchorPane>
                   </content>
