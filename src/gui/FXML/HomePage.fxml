@@ -120,26 +120,22 @@
                                       <Region prefHeight="18.0" prefWidth="717.0" />
                                   </children>
                               </VBox>
-                              <ScrollPane fx:id="leaderScrollPane" layoutX="5.0" layoutY="5.0" prefHeight="695.0" prefWidth="710.0" stylesheets="@../CSS/scrollpane.css">
-                                  <content>
-                                      <BarChart fx:id="leaderBoard" prefHeight="693.0" prefWidth="704.0" stylesheets="@../CSS/chart.css" title="LeaderBoard">
-                                          <xAxis>
-                                              <CategoryAxis side="BOTTOM" fx:id="xAxis">
-                                                  <tickLabelFont>
-                                                      <Font size="16.0" />
-                                                  </tickLabelFont>
-                                              </CategoryAxis>
-                                          </xAxis>
-                                          <yAxis>
-                                              <NumberAxis fx:id="yAxis" side="LEFT" tickLabelFill="WHITE">
-                                                  <tickLabelFont>
-                                                      <Font size="16.0" />
-                                                  </tickLabelFont>
-                                              </NumberAxis>
-                                          </yAxis>
-                                      </BarChart>
-                                  </content>
-                              </ScrollPane>
+                                <BarChart fx:id="leaderBoard" layoutX="5.0" layoutY="5.0" prefHeight="693.0" prefWidth="704.0" stylesheets="@../CSS/chart.css" title="LeaderBoard">
+                                    <xAxis>
+                                        <CategoryAxis side="BOTTOM" fx:id="xAxis">
+                                            <tickLabelFont>
+                                                <Font size="16.0" />
+                                            </tickLabelFont>
+                                        </CategoryAxis>
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis fx:id="yAxis" side="LEFT" tickLabelFill="WHITE">
+                                            <tickLabelFont>
+                                                <Font size="16.0" />
+                                            </tickLabelFont>
+                                        </NumberAxis>
+                                    </yAxis>
+                                </BarChart>
                               <HBox prefHeight="58.0" prefWidth="717.0">
                                   <children>
                                       <Region prefHeight="58.0" prefWidth="548.0" />
@@ -208,14 +204,12 @@
                   <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                           <children>
-                              <Pane layoutX="-1.0" layoutY="-4.0" prefHeight="707.0" prefWidth="717.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;">
-                                  <children>
-                                      <ScrollPane layoutX="14.0" layoutY="14.0" maxWidth="694.0" minWidth="694.0" prefHeight="680.0" prefWidth="694.0" stylesheets="@../CSS/scrollpane.css">
-                                          <content>
-                                              <TextFlow fx:id="info" prefHeight="669.0" prefWidth="673.0" />
-                                          </content>
-                                      </ScrollPane>
-                                  </children></Pane>
+                        <Pane layoutY="-4.0" prefHeight="715.0" prefWidth="717.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;" />
+                                <ScrollPane layoutX="13.0" layoutY="10.0" maxWidth="694.0" minWidth="694.0" prefHeight="680.0" prefWidth="694.0" stylesheets="@../CSS/scrollpane.css">
+                                    <content>
+                                        <TextFlow fx:id="info" prefHeight="669.0" prefWidth="673.0" />
+                                    </content>
+                                </ScrollPane>
                           </children>
                       </AnchorPane>
                   </content>
