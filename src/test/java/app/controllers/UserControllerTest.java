@@ -595,4 +595,40 @@ public class UserControllerTest {
 
         assertEquals(expected, result);
     }
+
+    @Test
+    public void updateUserPictureFail() {
+        Response expected = new Response(false, "You are not authorized!");
+
+        Mockito.when(securityService.findLoggedInUsername())
+                .thenReturn(null);
+
+        Response result = userController.updateUserPicture(1);
+
+        Mockito.verify(securityService).findLoggedInUsername();
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void updateUserPictureSuccess() {
+        Response expected = new Response(true, "Your profile picture has been updated!");
+
+        User user = new User();
+        user.setId(2);
+
+        Mockito.when(securityService.findLoggedInUsername())
+                .thenReturn("username-test");
+        Mockito.when(userService.findByUsername("username-test"))
+                .thenReturn(user);
+        Mockito.doAnswer((i) -> null).when(userService).updateProfilePicture(1, 2);
+
+        Response result = userController.updateUserPicture(1);
+
+        Mockito.verify(securityService, times(2)).findLoggedInUsername();
+        Mockito.verify(userService).findByUsername("username-test");
+        Mockito.verify(userService).updateProfilePicture(1, 2);
+
+        assertEquals(expected, result);
+    }
 }
