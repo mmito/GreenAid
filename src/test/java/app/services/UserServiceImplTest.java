@@ -330,4 +330,13 @@ public class UserServiceImplTest {
 
         assertEquals(expected, result);
     }
+
+    @Test
+    public void updateProfilePicture() {
+        Mockito.doAnswer((i) -> null).when(userRepositoryMock).updateProfilePicture(1, 2);
+
+        userService.updateProfilePicture(1, 2);
+
+        Mockito.verify(userRepositoryMock).updateProfilePicture(1, 2);
+    }
 }
