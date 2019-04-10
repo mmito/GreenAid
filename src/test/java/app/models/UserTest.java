@@ -23,6 +23,7 @@ public class UserTest {
         user.setExperience_points(100);
         user.setFirst_name("first_name");
         user.setLast_name("last_name");
+        user.setProfile_picture(1);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         Date date = sdf.parse("2010/10/10");
         user.setLast_update(new Timestamp(date.getTime()));
@@ -114,6 +115,17 @@ public class UserTest {
         Timestamp expected = new Timestamp(date.getTime());
         user.setLast_update(new Timestamp(date.getTime()));
         assertEquals(expected, user.getLast_update());
+    }
+
+    @Test
+    public void getProfilePicture() {
+        assertEquals(1, user.getProfile_picture());
+    }
+
+    @Test
+    public void setProfilePicture() {
+        user.setProfile_picture(2);
+        assertEquals(2, user.getProfile_picture());
     }
 
     @Test

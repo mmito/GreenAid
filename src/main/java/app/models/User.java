@@ -94,19 +94,19 @@ public class User {
         this.last_update = last_update;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id;
-    }
-
     public int getProfile_picture() {
         return profile_picture;
     }
 
     public void setProfile_picture(int profile_picture) {
         this.profile_picture = profile_picture;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id;
     }
 }
