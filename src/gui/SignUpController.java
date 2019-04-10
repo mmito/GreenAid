@@ -34,52 +34,35 @@ public class SignUpController implements Initializable {
     @FXML
     private Button saveUser;
     @FXML
-    private PasswordField password;
+    private PasswordField password, passwordConfirm;
     @FXML
-    private PasswordField passwordConfirm;
-    @FXML
-    private TextField username;
-    @FXML
-    private TextField firstname;
-    @FXML
-    private TextField lastname;
+    private TextField username, firstname, lastname;
     @FXML
     private AnchorPane pane;
     @FXML
-    private Text exists;
-    @FXML
-    private Text emptyFirst;
-    @FXML
-    private Text emptyLast;
-    @FXML
-    private Text emptyUser;
-    @FXML
-    private Text emptyPass;
-    @FXML
-    private Text emptyPassCon;
+    private Text exists, emptyFirst, emptyLast, emptyUser, emptyPass, emptyPassCon;
     @FXML
     private ImageView Home;
     @FXML
     private Text passcheck;
 
-    private double xOffset =0;
-    private double yOffset =0;
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
-    exists.setVisible(false);
-    emptyFirst.setVisible(false);
-    emptyLast.setVisible(false);
-    emptyUser.setVisible(false);
-    emptyPass.setVisible(false);
-    emptyPassCon.setVisible(false);
-    passcheck.setVisible(false);
+        exists.setVisible(false);
+        emptyFirst.setVisible(false);
+        emptyLast.setVisible(false);
+        emptyUser.setVisible(false);
+        emptyPass.setVisible(false);
+        emptyPassCon.setVisible(false);
+        passcheck.setVisible(false);
     }
 
     // Gets the username from the register screen
     public String getUsername() {
         return username.getText();
-
     }
 
     // Gets the Firstname from the register screen
@@ -205,7 +188,6 @@ public class SignUpController implements Initializable {
         if (getPassword().equals(getPasswordConfirm()) && !getLastname().isEmpty()&& !getFirstname().isEmpty()
             && !getUsername().isEmpty() && !getPassword().isEmpty()) {
 
-
             // HttpHeaders
             HttpHeaders headers = new HttpHeaders();
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
@@ -213,7 +195,6 @@ public class SignUpController implements Initializable {
             params.add("last_name", getLastname());
             params.add("username", getUsername());
             params.add("password", getPassword());
-
 
             headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -256,7 +237,6 @@ public class SignUpController implements Initializable {
         password.clear();
         passwordConfirm.clear();
     }
-
 }
 
 

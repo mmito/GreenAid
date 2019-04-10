@@ -13,6 +13,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -53,7 +54,7 @@ public class HomepageController implements Initializable {
     @FXML
     private ComboBox<String> comboBox;
     @FXML
-    private ImageView Home , badge, place;
+    private ImageView Home , badge, place, userImage;
     @FXML
     private Text activityText, field, firstName, lastName, level, xp, introText, errorUser;
     @FXML
@@ -79,7 +80,7 @@ public class HomepageController implements Initializable {
     @FXML
     private WebView browser;
     @FXML
-    private StackPane levelPopUp , rankPopUp;
+    private StackPane levelPopUp , rankPopUp, newPhoto;
 
 
     private long categoryId;
@@ -147,6 +148,106 @@ public class HomepageController implements Initializable {
         WebEngine webEngine = browser.getEngine();
         webEngine.load(url);
         browser.getEngine().setUserStyleSheetLocation(getClass().getResource("/CSS/webView.css").toExternalForm());
+
+        //Sets the User's profile picture
+        setProfilePicture();
+    }
+
+    /**
+     * Sets the user's profile picture in relation to the one he choose
+     */
+    public void setProfilePicture(){
+        int choosed = user.getProfile_picture();
+
+        switch (choosed){
+            case 0:
+                break;
+            case 1:
+                userImage.setImage(new Image("images/girl1.png"));
+                break;
+            case 2:
+                userImage.setImage(new Image("images/guy1.png"));
+                break;
+            case 3:
+                userImage.setImage(new Image("images/girl2.png"));
+                break;
+            case 4:
+                userImage.setImage(new Image("images/guy2.png"));
+                break;
+            default:
+                System.out.println("The image linked to this number does not exists");
+        }
+    }
+
+    /**
+     * Changes the int linked to the image in the DB
+     */
+    public void chooseNewProfile(){
+        HBox hBox = new HBox();
+        hBox.setSpacing(5);
+
+        Image image1 = new Image("images/girl1.png");
+        ImageView avatar1 = new ImageView(image1);
+        avatar1.setFitHeight(160);
+        avatar1.setFitWidth(160);
+        avatar1.setOnMouseEntered(event -> avatar1.setCursor(Cursor.HAND));
+
+        Image image2 = new Image("images/guy1.png");
+        ImageView avatar2 = new ImageView(image2);
+        avatar2.setFitHeight(160);
+        avatar2.setFitWidth(160);
+        avatar2.setOnMouseEntered(event -> avatar2.setCursor(Cursor.HAND));
+
+        Image image3 = new Image("images/girl2.png");
+        ImageView avatar3 = new ImageView(image3);
+        avatar3.setFitHeight(160);
+        avatar3.setFitWidth(160);
+        avatar3.setOnMouseEntered(event -> avatar3.setCursor(Cursor.HAND));
+
+        Image image4 = new Image("images/guy2.png");
+        ImageView avatar4 = new ImageView(image4);
+        avatar4.setFitHeight(160);
+        avatar4.setFitWidth(160);
+        avatar4.setOnMouseEntered(event -> avatar4.setCursor(Cursor.HAND));
+
+        hBox.getChildren().addAll(avatar1, avatar2, avatar3, avatar4);
+
+        JFXDialogLayout dialogLayout = new JFXDialogLayout();
+        dialogLayout.setHeading(new Text("Here are the possible photos"));
+        dialogLayout.setBody(hBox);
+
+        JFXDialog dialog = new JFXDialog(newPhoto, dialogLayout, JFXDialog.DialogTransition.CENTER);
+
+        JFXButton button = new JFXButton("Close");
+        button.setOnAction(event -> {
+            dialog.close();
+        });
+
+        avatar1.setOnMouseClicked(event -> {
+            Client.updateProfilePicture(LogInController.sessionCookie, 1);
+            userImage.setImage(image1);
+            dialog.close();
+        });
+        avatar2.setOnMouseClicked(event -> {
+            Client.updateProfilePicture(LogInController.sessionCookie, 2);
+            userImage.setImage(image2);
+            dialog.close();
+        });
+        avatar3.setOnMouseClicked(event -> {
+            Client.updateProfilePicture(LogInController.sessionCookie, 3);
+            userImage.setImage(image3);
+            dialog.close();
+        });
+        avatar4.setOnMouseClicked(event -> {
+            Client.updateProfilePicture(LogInController.sessionCookie, 4);
+            userImage.setImage(image4);
+            dialog.close();
+
+        });
+
+        dialogLayout.setActions(button);
+
+        dialog.show();
     }
 
     /**
@@ -165,6 +266,7 @@ public class HomepageController implements Initializable {
 
         }
     }
+
     /**
      * Checks if you are the new rank and gives a popup
      */
@@ -213,7 +315,6 @@ public class HomepageController implements Initializable {
     /**
      * Sets achievements for levels
      */
-
     public  void achievements(){
         if(levelNumber == 1) {
             Image image = new Image("images/lvl1.png");
@@ -645,8 +746,6 @@ public class HomepageController implements Initializable {
         ranking();
         level.setText("lvl"+ (int) levelNumber);
     }
-
-
 
     /**
      * JFXDialog pops up when when increase in level
