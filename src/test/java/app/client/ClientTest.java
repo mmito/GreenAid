@@ -45,6 +45,7 @@ public class ClientTest {
     private static final String url_remove_follow = "http://localhost:8080/user/remove-following";
     private static final String url_recommendation = "http://localhost:8080/user/recommendation";
     private static final String url_leaderboard = "http://localhost:8080/user/leaderboard";
+    private static final String url_update_profile_picture = "http://localhost:8080/user/update-profile-picture";
 
     @Test
     public void getSessionCookieFail() {
@@ -455,4 +456,27 @@ public class ClientTest {
         assertEquals(userList, result);
     }
 
+    @Test
+    public void updateProfilePicture() {
+        String expected = "data-test";
+
+        Response response = new Response();
+        response.setOk(true);
+        response.setData("data-test");
+        HttpEntity<Response> httpEntity = new HttpEntity<>(response);
+
+        MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
+        params.add("profile_picture", 1);
+
+        PowerMockito.mockStatic(HttpRequests.class);
+        PowerMockito.when(HttpRequests.postRequest("sessionCookie", url_update_profile_picture, params))
+                .thenReturn(httpEntity);
+
+        String result = Client.updateProfilePicture("sessionCookie", 1);
+
+        PowerMockito.verifyStatic(HttpRequests.class);
+        HttpRequests.postRequest("sessionCookie", url_update_profile_picture, params);
+
+        assertEquals(expected, result);
+    }
 }

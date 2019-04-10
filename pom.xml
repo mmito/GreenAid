@@ -295,6 +295,7 @@
                     <excludes>
                         <exclude>**/app/SpringServer.class</exclude>
                         <exclude>grade/**</exclude>
+                        <exclude>**/gui/**</exclude>
                     </excludes>
                 </configuration>
 
