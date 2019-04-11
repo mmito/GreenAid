@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.web.*?>
 <?import com.jfoenix.controls.*?>
 <?import java.net.*?>
@@ -77,15 +78,25 @@
                   <content>
                       <AnchorPane prefHeight="701.0" prefWidth="689.0">
                           <children>
-                        <Pane layoutX="1.0" layoutY="-5.0" prefHeight="714.0" prefWidth="717.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;" />
-                        <ImageView fx:id="place" fitHeight="99.0" fitWidth="113.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="userImage" fitHeight="150.0" fitWidth="150.0" layoutX="165.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+                              <Pane layoutX="1.0" layoutY="-5.0" prefHeight="708.0" prefWidth="717.0" style="-fx-background-color: #1D7874; -fx-opacity: 0.8;" />
+                              <ImageView fx:id="place" fitHeight="99.0" fitWidth="113.0" layoutX="153.0" layoutY="224.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="userImage" fitHeight="150.0" fitWidth="150.0" layoutX="220.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/userDefault.png" />
                            </image></ImageView>
-                              <Text fx:id="firstName" fill="WHITE" layoutX="198.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USER'S NAME" wrappingWidth="146.6708984375" />
-                              <Text fx:id="lastName" fill="WHITE" layoutX="380.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USER'S SURNAME" wrappingWidth="131.6708984375" />
-                              <Text fx:id="field" fill="WHITE" layoutX="127.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THE USERNAME WILL BE HERE" textAlignment="CENTER" wrappingWidth="434.6708984375" />
+                              <Text fx:id="firstName" fill="WHITE" layoutX="11.0" layoutY="131.0" strokeWidth="0.0" text="Firstname: First" wrappingWidth="200.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Text>
+                              <Text fx:id="lastName" fill="WHITE" layoutX="11.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lastname: Last" textOrigin="CENTER" wrappingWidth="200.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Text>
+                              <Text fx:id="field" fill="WHITE" layoutX="11.0" layoutY="107.0" strokeWidth="0.0" text="Username: username" wrappingWidth="200.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
                               <ProgressIndicator fx:id="progress" layoutX="423.0" layoutY="79.0" onMouseEntered="#Hover" onMouseExited="#exit" prefHeight="143.0" prefWidth="196.0" progress="0.0" />
                               <Text fill="WHITE" layoutX="388.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Progress to the next Achievement">
                                   <font>
@@ -101,9 +112,13 @@
                               <Text fill="WHITE" layoutX="598.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="xp" fx:id="xp" />
                               <Text fx:id="introText" fill="WHITE" layoutX="20.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INTRODUCTION SENTENCE" />
                               <StackPane fx:id="levelPopUp" layoutX="378.0" layoutY="78.0" prefHeight="146.0" prefWidth="287.0" />
-                        <StackPane fx:id="rankPopUp" layoutX="5.0" layoutY="27.0" prefHeight="236.0" prefWidth="340.0" />
-                        <ImageView fx:id="badge" fitHeight="59.0" fitWidth="72.0" layoutX="21.0" layoutY="163.0" pickOnBounds="true" preserveRatio="true" />
-                        <StackPane fx:id="newPhoto" alignment="TOP_LEFT" layoutX="11.0" layoutY="-1.0" prefHeight="31.0" prefWidth="696.0">
+                        <StackPane fx:id="rankPopUp" layoutX="7.0" layoutY="27.0" prefHeight="178.0" prefWidth="375.0" />
+                        <StackPane fx:id="infoTree" layoutX="14.0" layoutY="203.0">
+                           <children>
+                              <ImageView fx:id="badge" fitHeight="59.0" fitWidth="72.0" layoutX="20.0" layoutY="264.0" onMouseEntered="#setInfoTree" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="newPhoto" alignment="TOP_LEFT" layoutX="11.0" prefHeight="31.0" prefWidth="696.0">
                            <children>
                               <Hyperlink alignment="BASELINE_LEFT" onMouseClicked="#chooseNewProfile" text="Click here to change the photo !" textFill="WHITE" underline="true" />
                            </children>
