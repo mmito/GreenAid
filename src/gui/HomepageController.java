@@ -107,7 +107,7 @@ public class HomepageController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
         //Sets the User's username, First Name, Last Name and the number 1 person
         field.setText("Username: " + LogInController.Name);
-        firstName.setText("Fullname: " + user.getFirst_name());
+        firstName.setText("Firstname: " + user.getFirst_name());
         lastName.setText("Lastname: " + user.getLast_name());
         no1 = top20leaderboard.get(0).getUsername();
 
