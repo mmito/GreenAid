@@ -80,7 +80,7 @@ public class HomepageController implements Initializable {
     @FXML
     private WebView browser;
     @FXML
-    private StackPane levelPopUp , rankPopUp, newPhoto;
+    private StackPane levelPopUp , rankPopUp, newPhoto, infoTree;
 
 
     private long categoryId;
@@ -106,9 +106,9 @@ public class HomepageController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         //Sets the User's username, First Name, Last Name and the number 1 person
-        field.setText(LogInController.Name);
-        firstName.setText(user.getFirst_name());
-        lastName.setText(user.getLast_name());
+        field.setText("Username: " + LogInController.Name);
+        firstName.setText("Fullname: " + user.getFirst_name());
+        lastName.setText("Lastname: " + user.getLast_name());
         no1 = top20leaderboard.get(0).getUsername();
 
         //Initialize the ComboBox elements
@@ -151,6 +151,23 @@ public class HomepageController implements Initializable {
 
         //Sets the User's profile picture
         setProfilePicture();
+    }
+
+    /**
+     * shows info on the tree when it is hovered
+     */
+    public void setInfoTree(){
+        Text temp = new Text();
+        temp.setText("This tree evolves in relation to the XP you are gaining. Take good care of it !");
+
+        JFXDialogLayout dialogLayout = new JFXDialogLayout();
+        dialogLayout.setBody(temp);
+
+        JFXDialog dialog = new JFXDialog(infoTree, dialogLayout, JFXDialog.DialogTransition.NONE);
+
+        infoTree.setOnMouseExited(event -> dialog.close());
+
+        dialog.show();
     }
 
     /**
