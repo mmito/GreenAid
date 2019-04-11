@@ -5,6 +5,15 @@ In today's world, the carbon dioxide consumption is increasing day by day. Unfor
 
 **GO GREEN** is an application which aims to influence better standards of living by creating an activity-based gamification app. The user registers to the app, selects an activity that he/she's done, selects the amount of it, and the activity gets added to his/her profile and he/she earns XP points according to the amount and type of the activity. Then friends can be added and leaderboards between friends are created in order to influence healthy&sustainable activities even more. 
 
+## Licensing and contributions
+
+1. We used IntelliJ while developing this app. IntelliJ is under the license of Jetbrains.
+2. Spring Framework - [Apache 2.0 License](https://choosealicense.com/licenses/apache-2.0/)
+3. Hibernate License - [GNU Lesser General Public License v3.0](https://choosealicense.com/licenses/lgpl-3.0/)
+4. JavaFXML Scene Builder - [Oracle BSD License](https://www.oracle.com/technetwork/licenses/bsd-license-1835287.html)
+5. RecycleCity game - Licensed under US Environmental Protection Agency (US EPA). We e-mailed them for permission to use the game in our application and they granted it.
+Proof:
+<<img src="/images/mail.jpg">
 
 ## Design Goals
  1. Creating a simple, clean, good-looking GUI.
@@ -52,12 +61,27 @@ Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getti
 <img src="/images/signup.jpg">
 
 ### Homepage
+<img src="/images/home1.PNG">
+<img src="/images/home2.PNG">
+<img src="/images/pp.PNG">
+<img src="/images/levelup.PNG">
+
+
+### Friend List
+<img src="/images/Friendlist.PNG">
+<img src="/images/popup.PNG">
 
 ### Leaderboard Page
+<img src="/images/fleader.PNG">
+<img src="/images/top20.PNG">
 
-### Recommendation page 
+
+### Recommendation/Info page
+ <img src="/images/Info.PNG">
 
 ### Game Page for kids
+<img src="/images/Game.PNG">
+
 
 ## Libraries/Frameworks used
  1. Spring: Java Framework for developing web, mobile and desktop apps and offers lots of ease on server side and database. 
@@ -82,13 +106,17 @@ Run `mvn test` to create a branch/code coverage.
     		SOURCE FOLDER
     	    	    /   \ 
     	           /     \
-    	         GUI   APP-->tests for everything
+    	         GUI    APP-->tests for everything
     	                /  \
-    	            Client Server->Security Configurations
-    	   		              /   \
-    	   		             /   Communication with database
-    	   		            /  
+    	            Client Server-> Main functionalities
+    	   		     /         /   \
+    	   		    /         /   Communication with database
+    	   	Http Requests    /  
     	     Authentication/Authorization
+
+## Database Schema
+<img src="/images/db.jpg">
+
 
 ## The Joel Test Score
 
@@ -181,10 +209,4 @@ I think that this project will really help us prepare for programming jobs in th
 Getting the team to work together as an efficient machine will be the main task, and i would love to make this possible.
 I think i have the creativity and team work capabilities to make a great application, yet i still need to learn a lot about programming itself and more importantly programming in a team.
 
-## Licensing and contributions
-
-1. We used IntelliJ while developing this app. IntelliJ is under the license of Jetbrains.
-2. Spring Framework - [Apache 2.0 License](https://choosealicense.com/licenses/apache-2.0/)
-3. Hibernate License - [GNU Lesser General Public License v3.0](https://choosealicense.com/licenses/lgpl-3.0/)
-4. JavaFXML Scene Builder - [Oracle BSD License](https://www.oracle.com/technetwork/licenses/bsd-license-1835287.html)
 
