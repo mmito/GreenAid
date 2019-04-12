@@ -106,9 +106,9 @@ public class HomepageController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         //Sets the User's username, First Name, Last Name and the number 1 person
-        field.setText("Username: " + LogInController.Name);
-        firstName.setText("Firstname: " + user.getFirst_name());
-        lastName.setText("Lastname: " + user.getLast_name());
+        field.setText(LogInController.Name + "\n");
+        firstName.setText("First name: " + user.getFirst_name());
+        lastName.setText("Last name: " + user.getLast_name());
         no1 = top20leaderboard.get(0).getUsername();
 
         //Initialize the ComboBox elements
@@ -292,15 +292,14 @@ public class HomepageController implements Initializable {
             place.setVisible(true);
             Image image = new Image("images/number1.png");
             place.setImage(image);
-            place.setVisible(true);
 
-            ImageView imageView = new ImageView();
+           /* ImageView imageView = new ImageView();
             imageView.setImage(image);
             imageView.setFitHeight(100);
-            imageView.setFitWidth(100);
+            imageView.setFitWidth(100);*/
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             dialogLayout.setHeading(new Text("Hey, " + user.getUsername() + ", Congratulations! \nyou have just hit Rank 1!!! \n" +"You have earned this:"));
-            dialogLayout.setBody(imageView);
+            //dialogLayout.setBody(imageView);
 
 
             JFXDialog dialog = new JFXDialog(rankPopUp, dialogLayout, JFXDialog.DialogTransition.NONE);
@@ -682,7 +681,7 @@ public class HomepageController implements Initializable {
 
             hBox.getChildren().addAll(datePick, addActivity);
         } else if ("Lowering the Temperature of your Home".equals(activity)) {
-            activityText.setText("Since how many days have you been lowering your home's temperature ?");
+            activityText.setText("How many degrees have you been lowering your home's temperature each day by?");
             hBox.getChildren().clear();
 
             slider.getStylesheets().add(getClass().getResource("/CSS/Slider.css").toExternalForm());
@@ -1053,13 +1052,13 @@ public class HomepageController implements Initializable {
                 "a car, we needed to find how many CO2 a car uses per km and how many CO2 a transportation vehicle" +
                 "uses per km and we calculated the deficit.\n\n" +
                 "Because of the available information online, we used the" +
-                "following parameters for adding an activity:" +
-                "Eating a vegetarian meal/per serving" +
-                "Buying a local produce/per number of items" +
-                "Using a bike instead of car/per km" +
-                "Using public transport instead of car/per km" +
-                "Lowering the temperature of your home by 1 degree Celcius/per day" +
-                "Installing solar panels/per day");
+                "following parameters for adding an activity:\n" +
+                "• Eating a vegetarian meal/per serving\n" +
+                "• Buying a local produce/per number of items\n" +
+                "• Using a bike instead of car/per km\n" +
+                "• Using public transport instead of car/per km\n" +
+                "• Lowering the temperature of your home by 1 degree Celcius/per day\n" +
+                "• Installing solar panels/per day\n");
 
         Text text2 = new Text();
         text2.setFill(Color.WHITE);
