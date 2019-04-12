@@ -3,13 +3,13 @@ package app.services;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecommendationRepository {
+class RecommendationRepository {
 
     /**
      * Food recommendations.
-     * @return
+     * @return List of eating recommendations
      */
-    public List<String> getEatRecommendations() {
+    List<String> getEatRecommendations() {
         List<String> eatRecommendations = new ArrayList<>();
         eatRecommendations.add("Meatless Monday time! Don't eat any meat on monday");
         eatRecommendations.add("Buy food that are in season, this "
@@ -21,17 +21,16 @@ public class RecommendationRepository {
         eatRecommendations.add("Felafel Time!");
         eatRecommendations.add("Avoid Robert Mugabe’s Birthday Party\nThis year attendees will be "
                 + "feasting on two elephants, two buffalo, two sables, "
-                + "five impalas and a lion. What a sad day in Zimbabwe for"
-                + " both food sustainability and economic inequality.");
+                + "five impalas and a lion.");
         eatRecommendations.add("Use climate-appropriate plants in your garden");
         return eatRecommendations;
     }
 
     /**
      * Household recommendations.
-     * @return
+     * @return List og household recommendations
      */
-    public List<String> getHouseholdRecommendations() {
+    List<String> getHouseholdRecommendations() {
         List<String> householdRecommendations = new ArrayList<>();
         householdRecommendations.add("Wear an extra layer of clothing"
                 + " and reduce your house temperature by 1 degrees!");
@@ -47,9 +46,9 @@ public class RecommendationRepository {
 
     /**
      * Transport recommendations.
-     * @return
+     * @return List of transport recommendations
      */
-    public List<String> getTransportRecommendations() {
+    List<String> getTransportRecommendations() {
         List<String> transportRecommendations = new ArrayList<>();
         transportRecommendations.add("Do Carpooling instead of driving your own car."
                 + " BlaBla Car is recommended");
@@ -62,8 +61,7 @@ public class RecommendationRepository {
         transportRecommendations.add("Buy economy class flights, "
                 + "for the same reasons as carpooling and public transportation.\n"
                 + "Don't be like Prince Alwaleed bin Talal al-Saud, or the "
-                + "Sultan of Brunei, who buy entire economy-size "
-                + "planes and convert them into flying palaces.");
+                + "Sultan of Brunei!");
         transportRecommendations.add("Don't buy a HondaJet if you have enough money");
         return transportRecommendations;
     }
