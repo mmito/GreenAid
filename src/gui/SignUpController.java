@@ -5,8 +5,9 @@ import javafx.fxml.FXML;
 
 import javafx.fxml.Initializable;
 
-import javafx.scene.control.*;
-
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -21,7 +22,6 @@ import org.springframework.http.MediaType;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
 
 import java.net.URL;
 import java.util.ResourceBundle;
