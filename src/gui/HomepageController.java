@@ -302,13 +302,9 @@ public class HomepageController implements Initializable {
             Image image = new Image("images/number1.png");
             place.setImage(image);
 
-           /* ImageView imageView = new ImageView();
-            imageView.setImage(image);
-            imageView.setFitHeight(100);
-            imageView.setFitWidth(100);*/
+
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
-            dialogLayout.setHeading(new Text("Hey, " + user.getUsername() + ", Congratulations! \nyou have just hit Rank 1!!! \n" +"You have earned this:"));
-            //dialogLayout.setBody(imageView);
+            dialogLayout.setHeading(new Text("Hey, " + user.getUsername() + ", Congratulations! \nyou have just hit Rank 1!!! \n" ));
 
 
             JFXDialog dialog = new JFXDialog(rankPopUp, dialogLayout, JFXDialog.DialogTransition.NONE);
