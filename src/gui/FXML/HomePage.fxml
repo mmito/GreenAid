@@ -1,32 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTabPane?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.ProgressIndicator?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.text.TextFlow?>
-<?import javafx.scene.web.WebView?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.web.*?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#movingHome" prefHeight="954.0" prefWidth="1398.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HomepageController">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#movingHome" prefHeight="954.0" prefWidth="1398.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HomepageController">
    <children>
       <ImageView fitHeight="987.0" fitWidth="1698.0" layoutX="-243.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -65,7 +48,7 @@
                   <Font size="16.0" />
                </font>
             </JFXButton>
-            <TextFlow fx:id="recommendation" layoutX="23.0" layoutY="595.0" prefHeight="134.0" prefWidth="375.0" />
+            <TextFlow fx:id="recommendation" layoutX="25.0" layoutY="547.0" prefHeight="134.0" prefWidth="375.0" />
          </children>
       </AnchorPane>
       <ImageView fx:id="Home" fitHeight="52.0" fitWidth="55.0" layoutY="1.0" onMouseClicked="#Home" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">

@@ -3,9 +3,6 @@
 <?import com.jfoenix.controls.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -20,7 +17,7 @@
       <JFXButton fx:id="login" buttonType="RAISED" layoutX="421.0" layoutY="241.0" onMouseClicked="#handleLoginClicked" style="-fx-background-color: #1D7874;" text="Log In" textFill="WHITE" />
       <Text fx:id="invalid" fill="RED" layoutX="275.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" text="I AM TEXT" wrappingWidth="172.6708984375">
          <font>
-            <Font size="18.0" />
+            <Font size="14.0" />
          </font>
       </Text>
       <Hyperlink fx:id="register" layoutX="335.0" layoutY="242.0" onAction="#handleRegisterClicked" text="Register" textFill="WHITE" underline="true" />

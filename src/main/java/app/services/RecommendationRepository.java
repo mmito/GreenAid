@@ -18,7 +18,7 @@ class RecommendationRepository {
                 + "if you think you won't be able to finish it!");
         eatRecommendations.add("Buy organic food!");
         eatRecommendations.add("Tofu Day!");
-        eatRecommendations.add("Felafel Time!");
+        eatRecommendations.add("Falafel Time!");
         eatRecommendations.add("Avoid Robert Mugabe’s Birthday Party\nThis year attendees will be "
                 + "feasting on two elephants, two buffalo, two sables, "
                 + "five impalas and a lion.");
